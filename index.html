@@ -1,289 +1,776 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silent Manager v2.0</title>
-    <style>
-        :root {
-            --bg-main: #050505;
-            --bg-sidebar: #020202;
-            --bg-card: #0a0a0a;
-            --border: #141414;
-            --accent: #bb71e4; /* VIP/Light Purple */
-            --criminal: #7a2eb0; /* Dark Purple */
-            --rich: #ffd700; /* Gold */
-            --text: #888;
-            --danger: #ff4444;
-            --success: #00ff88;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>silent [Manager]</title>
 
-        body {
-            margin: 0;
-            background: var(--bg-main);
-            color: var(--text);
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 13px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        /* --- UI Framework --- */
-        .navbar {
-            height: 60px;
-            background: var(--bg-sidebar);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 30px;
-            position: fixed;
-            width: 100%;
-            z-index: 100;
-            box-sizing: border-box;
-        }
+<style>
 
-        .brand { color: #fff; font-weight: bold; letter-spacing: 2px; }
-        .brand span { color: var(--accent); }
+:root{
+    --bg:#070707;
+    --sidebar:#0b0b0b;
+    --card:#101010;
+    --card2:#0d0d0d;
+    --border:#1d1d1d;
+    --text:#d8d8d8;
+    --muted:#6e6e6e;
 
-        .layout { display: flex; padding-top: 60px; }
+    --purple:#bb71e4;
+    --purple-dark:#7d4be0;
+    --gold:#ffcc4d;
+    --danger:#ff4d5a;
+    --success:#37d67a;
+}
 
-        .sidebar {
-            width: 240px;
-            height: calc(100vh - 60px);
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border);
-            position: fixed;
-            padding-top: 20px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .nav-item {
-            padding: 15px 30px;
-            cursor: pointer;
-            transition: 0.2s;
-            border-left: 2px solid transparent;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 1px;
-        }
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+}
 
-        .nav-item:hover { background: #080808; color: #fff; }
-        .nav-item.active { 
-            background: #0d0d0d; 
-            color: #fff; 
-            border-left-color: var(--accent);
-        }
+/* NAVBAR */
 
-        .main { margin-left: 240px; padding: 40px; width: calc(100% - 240px); box-sizing: border-box; }
+.navbar{
+    height:60px;
+    width:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:999;
+    background:#050505;
+    border-bottom:1px solid var(--border);
 
-        /* --- Components --- */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 25px;
-            border-radius: 2px;
-            margin-bottom: 20px;
-        }
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    padding:0 25px;
+}
 
-        input, select {
-            background: #000;
-            border: 1px solid var(--border);
-            padding: 12px;
-            color: #fff;
-            font-family: inherit;
-            margin-bottom: 10px;
-            outline: none;
-        }
+.brand{
+    font-size:15px;
+    font-weight:800;
+    color:#fff;
+    letter-spacing:1px;
+}
 
-        .btn {
-            padding: 10px 20px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: #fff;
-            cursor: pointer;
-            font-family: inherit;
-            text-transform: uppercase;
-            font-size: 11px;
-            transition: 0.3s;
-        }
+.brand span{
+    color:var(--purple);
+}
 
-        .btn:hover { background: #fff; color: #000; }
-        .btn-danger { border-color: var(--danger); color: var(--danger); }
-        .btn-danger:hover { background: var(--danger); color: #fff; }
-        .btn-success { border-color: var(--success); color: var(--success); }
-        .btn-success:hover { background: var(--success); color: #000; }
+.admin-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 
-        /* --- Ranks & UI Polish --- */
-        .rank { font-weight: bold; padding: 2px 6px; border-radius: 2px; font-size: 10px; }
-        .rank-vip { color: var(--accent); border: 1px solid var(--accent); }
-        .rank-criminal { color: var(--criminal); border: 1px solid var(--criminal); }
-        .rank-rich { color: var(--rich); border: 1px solid var(--rich); text-shadow: 0 0 5px var(--rich); }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { text-align: left; padding: 15px; border-bottom: 2px solid var(--border); color: #444; font-size: 10px; }
-        td { padding: 12px 15px; border-bottom: 1px solid var(--border); }
+.admin-avatar{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--purple),#7335ff);
+    box-shadow:0 0 20px rgba(187,113,228,.4);
+}
 
-        .hidden { display: none; }
-        .console-text { color: var(--success); font-family: monospace; margin-top: 10px; }
-    </style>
+/* LAYOUT */
+
+.layout{
+    display:flex;
+    padding-top:60px;
+}
+
+.sidebar{
+    width:240px;
+    height:calc(100vh - 60px);
+    background:var(--sidebar);
+    border-right:1px solid var(--border);
+    position:fixed;
+}
+
+.sidebar-inner{
+    padding-top:20px;
+}
+
+.nav-item{
+    padding:14px 25px;
+    color:#7a7a7a;
+    cursor:pointer;
+    transition:.25s;
+    border-left:3px solid transparent;
+    font-size:13px;
+    font-weight:600;
+}
+
+.nav-item:hover{
+    background:#111;
+    color:#fff;
+}
+
+.nav-item.active{
+    background:#101010;
+    color:#fff;
+    border-left-color:var(--purple);
+}
+
+/* MAIN */
+
+.main{
+    margin-left:240px;
+    width:100%;
+    padding:30px;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:linear-gradient(180deg,#101010,#0c0c0c);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:22px;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--purple),transparent);
+}
+
+.card-title{
+    color:#666;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:11px;
+    margin-bottom:12px;
+}
+
+.big{
+    font-size:30px;
+    font-weight:800;
+    color:#fff;
+}
+
+.online{
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--success);
+    box-shadow:0 0 10px var(--success);
+}
+
+/* BUTTONS */
+
+.btn{
+    background:#161616;
+    border:1px solid #2a2a2a;
+    color:#bdbdbd;
+    padding:9px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.25s;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+}
+
+.btn:hover{
+    border-color:var(--purple);
+    color:#fff;
+}
+
+.btn-danger{
+    color:#ff8d8d;
+    border-color:#3b1e1e;
+    background:#1b1010;
+}
+
+.btn-danger:hover{
+    background:#2a1313;
+}
+
+.btn-purple{
+    background:linear-gradient(135deg,var(--purple),#8f52ff);
+    color:white;
+    border:none;
+}
+
+.btn-purple:hover{
+    opacity:.9;
+}
+
+/* TABLE */
+
+.table-wrap{
+    background:var(--card2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:25px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    padding:15px;
+    font-size:11px;
+    color:#555;
+    border-bottom:1px solid var(--border);
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #151515;
+}
+
+tr:hover{
+    background:#111;
+}
+
+/* RANKS */
+
+.rank{
+    padding:5px 10px;
+    border-radius:30px;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.5px;
+}
+
+.rank-vip{
+    background:#2b1935;
+    color:#cb93ff;
+}
+
+.rank-criminal{
+    background:#23102d;
+    color:#9e5eff;
+}
+
+.rank-rich{
+    background:#2d250c;
+    color:var(--gold);
+}
+
+.rank-admin{
+    background:#301414;
+    color:#ff7272;
+}
+
+/* SEARCH */
+
+.search{
+    width:100%;
+    background:#090909;
+    border:1px solid var(--border);
+    color:#fff;
+    padding:13px;
+    border-radius:7px;
+    outline:none;
+    margin-bottom:20px;
+}
+
+/* SERVER */
+
+.server-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:15px;
+}
+
+/* PLANS */
+
+.plan-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.plan{
+    background:linear-gradient(180deg,#101010,#0a0a0a);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:28px;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.plan:hover{
+    transform:translateY(-5px);
+    border-color:var(--purple);
+}
+
+.plan h2{
+    font-size:28px;
+    color:white;
+}
+
+.price{
+    font-size:52px;
+    font-weight:800;
+    margin:20px 0;
+}
+
+.feature{
+    margin:14px 0;
+    color:#8b8b8b;
+    font-size:14px;
+}
+
+.feature.active{
+    color:#d8d8d8;
+}
+
+.purchase{
+    margin-top:25px;
+    width:100%;
+    padding:13px;
+}
+
+/* PANELS */
+
+.panel{
+    display:none;
+}
+
+.panel.active{
+    display:block;
+}
+
+/* LOGS */
+
+.logs{
+    background:var(--card2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.log{
+    padding:15px 18px;
+    border-bottom:1px solid #151515;
+    color:#777;
+}
+
+.log span{
+    color:var(--purple);
+    font-weight:700;
+}
+
+</style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="brand">SYSTEM<span>CORE</span></div>
-    </nav>
+<!-- NAVBAR -->
 
-    <div class="layout">
-        <aside class="sidebar">
-            <div class="nav-item active" onclick="tab('home')">Home</div>
-            <div class="nav-item" onclick="tab('users')">Users</div>
-            <div class="nav-item" onclick="tab('management')">User Control</div>
-            <div class="nav-item" onclick="tab('purge')">Purge System</div>
-            <div class="nav-item" onclick="tab('logs')">Audit Logs</div>
-        </aside>
+<div class="navbar">
 
-        <main class="main">
-            <!-- HOME / SERVER FUNCTIONS -->
-            <div id="home-sec">
-                <h2 style="color:#fff">System Status</h2>
-                <div class="grid-3">
-                    <div class="card">
-                        <h4 style="margin:0">Database Cluster</h4>
-                        <p class="console-text">ONLINE [0.4ms]</p>
-                        <button class="btn btn-danger" onclick="serverOp('STOP_DB')">Kill DB</button>
-                    </div>
-                    <div class="card">
-                        <h4 style="margin:0">Main Server</h4>
-                        <p class="console-text" id="serverStatus">RUNNING</p>
-                        <button class="btn btn-danger" onclick="serverOp('STOP_SRV')">Stop Server</button>
-                        <button class="btn btn-success" onclick="serverOp('START_SRV')">Restart</button>
-                    </div>
-                    <div class="card">
-                        <h4 style="margin:0">Firewall</h4>
-                        <p class="console-text">ACTIVE [DROP_ALL]</p>
-                        <button class="btn">Settings</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- USERS LIST -->
-            <div id="users-sec" class="hidden">
-                <div class="card">
-                    <table>
-                        <thead>
-                            <tr><th>ID</th><th>User</th><th>Rank</th><th>Joined</th></tr>
-                        </thead>
-                        <tbody id="userTable"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- USER CONTROL PANEL -->
-            <div id="management-sec" class="hidden">
-                <div class="card" style="max-width: 500px;">
-                    <h3>User Override Panel</h3>
-                    <p>Enter exact username to modify permissions.</p>
-                    <input type="text" id="targetUser" placeholder="Username..." style="width:100%">
-                    <div style="display:flex; gap:10px; margin-bottom: 20px;">
-                        <select id="rankSelect" style="flex:1">
-                            <option value="vip">VIP [$30]</option>
-                            <option value="criminal">Criminal [$50]</option>
-                            <option value="rich">Rich [$100]</option>
-                        </select>
-                        <button class="btn btn-success" onclick="modifyUser('RANK')">Set Rank</button>
-                    </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                        <button class="btn btn-danger" onclick="modifyUser('BAN')">Permanent Ban</button>
-                        <button class="btn" onclick="modifyUser('KICK')">Session Kick</button>
-                    </div>
-                    <div id="mgtStatus" class="console-text" style="margin-top:20px; display:none;"></div>
-                </div>
-            </div>
-
-            <!-- PURGE SECTION -->
-            <div id="purge-sec" class="hidden">
-                <div class="card">
-                    <h3>Paste Nullifier</h3>
-                    <input type="text" id="purgeInput" placeholder="Paste URL..." style="width: 100%">
-                    <button class="btn btn-danger" style="width:100%" onclick="executePurge()">Wipe from Storage</button>
-                </div>
-            </div>
-
-            <!-- LOGS -->
-            <div id="logs-sec" class="hidden">
-                <div class="card">
-                    <table id="logTable"></table>
-                </div>
-            </div>
-        </main>
+    <div class="brand">
+        silent <span>[Manager]</span>
     </div>
 
-    <script>
-        const users = [
-            {n: "asuna", r: "rich", j: "2023"}, {n: "Bella", r: "vip", j: "2024"}, 
-            {n: "ceo", r: "rich", j: "2020"}, {n: "Hacker", r: "criminal", j: "2021"}
-        ];
+    <div class="admin-box">
+        <div>
+            <div style="font-weight:700;">ceo</div>
+            <div style="font-size:11px;color:#666;">Administrator</div>
+        </div>
+        <div class="admin-avatar"></div>
+    </div>
 
-        // Fill user table
-        function renderUsers() {
-            const tbody = document.getElementById('userTable');
-            tbody.innerHTML = users.map((u, i) => `
-                <tr>
-                    <td>#${2000+i}</td>
-                    <td style="color:#fff">${u.n}</td>
-                    <td><span class="rank rank-${u.r}">${u.r.toUpperCase()}</span></td>
-                    <td>${u.j}</td>
-                </tr>
-            `).join('');
-        }
+</div>
 
-        // Server Ops
-        function serverOp(op) {
-            const s = document.getElementById('serverStatus');
-            if(op === 'STOP_SRV') {
-                s.innerText = "OFFLINE";
-                s.style.color = "var(--danger)";
-            } else if(op === 'START_SRV') {
-                s.innerText = "REBOOTING...";
-                setTimeout(() => { s.innerText = "RUNNING"; s.style.color = "var(--success)"; }, 2000);
-            }
-        }
+<!-- LAYOUT -->
 
-        // User Management
-        function modifyUser(type) {
-            const user = document.getElementById('targetUser').value;
-            const status = document.getElementById('mgtStatus');
-            if(!user) return;
+<div class="layout">
 
-            status.style.display = "block";
-            status.innerText = `[SYS] Executing ${type} on ${user}...`;
-            
-            setTimeout(() => {
-                status.innerText = `[DONE] ${user} has been updated.`;
-            }, 1000);
-        }
+    <!-- SIDEBAR -->
 
-        // Navigation
-        function tab(t) {
-            ['home', 'users', 'management', 'purge', 'logs'].forEach(s => {
-                document.getElementById(s + '-sec').classList.add('hidden');
-            });
-            document.getElementById(t + '-sec').classList.remove('hidden');
-            
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            
-            if(t === 'users') renderUsers();
-        }
+    <aside class="sidebar">
 
-        // Generate Logs
-        const logData = [];
-        const ops = ["Admin", "ceo", "Kaede"];
-        const acts = ["SET_RANK", "BAN", "PURGE", "RESTART_SRV"];
-        for(let i=0; i<50; i++) {
-            logData.push(`<tr><td>${ops[i%3]}</td><td>${acts[i%4]}</td><td>node_0${i}</td><td>${i}m ago</td></tr>`);
-        }
-        document.getElementById('logTable').innerHTML = logData.join('');
+        <div class="sidebar-inner">
 
-    </script>
+            <div class="nav-item active" onclick="switchPanel('dashboard',this)">
+                Main Menu
+            </div>
+
+            <div class="nav-item" onclick="switchPanel('users',this)">
+                Users
+            </div>
+
+            <div class="nav-item" onclick="switchPanel('servers',this)">
+                Website Control
+            </div>
+
+            <div class="nav-item" onclick="switchPanel('plans',this)">
+                Memberships
+            </div>
+
+            <div class="nav-item" onclick="switchPanel('logs',this)">
+                Audit Logs
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- DASHBOARD -->
+
+        <div id="dashboard" class="panel active">
+
+            <div class="grid">
+
+                <div class="card">
+                    <div class="card-title">Registered Users</div>
+                    <div class="big">18,492</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Online Users</div>
+                    <div class="big">1,842</div>
+
+                    <div class="online">
+                        <div class="dot"></div>
+                        <span>Live</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Revenue</div>
+                    <div class="big">$48,120</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Server Status</div>
+
+                    <div class="online">
+                        <div class="dot"></div>
+                        <span>Operational</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- USERS -->
+
+        <div id="users" class="panel">
+
+            <input class="search" type="text" placeholder="Search username...">
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Rank</th>
+                            <th>Status</th>
+                            <th>Management</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="userTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- SERVERS -->
+
+        <div id="servers" class="panel">
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <div class="card-title">Website Server</div>
+
+                    <div class="server-box">
+                        <div class="online">
+                            <div class="dot"></div>
+                            <span>Running</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:25px; display:flex; gap:10px;">
+                        <button class="btn btn-purple">Restart Server</button>
+                        <button class="btn btn-danger">Stop Server</button>
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-title">Database Cluster</div>
+
+                    <div class="online">
+                        <div class="dot"></div>
+                        <span>Healthy</span>
+                    </div>
+
+                    <div style="margin-top:25px; display:flex; gap:10px;">
+                        <button class="btn">Backup</button>
+                        <button class="btn">Optimize</button>
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-title">Security System</div>
+
+                    <div class="online">
+                        <div class="dot"></div>
+                        <span>Protected</span>
+                    </div>
+
+                    <div style="margin-top:25px; display:flex; gap:10px;">
+                        <button class="btn">Firewall</button>
+                        <button class="btn">Sessions</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- MEMBERSHIPS -->
+
+        <div id="plans" class="panel">
+
+            <div class="plan-grid">
+
+                <div class="plan">
+
+                    <h2>VIP</h2>
+
+                    <div class="price">$30</div>
+
+                    <div class="feature active">Light Purple Username</div>
+                    <div class="feature active">Light Purple Highlight</div>
+                    <div class="feature active">GIF Profile Picture</div>
+                    <div class="feature active">Instant Paste Edits</div>
+                    <div class="feature">Unlist Own Pastes</div>
+                    <div class="feature">Private Own Pastes</div>
+                    <div class="feature">Password Protected Pastes</div>
+                    <div class="feature active">1 Username Change</div>
+
+                    <button class="btn btn-purple purchase">
+                        Purchase
+                    </button>
+
+                </div>
+
+                <div class="plan">
+
+                    <h2>Criminal</h2>
+
+                    <div class="price">$50</div>
+
+                    <div class="feature active">Dark Purple Username</div>
+                    <div class="feature active">Dark Purple Highlight</div>
+                    <div class="feature active">GIF Profile Picture</div>
+                    <div class="feature active">Instant Paste Edits</div>
+                    <div class="feature active">Unlist Own Pastes</div>
+                    <div class="feature active">Private Own Pastes</div>
+                    <div class="feature">Password Protected Pastes</div>
+                    <div class="feature active">2 Username Changes</div>
+
+                    <button class="btn btn-purple purchase">
+                        Purchase
+                    </button>
+
+                </div>
+
+                <div class="plan">
+
+                    <h2>Rich</h2>
+
+                    <div class="price">$100</div>
+
+                    <div class="feature active">Sparkling Gold Username</div>
+                    <div class="feature active">Gold Paste Highlight</div>
+                    <div class="feature active">GIF Profile Picture</div>
+                    <div class="feature active">Instant Paste Edits</div>
+                    <div class="feature active">Unlist Own Pastes</div>
+                    <div class="feature active">Private Own Pastes</div>
+                    <div class="feature active">Password Protected Pastes</div>
+                    <div class="feature active">3 Username Changes</div>
+
+                    <button class="btn btn-purple purchase">
+                        Purchase
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- LOGS -->
+
+        <div id="logs" class="panel">
+
+            <div class="logs" id="logBox"></div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+
+const users = [
+"asuna","Bella","go5","her","sewer","ace","mishka","Hacker",
+"ye","vxu","xan","king","Kris","Akanori","baki","laskun",
+"engineowning","vayne","paranoid","law","obsessor","config",
+"Joey","Worsaken","ruin","Ry","Fed","babytron","tragic",
+"rockstar","glow","Ty","proxy","Kira","bladee","Leonardo",
+"ghoul","lord","kills","Ivan","solar","Dolphin","Harmless",
+"Graveyard","Vile","meow","coffin","Machiavelli","Jay",
+"stalker","doppler","Water","Rogue","DGSI","father","Kaito"
+];
+
+const userTable = document.getElementById("userTable");
+
+userTable.innerHTML = users.map((u,i)=>`
+
+<tr>
+
+<td>#${1000+i}</td>
+
+<td style="font-weight:700;color:white;">
+${u}
+</td>
+
+<td>
+<span class="rank ${
+i % 3 === 0 ? 'rank-vip' :
+i % 3 === 1 ? 'rank-criminal' :
+'rank-rich'
+}">
+${
+i % 3 === 0 ? 'VIP' :
+i % 3 === 1 ? 'CRIMINAL' :
+'RICH'
+}
+</span>
+</td>
+
+<td style="color:#46d37d;">
+Online
+</td>
+
+<td>
+
+<button class="btn">
+Promote
+</button>
+
+<button class="btn">
+Kick
+</button>
+
+<button class="btn btn-danger" onclick="banRow(this)">
+Ban
+</button>
+
+</td>
+
+</tr>
+
+`).join("");
+
+function banRow(btn){
+    btn.closest("tr").style.opacity=".35";
+}
+
+function switchPanel(id,el){
+
+    document.querySelectorAll(".panel").forEach(p=>{
+        p.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav-item").forEach(n=>{
+        n.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    el.classList.add("active");
+}
+
+const logBox = document.getElementById("logBox");
+
+const actions = [
+"restarted website server",
+"updated user permissions",
+"banned account",
+"created database backup",
+"optimized storage cluster",
+"updated memberships",
+"reviewed audit log",
+"enabled maintenance mode"
+];
+
+let html = "";
+
+for(let i=0;i<120;i++){
+
+    html += `
+    <div class="log">
+        <span>ceo</span> ${actions[Math.floor(Math.random()*actions.length)]}
+    </div>
+    `;
+}
+
+logBox.innerHTML = html;
+
+</script>
+
 </body>
 </html>
