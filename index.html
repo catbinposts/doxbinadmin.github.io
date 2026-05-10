@@ -1,4 +1,500 @@
-<!-- REPLACE YOUR ENTIRE <script> WITH THIS -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>silent [Manager]</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --bg:#070707;
+    --sidebar:#0b0b0b;
+    --card:#101010;
+    --border:#1d1d1d;
+
+    --text:#d8d8d8;
+    --muted:#666;
+
+    --purple:#bb71e4;
+    --purple2:#8b4eff;
+    --danger:#ff4d5a;
+    --success:#42d67d;
+    --gold:#ffcc4d;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+}
+
+/* NAVBAR */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:60px;
+    background:#050505;
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 24px;
+    z-index:999;
+}
+
+.brand{
+    font-size:15px;
+    font-weight:800;
+    color:white;
+}
+
+.brand span{
+    color:var(--purple);
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--purple),var(--purple2));
+    box-shadow:0 0 20px rgba(187,113,228,.45);
+}
+
+/* LAYOUT */
+
+.layout{
+    display:flex;
+    padding-top:60px;
+}
+
+.sidebar{
+    width:240px;
+    height:calc(100vh - 60px);
+    background:#0b0b0b;
+    border-right:1px solid var(--border);
+    position:fixed;
+}
+
+.sidebar-inner{
+    padding-top:20px;
+}
+
+.nav-item{
+    padding:14px 24px;
+    color:#777;
+    cursor:pointer;
+    transition:.2s;
+    border-left:3px solid transparent;
+    font-size:13px;
+    font-weight:600;
+}
+
+.nav-item:hover{
+    background:#111;
+    color:white;
+}
+
+.nav-item.active{
+    background:#101010;
+    color:white;
+    border-left-color:var(--purple);
+}
+
+/* MAIN */
+
+.main{
+    margin-left:240px;
+    width:100%;
+    padding:30px;
+}
+
+/* CARDS */
+
+.card{
+    background:linear-gradient(180deg,#101010,#0b0b0b);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:20px;
+}
+
+.card-title{
+    color:#666;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:14px;
+}
+
+/* BUTTONS */
+
+.btn{
+    background:#171717;
+    border:1px solid #2b2b2b;
+    color:#ccc;
+    padding:10px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.2s;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+}
+
+.btn:hover{
+    border-color:var(--purple);
+    color:white;
+}
+
+.btn-danger{
+    background:#1a1010;
+    border-color:#3a1f1f;
+    color:#ff9191;
+}
+
+.btn-purple{
+    background:linear-gradient(135deg,var(--purple),var(--purple2));
+    border:none;
+    color:white;
+}
+
+/* TABLE */
+
+.table-wrap{
+    background:#0c0c0c;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    padding:16px;
+    color:#555;
+    font-size:11px;
+    border-bottom:1px solid var(--border);
+}
+
+td{
+    padding:16px;
+    border-bottom:1px solid #151515;
+}
+
+tr:hover{
+    background:#111;
+}
+
+/* INPUTS */
+
+input,select{
+    width:100%;
+    background:#080808;
+    border:1px solid var(--border);
+    color:white;
+    padding:13px;
+    border-radius:8px;
+    outline:none;
+}
+
+.panel-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+}
+
+/* RANKS */
+
+.rank{
+    padding:5px 10px;
+    border-radius:30px;
+    font-size:10px;
+    font-weight:800;
+}
+
+.rank-vip{background:#2b1935;color:#cb97ff;}
+.rank-criminal{background:#251030;color:#a063ff;}
+.rank-rich{background:#2c240d;color:#ffcc4d;}
+.rank-council{background:#12202d;color:#6ebcff;}
+.rank-mod{background:#182b20;color:#6effa8;}
+.rank-manager{background:#2b1e36;color:#d495ff;}
+.rank-admin{background:#311515;color:#ff7878;}
+.rank-founder{background:#2f2608;color:#ffd86b;}
+
+/* PANELS */
+
+.panel{
+    display:none;
+}
+
+.panel.active{
+    display:block;
+}
+
+/* LOGS */
+
+.logs{
+    background:#0c0c0c;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.log{
+    padding:14px 18px;
+    border-bottom:1px solid #161616;
+    color:#777;
+}
+
+.log span{
+    color:var(--purple);
+    font-weight:700;
+}
+
+.status{
+    margin-top:14px;
+    color:var(--purple);
+    display:none;
+}
+
+</style>
+</head>
+<body>
+
+<div class="navbar">
+
+    <div class="brand">
+        silent <span>[Manager]</span>
+    </div>
+
+    <div class="profile">
+        <div>
+            <div style="font-weight:700;">silent [Manager]</div>
+            <div style="font-size:11px;color:#666;">Administrator</div>
+        </div>
+        <div class="avatar"></div>
+    </div>
+
+</div>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-inner">
+
+            <div class="nav-item active" onclick="switchPanel('users',this)">
+                Users
+            </div>
+
+            <div class="nav-item" onclick="switchPanel('userpanel',this)">
+                User Panel
+            </div>
+
+            <div class="nav-item" onclick="switchPanel('purge',this)">
+                Post Purge
+            </div>
+
+            <div class="nav-item" onclick="switchPanel('logs',this)">
+                Audit Logs
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- USERS -->
+
+        <div id="users" class="panel active">
+
+            <div class="card">
+
+                <div class="card-title">
+                    User Database
+                </div>
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Rank</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="userTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- USER PANEL -->
+
+        <div id="userpanel" class="panel">
+
+            <div class="panel-grid">
+
+                <div class="card">
+
+                    <div class="card-title">
+                        User Management
+                    </div>
+
+                    <input
+                        type="text"
+                        id="targetUser"
+                        placeholder="Enter username..."
+                    >
+
+                    <div style="height:16px;"></div>
+
+                    <select id="rankSelect">
+
+                        <option>VIP</option>
+                        <option>CRIMINAL</option>
+                        <option>RICH</option>
+                        <option>COUNCIL</option>
+                        <option>MOD</option>
+                        <option>MANAGER</option>
+                        <option>ADMIN</option>
+                        <option>FOUNDER</option>
+
+                    </select>
+
+                    <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+
+                        <button class="btn btn-purple" onclick="changeRank()">
+                            Change Rank
+                        </button>
+
+                        <button class="btn" onclick="degradeRank()">
+                            Degrade
+                        </button>
+
+                        <button class="btn" onclick="changeNickname()">
+                            Nickname
+                        </button>
+
+                        <button class="btn" onclick="kickSession()">
+                            Session Kick
+                        </button>
+
+                        <button class="btn btn-danger" onclick="timeoutUser()">
+                            Timeout
+                        </button>
+
+                        <button class="btn btn-danger" onclick="banPanelUser()">
+                            Ban
+                        </button>
+
+                    </div>
+
+                    <div class="status" id="panelStatus"></div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-title">
+                        Rank Hierarchy
+                    </div>
+
+                    <div style="line-height:2;">
+
+                        VIP<br>
+                        Criminal<br>
+                        Rich<br>
+                        Council<br>
+                        Mod<br>
+                        Manager<br>
+                        Admin<br>
+                        Founder
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PURGE -->
+
+        <div id="purge" class="panel">
+
+            <div class="card" style="max-width:650px;">
+
+                <div class="card-title">
+                    Post Purge
+                </div>
+
+                <input
+                    type="text"
+                    id="purgeInput"
+                    placeholder="https://example.com/post/123"
+                >
+
+                <div style="margin-top:15px;">
+                    <button class="btn btn-danger" onclick="purgePost()">
+                        Purge Post
+                    </button>
+                </div>
+
+                <div class="status" id="purgeStatus"></div>
+
+            </div>
+
+        </div>
+
+        <!-- LOGS -->
+
+        <div id="logs" class="panel">
+
+            <div class="logs" id="logsBox"></div>
+
+        </div>
+
+    </main>
+
+</div>
 
 <script>
 
@@ -448,3 +944,6 @@ el.classList.add("active");
 }
 
 </script>
+
+</body>
+</html>
