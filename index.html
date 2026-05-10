@@ -2,452 +2,318 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>manager panel</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
-    --bg:#050505;
-    --sidebar:#0a0a0a;
-    --card:#101010;
-    --border:#1d1d1d;
-
-    --text:#e0e0e0;
-    --muted:#7a7a7a;
-
-    --purple:#b76cff;
-    --purple2:#6b42ff;
+ --bg:#070707;
+ --sidebar:#0b0b0b;
+ --card:#101010;
+ --border:#1d1d1d;
+ --text:#d8d8d8;
+ --muted:#666;
+ --purple:#bb71e4;
+ --purple2:#8b4eff;
+ --danger:#ff4d5a;
+ --success:#42d67d;
+ --warning:#ffb84d;
 }
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
 }
 
 body{
-    font-family:'Inter',sans-serif;
-    color:var(--text);
-    overflow-x:hidden;
-    background: linear-gradient(145deg,#040404,#0d0717,#050505);
+ background:var(--bg);
+ color:var(--text);
+ font-family:'Inter',sans-serif;
 }
-
-/* LOGIN */
-
-.login-screen{
-    position:fixed;
-    inset:0;
-    z-index:999999;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    backdrop-filter:blur(20px);
-    background:rgba(0,0,0,.75);
-}
-
-.login-box{
-    width:420px;
-    background:rgba(10,10,10,.95);
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:24px;
-    padding:35px;
-}
-
-.login-title{font-size:34px;font-weight:900;}
-.login-sub{color:#8f8f8f;margin-bottom:24px;}
-.login-error{margin-top:15px;color:#ff6a7d;display:none;}
-.hidden{display:none!important;}
 
 /* NAVBAR */
-
 .navbar{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:68px;
-    background:rgba(4,4,4,.8);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid rgba(255,255,255,.05);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 26px;
-    z-index:999;
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ height:60px;
+ background:#050505;
+ border-bottom:1px solid var(--border);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 24px;
+ z-index:999;
 }
 
 .brand{
-    font-size:20px;
-    font-weight:900;
+ font-size:15px;
+ font-weight:800;
+ color:white;
 }
 
-.brand span{color:var(--purple);}
+.brand span{
+ color:var(--purple);
+}
 
-/* RIGHT LABEL */
-.right-label{
-    position:absolute;
-    right:26px;
-    top:22px;
-    font-weight:800;
-    font-size:13px;
-    color:#cfcfcf;
+.profile{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+
+.avatar{
+ width:36px;
+ height:36px;
+ border-radius:50%;
+ background:linear-gradient(135deg,var(--purple),var(--purple2));
+ box-shadow:0 0 20px rgba(187,113,228,.45);
 }
 
 /* LAYOUT */
-
 .layout{
-    display:flex;
-    padding-top:68px;
+ display:flex;
+ padding-top:60px;
 }
 
 .sidebar{
-    width:250px;
-    height:calc(100vh - 68px);
-    background:rgba(8,8,8,.85);
-    backdrop-filter:blur(12px);
-    border-right:1px solid rgba(255,255,255,.04);
-    position:fixed;
+ width:240px;
+ height:calc(100vh - 60px);
+ background:#0b0b0b;
+ border-right:1px solid var(--border);
+ position:fixed;
+}
+
+.sidebar-inner{
+ padding-top:20px;
 }
 
 .nav-item{
-    padding:15px 24px;
-    color:#8d8d8d;
-    font-size:13px;
-    font-weight:700;
-    cursor:pointer;
+ padding:14px 24px;
+ color:#777;
+ cursor:pointer;
+ transition:.2s;
+ border-left:3px solid transparent;
+ font-size:13px;
+ font-weight:600;
 }
 
-.nav-item:hover{background:#121212;color:white;}
-.nav-item.active{background:#141414;border-left:3px solid var(--purple);color:white;}
+.nav-item:hover{
+ background:#111;
+ color:white;
+}
+
+.nav-item.active{
+ background:#101010;
+ color:white;
+ border-left-color:var(--purple);
+}
 
 /* MAIN */
-
 .main{
-    margin-left:250px;
-    width:100%;
-    padding:30px;
+ margin-left:240px;
+ width:100%;
+ padding:30px;
 }
 
 /* CARDS */
-
 .card{
-    background:rgba(20,20,20,.9);
-    border:1px solid rgba(255,255,255,.05);
-    border-radius:18px;
-    padding:24px;
-    margin-bottom:22px;
+ background:linear-gradient(180deg,#101010,#0b0b0b);
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:24px;
+ margin-bottom:20px;
 }
 
 .card-title{
-    color:#868686;
-    font-size:11px;
-    text-transform:uppercase;
-    font-weight:800;
-    margin-bottom:18px;
+ color:#666;
+ font-size:11px;
+ text-transform:uppercase;
+ letter-spacing:1px;
+ margin-bottom:16px;
 }
 
 /* STATS */
-
 .stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:18px;
+ margin-bottom:24px;
 }
 
 .stat{
-    border-radius:18px;
-    padding:22px;
-    background:#151515;
-    border:1px solid rgba(255,255,255,.05);
+ background:#0d0d0d;
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:18px;
 }
 
 .stat-value{
-    font-size:28px;
-    font-weight:900;
+ font-size:26px;
+ font-weight:800;
+ color:white;
 }
 
 .stat-label{
-    margin-top:8px;
-    color:#757575;
-    font-size:12px;
+ margin-top:5px;
+ color:#666;
+ font-size:12px;
 }
 
 /* BUTTONS */
-
 .btn{
-    background:#171717;
-    border:1px solid #2b2b2b;
-    color:#d2d2d2;
-    padding:11px 15px;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:11px;
-    font-weight:800;
+ background:#171717;
+ border:1px solid #2b2b2b;
+ color:#ccc;
+ padding:10px 14px;
+ border-radius:6px;
+ cursor:pointer;
+ transition:.2s;
+ font-size:11px;
+ font-weight:700;
+ text-transform:uppercase;
 }
 
-.btn:hover{border-color:var(--purple);color:white;}
-
-.btn-purple{
-    background:linear-gradient(135deg,var(--purple),var(--purple2));
-    border:none;
-    color:white;
+.btn:hover{
+ border-color:var(--purple);
+ color:white;
 }
 
 .btn-danger{
-    background:#211014;
-    border-color:#4d1d27;
-    color:#ff8ea1;
+ background:#1a1010;
+ border-color:#3a1f1f;
+ color:#ff9191;
 }
 
-/* INPUTS */
-
-input,select{
-    width:100%;
-    background:#0b0b0b;
-    border:1px solid rgba(255,255,255,.06);
-    color:white;
-    padding:14px;
-    border-radius:12px;
+.btn-purple{
+ background:linear-gradient(135deg,var(--purple),var(--purple2));
+ border:none;
+ color:white;
 }
-
-/* PANELS */
-
-.panel{display:none;}
-.panel.active{display:block;}
 
 /* TABLE */
-
 .table-wrap{
-    border-radius:16px;
-    overflow:auto;
-    border:1px solid rgba(255,255,255,.05);
+ background:#0c0c0c;
+ border:1px solid var(--border);
+ border-radius:12px;
+ overflow:auto;
+ max-height:700px;
 }
 
 table{
-    width:100%;
-    border-collapse:collapse;
+ width:100%;
+ border-collapse:collapse;
 }
 
 th{
-    background:#0b0b0b;
-    padding:16px;
-    text-align:left;
-    font-size:11px;
-    color:#707070;
+ text-align:left;
+ padding:16px;
+ color:#555;
+ font-size:11px;
+ border-bottom:1px solid var(--border);
+ position:sticky;
+ top:0;
+ background:#0c0c0c;
 }
 
 td{
-    padding:16px;
-    border-bottom:1px solid rgba(255,255,255,.04);
+ padding:16px;
+ border-bottom:1px solid #151515;
 }
 
-/* STATUS */
+tr:hover{
+ background:#111;
+}
 
-.status-online{color:#4be285;}
-.status-offline{color:#8d8d8d;}
-.status-banned{color:#ff637d;}
-.status-timeout{color:#ffbf52;}
-.status-kicked{color:#9d9d9d;}
+/* INPUTS */
+input,select{
+ width:100%;
+ background:#080808;
+ border:1px solid var(--border);
+ color:white;
+ padding:13px;
+ border-radius:8px;
+ outline:none;
+}
 
+input:focus, select:focus{
+ border-color:var(--purple);
+}
+
+.panel-grid{
+ display:grid;
+ grid-template-columns:2fr 1fr;
+ gap:20px;
+}
+
+/* PANELS */
+.panel{ display:none; }
+.panel.active{ display:block; }
 </style>
 </head>
 
+<!-- PASSWORD GATE -->
+<script>
+const pass = prompt("Enter password:");
+if(pass !== "1344"){
+ document.documentElement.innerHTML = "<h1 style='color:white;background:black;padding:40px;font-family:sans-serif'>Access denied</h1>";
+ throw new Error("Blocked");
+}
+</script>
+
 <body>
 
-<!-- LOGIN -->
-<div class="login-screen" id="loginScreen">
-    <div class="login-box">
-        <div class="login-title">secure access</div>
-        <div class="login-sub">enter password</div>
-
-        <input type="password" id="passwordInput" onkeydown="if(event.key==='Enter') login()">
-
-        <button class="btn btn-purple" style="width:100%;margin-top:18px;" onclick="login()">unlock</button>
-
-        <div class="login-error" id="loginError">invalid password</div>
-    </div>
-</div>
-
-<!-- NAVBAR -->
 <div class="navbar">
-    <div class="brand">control<span>.core</span></div>
-    <div class="right-label">silent [Manager]</div>
+ <div class="brand">Manager <span>[Panel]</span></div>
+
+ <div class="profile">
+  <div>
+   <div style="font-weight:700;">Manager</div>
+   <div style="font-size:11px;color:#666;">Administrator</div>
+  </div>
+  <div class="avatar"></div>
+ </div>
 </div>
 
 <div class="layout">
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
-
-    <div class="nav-item active" onclick="switchPanel('dashboard',this)">Dashboard</div>
-    <div class="nav-item" onclick="switchPanel('users',this)">Users</div>
-    <div class="nav-item" onclick="switchPanel('userpanel',this)">User Panel</div>
-    <div class="nav-item" onclick="switchPanel('logs',this)">Audit Logs</div>
-
+ <div class="sidebar-inner">
+  <div class="nav-item active" onclick="switchPanel('dashboard',this)">Dashboard</div>
+  <div class="nav-item" onclick="switchPanel('users',this)">Users</div>
+  <div class="nav-item" onclick="switchPanel('adduser',this)">Add User</div>
+  <div class="nav-item" onclick="switchPanel('userpanel',this)">User Panel</div>
+  <div class="nav-item" onclick="switchPanel('purge',this)">Post Purge</div>
+  <div class="nav-item" onclick="switchPanel('logs',this)">Audit Logs</div>
+ </div>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
 
 <!-- DASHBOARD -->
 <div id="dashboard" class="panel active">
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="stat-value" id="totalUsers">0</div>
-            <div class="stat-label">TOTAL USERS</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-value" id="onlineUsers">0</div>
-            <div class="stat-label">ONLINE USERS</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-value">SECURE</div>
-            <div class="stat-label">NODE STATUS</div>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- USERS -->
-<div id="users" class="panel">
-
-    <div class="card">
-
-        <input id="searchInput" oninput="renderUsers()" placeholder="Search users...">
-
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th><th>Name</th><th>Rank</th><th>Status</th><th>Joined</th>
-                    </tr>
-                </thead>
-                <tbody id="userTable"></tbody>
-            </table>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- USER PANEL -->
-<div id="userpanel" class="panel">
-
-    <div class="card">
-
-        <input id="targetUser" placeholder="username...">
-
-        <select id="rankSelect">
-            <option>MEMBER</option>
-            <option>VIP</option>
-            <option>CRIMINAL</option>
-            <option>RICH</option>
-            <option>COUNCIL</option>
-            <option>MOD</option>
-            <option>MANAGER</option>
-            <option>ADMIN</option>
-            <option>FOUNDER</option>
-        </select>
-
-        <button class="btn btn-purple" onclick="changeRank()">Change Rank</button>
-        <button class="btn btn-danger" onclick="deleteUser()">Delete</button>
-
-        <div id="panelStatus"></div>
-
-    </div>
-
-</div>
-
-<!-- LOGS -->
-<div id="logs" class="panel">
-    <div id="logsBox"></div>
+ <div class="stats">
+  <div class="stat">
+   <div class="stat-value" id="totalUsers">0</div>
+   <div class="stat-label">TOTAL USERS</div>
+  </div>
+ </div>
 </div>
 
 </main>
 </div>
 
 <script>
-
-/* LOGIN */
-function login(){
-    const pass=document.getElementById("passwordInput").value;
-    if(pass==="1344"){
-        document.getElementById("loginScreen").classList.add("hidden");
-    } else {
-        document.getElementById("loginError").style.display="block";
-    }
-}
-
-/* USERS */
-const users=[];
-const ranks=["MEMBER","VIP","CRIMINAL","RICH","COUNCIL","MOD","MANAGER","ADMIN","FOUNDER"];
-
-for(let i=0;i<80;i++){
-users.push({
-id:Math.floor(Math.random()*99999),
-name:"user"+i,
-rank:"MEMBER",
-status:Math.random()>0.5?"Online":"Offline",
-joined:"2025"
-});
-}
-
-/* RENDER */
-function renderUsers(){
-const t=document.getElementById("userTable");
-
-t.innerHTML=users.map(u=>`
-<tr>
-<td>${u.id}</td>
-<td>${u.name}</td>
-<td>${u.rank}</td>
-<td>${u.status}</td>
-<td>${u.joined}</td>
-</tr>`).join("");
-
-document.getElementById("totalUsers").innerText=users.length;
-document.getElementById("onlineUsers").innerText=users.filter(u=>u.status==="Online").length;
-}
-
-renderUsers();
-
-/* PANEL SWITCH */
 function switchPanel(id,el){
-document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
-document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-el.classList.add("active");
+ document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ el.classList.add("active");
 }
-
-/* USER OPS */
-function getUser(){
-const n=document.getElementById("targetUser").value.toLowerCase();
-return users.find(u=>u.name.toLowerCase()===n);
-}
-
-function changeRank(){
-const u=getUser();
-if(!u)return;
-u.rank=document.getElementById("rankSelect").value;
-renderUsers();
-}
-
-function deleteUser(){
-const u=getUser();
-if(!u)return;
-users.splice(users.indexOf(u),1);
-renderUsers();
-}
-
 </script>
 
 </body>
