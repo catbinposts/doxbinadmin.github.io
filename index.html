@@ -16,13 +16,13 @@
     --card2:#0d0d0d;
     --border:#1d1d1d;
     --text:#d8d8d8;
-    --muted:#6e6e6e;
+    --muted:#707070;
 
     --purple:#bb71e4;
-    --purple-dark:#7d4be0;
+    --purple2:#8d49ff;
     --gold:#ffcc4d;
     --danger:#ff4d5a;
-    --success:#37d67a;
+    --success:#42d67d;
 }
 
 *{
@@ -41,12 +41,12 @@ body{
 /* NAVBAR */
 
 .navbar{
-    height:60px;
-    width:100%;
     position:fixed;
     top:0;
     left:0;
-    z-index:999;
+    width:100%;
+    height:60px;
+
     background:#050505;
     border-bottom:1px solid var(--border);
 
@@ -54,13 +54,14 @@ body{
     align-items:center;
     justify-content:space-between;
 
-    padding:0 25px;
+    padding:0 24px;
+    z-index:999;
 }
 
 .brand{
     font-size:15px;
     font-weight:800;
-    color:#fff;
+    color:white;
     letter-spacing:1px;
 }
 
@@ -68,18 +69,18 @@ body{
     color:var(--purple);
 }
 
-.admin-box{
+.profile{
     display:flex;
     align-items:center;
     gap:12px;
 }
 
-.admin-avatar{
-    width:34px;
-    height:34px;
+.avatar{
+    width:36px;
+    height:36px;
     border-radius:50%;
-    background:linear-gradient(135deg,var(--purple),#7335ff);
-    box-shadow:0 0 20px rgba(187,113,228,.4);
+    background:linear-gradient(135deg,var(--purple),var(--purple2));
+    box-shadow:0 0 18px rgba(187,113,228,.45);
 }
 
 /* LAYOUT */
@@ -102,23 +103,23 @@ body{
 }
 
 .nav-item{
-    padding:14px 25px;
-    color:#7a7a7a;
+    padding:14px 24px;
     cursor:pointer;
-    transition:.25s;
-    border-left:3px solid transparent;
+    transition:.2s;
+    color:#777;
     font-size:13px;
     font-weight:600;
+    border-left:3px solid transparent;
 }
 
 .nav-item:hover{
     background:#111;
-    color:#fff;
+    color:white;
 }
 
 .nav-item.active{
     background:#101010;
-    color:#fff;
+    color:white;
     border-left-color:var(--purple);
 }
 
@@ -139,10 +140,10 @@ body{
 }
 
 .card{
-    background:linear-gradient(180deg,#101010,#0c0c0c);
+    background:linear-gradient(180deg,#101010,#0b0b0b);
     border:1px solid var(--border);
-    border-radius:10px;
-    padding:22px;
+    border-radius:12px;
+    padding:24px;
     position:relative;
     overflow:hidden;
 }
@@ -159,16 +160,16 @@ body{
 
 .card-title{
     color:#666;
+    font-size:11px;
     text-transform:uppercase;
     letter-spacing:1px;
-    font-size:11px;
-    margin-bottom:12px;
+    margin-bottom:14px;
 }
 
 .big{
     font-size:30px;
     font-weight:800;
-    color:#fff;
+    color:white;
 }
 
 .online{
@@ -189,10 +190,10 @@ body{
 /* BUTTONS */
 
 .btn{
-    background:#161616;
-    border:1px solid #2a2a2a;
-    color:#bdbdbd;
-    padding:9px 14px;
+    background:#171717;
+    border:1px solid #292929;
+    color:#c0c0c0;
+    padding:9px 13px;
     border-radius:6px;
     cursor:pointer;
     transition:.25s;
@@ -203,37 +204,43 @@ body{
 
 .btn:hover{
     border-color:var(--purple);
-    color:#fff;
-}
-
-.btn-danger{
-    color:#ff8d8d;
-    border-color:#3b1e1e;
-    background:#1b1010;
-}
-
-.btn-danger:hover{
-    background:#2a1313;
+    color:white;
 }
 
 .btn-purple{
-    background:linear-gradient(135deg,var(--purple),#8f52ff);
-    color:white;
+    background:linear-gradient(135deg,var(--purple),var(--purple2));
     border:none;
+    color:white;
 }
 
 .btn-purple:hover{
     opacity:.9;
 }
 
+.btn-danger{
+    background:#1d1111;
+    border-color:#3d1f1f;
+    color:#ff8e8e;
+}
+
 /* TABLE */
+
+.search{
+    width:100%;
+    background:#090909;
+    border:1px solid var(--border);
+    padding:13px;
+    color:white;
+    border-radius:8px;
+    outline:none;
+    margin-bottom:18px;
+}
 
 .table-wrap{
     background:var(--card2);
     border:1px solid var(--border);
-    border-radius:10px;
+    border-radius:12px;
     overflow:hidden;
-    margin-top:25px;
 }
 
 table{
@@ -243,14 +250,14 @@ table{
 
 th{
     text-align:left;
-    padding:15px;
+    padding:16px;
     font-size:11px;
     color:#555;
     border-bottom:1px solid var(--border);
 }
 
 td{
-    padding:15px;
+    padding:16px;
     border-bottom:1px solid #151515;
 }
 
@@ -269,95 +276,23 @@ tr:hover{
 }
 
 .rank-vip{
-    background:#2b1935;
-    color:#cb93ff;
+    background:#2d1936;
+    color:#cb96ff;
 }
 
 .rank-criminal{
-    background:#23102d;
-    color:#9e5eff;
+    background:#251030;
+    color:#9d61ff;
 }
 
 .rank-rich{
-    background:#2d250c;
+    background:#2d250d;
     color:var(--gold);
 }
 
 .rank-admin{
-    background:#301414;
-    color:#ff7272;
-}
-
-/* SEARCH */
-
-.search{
-    width:100%;
-    background:#090909;
-    border:1px solid var(--border);
-    color:#fff;
-    padding:13px;
-    border-radius:7px;
-    outline:none;
-    margin-bottom:20px;
-}
-
-/* SERVER */
-
-.server-box{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:15px;
-}
-
-/* PLANS */
-
-.plan-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:25px;
-}
-
-.plan{
-    background:linear-gradient(180deg,#101010,#0a0a0a);
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:28px;
-    transition:.3s;
-    position:relative;
-    overflow:hidden;
-}
-
-.plan:hover{
-    transform:translateY(-5px);
-    border-color:var(--purple);
-}
-
-.plan h2{
-    font-size:28px;
-    color:white;
-}
-
-.price{
-    font-size:52px;
-    font-weight:800;
-    margin:20px 0;
-}
-
-.feature{
-    margin:14px 0;
-    color:#8b8b8b;
-    font-size:14px;
-}
-
-.feature.active{
-    color:#d8d8d8;
-}
-
-.purchase{
-    margin-top:25px;
-    width:100%;
-    padding:13px;
+    background:#311313;
+    color:#ff7474;
 }
 
 /* PANELS */
@@ -373,21 +308,46 @@ tr:hover{
 /* LOGS */
 
 .logs{
-    background:var(--card2);
+    background:#0c0c0c;
     border:1px solid var(--border);
-    border-radius:10px;
+    border-radius:12px;
     overflow:hidden;
 }
 
 .log{
-    padding:15px 18px;
-    border-bottom:1px solid #151515;
+    padding:14px 18px;
+    border-bottom:1px solid #161616;
     color:#777;
+    font-size:13px;
 }
 
 .log span{
     color:var(--purple);
     font-weight:700;
+}
+
+/* PURGE */
+
+.purge-box{
+    max-width:650px;
+}
+
+.purge-input{
+    width:100%;
+    margin-top:14px;
+    background:#080808;
+    border:1px solid var(--border);
+    color:white;
+    padding:14px;
+    border-radius:8px;
+    outline:none;
+}
+
+.status{
+    margin-top:15px;
+    color:var(--purple);
+    display:none;
+    font-size:13px;
 }
 
 </style>
@@ -402,12 +362,15 @@ tr:hover{
         silent <span>[Manager]</span>
     </div>
 
-    <div class="admin-box">
+    <div class="profile">
         <div>
-            <div style="font-weight:700;">ceo</div>
-            <div style="font-size:11px;color:#666;">Administrator</div>
+            <div style="font-weight:700;">silent [Manager]</div>
+            <div style="font-size:11px;color:#666;">
+                Administrator
+            </div>
         </div>
-        <div class="admin-avatar"></div>
+
+        <div class="avatar"></div>
     </div>
 
 </div>
@@ -434,8 +397,8 @@ tr:hover{
                 Website Control
             </div>
 
-            <div class="nav-item" onclick="switchPanel('plans',this)">
-                Memberships
+            <div class="nav-item" onclick="switchPanel('purge',this)">
+                Post Purge
             </div>
 
             <div class="nav-item" onclick="switchPanel('logs',this)">
@@ -458,30 +421,34 @@ tr:hover{
 
                 <div class="card">
                     <div class="card-title">Registered Users</div>
-                    <div class="big">18,492</div>
+                    <div class="big" id="totalUsers">57</div>
                 </div>
 
                 <div class="card">
                     <div class="card-title">Online Users</div>
-                    <div class="big">1,842</div>
+                    <div class="big">1,482</div>
 
                     <div class="online">
                         <div class="dot"></div>
-                        <span>Live</span>
+                        <span>Realtime</span>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">Revenue</div>
-                    <div class="big">$48,120</div>
+                    <div class="card-title">Website Status</div>
+
+                    <div class="online">
+                        <div class="dot" id="serverDot"></div>
+                        <span id="serverStatus">Operational</span>
+                    </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">Server Status</div>
+                    <div class="card-title">Database Cluster</div>
 
                     <div class="online">
                         <div class="dot"></div>
-                        <span>Operational</span>
+                        <span>Healthy</span>
                     </div>
                 </div>
 
@@ -493,7 +460,7 @@ tr:hover{
 
         <div id="users" class="panel">
 
-            <input class="search" type="text" placeholder="Search username...">
+            <input class="search" type="text" placeholder="Search username..." onkeyup="searchUsers(this.value)">
 
             <div class="table-wrap">
 
@@ -525,50 +492,50 @@ tr:hover{
 
                 <div class="card">
 
-                    <div class="card-title">Website Server</div>
-
-                    <div class="server-box">
-                        <div class="online">
-                            <div class="dot"></div>
-                            <span>Running</span>
-                        </div>
+                    <div class="card-title">
+                        Website Server
                     </div>
-
-                    <div style="margin-top:25px; display:flex; gap:10px;">
-                        <button class="btn btn-purple">Restart Server</button>
-                        <button class="btn btn-danger">Stop Server</button>
-                    </div>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-title">Database Cluster</div>
 
                     <div class="online">
-                        <div class="dot"></div>
-                        <span>Healthy</span>
+                        <div class="dot" id="serverIndicator"></div>
+                        <span id="serverText">Running</span>
                     </div>
 
-                    <div style="margin-top:25px; display:flex; gap:10px;">
-                        <button class="btn">Backup</button>
-                        <button class="btn">Optimize</button>
+                    <div style="margin-top:24px; display:flex; gap:10px;">
+
+                        <button class="btn btn-purple" onclick="restartServer()">
+                            Restart
+                        </button>
+
+                        <button class="btn btn-danger" onclick="stopServer()">
+                            Stop
+                        </button>
+
                     </div>
 
                 </div>
 
                 <div class="card">
 
-                    <div class="card-title">Security System</div>
+                    <div class="card-title">
+                        Security
+                    </div>
 
                     <div class="online">
                         <div class="dot"></div>
                         <span>Protected</span>
                     </div>
 
-                    <div style="margin-top:25px; display:flex; gap:10px;">
-                        <button class="btn">Firewall</button>
-                        <button class="btn">Sessions</button>
+                    <div style="margin-top:24px; display:flex; gap:10px;">
+
+                        <button class="btn" onclick="fakeAction('Firewall cache cleared')">
+                            Firewall
+                        </button>
+
+                        <button class="btn" onclick="fakeAction('All sessions refreshed')">
+                            Sessions
+                        </button>
+
                     </div>
 
                 </div>
@@ -577,74 +544,38 @@ tr:hover{
 
         </div>
 
-        <!-- MEMBERSHIPS -->
+        <!-- PURGE -->
 
-        <div id="plans" class="panel">
+        <div id="purge" class="panel">
 
-            <div class="plan-grid">
+            <div class="card purge-box">
 
-                <div class="plan">
-
-                    <h2>VIP</h2>
-
-                    <div class="price">$30</div>
-
-                    <div class="feature active">Light Purple Username</div>
-                    <div class="feature active">Light Purple Highlight</div>
-                    <div class="feature active">GIF Profile Picture</div>
-                    <div class="feature active">Instant Paste Edits</div>
-                    <div class="feature">Unlist Own Pastes</div>
-                    <div class="feature">Private Own Pastes</div>
-                    <div class="feature">Password Protected Pastes</div>
-                    <div class="feature active">1 Username Change</div>
-
-                    <button class="btn btn-purple purchase">
-                        Purchase
-                    </button>
-
+                <div class="card-title">
+                    Post Purge
                 </div>
 
-                <div class="plan">
-
-                    <h2>Criminal</h2>
-
-                    <div class="price">$50</div>
-
-                    <div class="feature active">Dark Purple Username</div>
-                    <div class="feature active">Dark Purple Highlight</div>
-                    <div class="feature active">GIF Profile Picture</div>
-                    <div class="feature active">Instant Paste Edits</div>
-                    <div class="feature active">Unlist Own Pastes</div>
-                    <div class="feature active">Private Own Pastes</div>
-                    <div class="feature">Password Protected Pastes</div>
-                    <div class="feature active">2 Username Changes</div>
-
-                    <button class="btn btn-purple purchase">
-                        Purchase
-                    </button>
-
+                <div style="font-size:26px;font-weight:800;color:white;">
+                    Remove Post
                 </div>
 
-                <div class="plan">
-
-                    <h2>Rich</h2>
-
-                    <div class="price">$100</div>
-
-                    <div class="feature active">Sparkling Gold Username</div>
-                    <div class="feature active">Gold Paste Highlight</div>
-                    <div class="feature active">GIF Profile Picture</div>
-                    <div class="feature active">Instant Paste Edits</div>
-                    <div class="feature active">Unlist Own Pastes</div>
-                    <div class="feature active">Private Own Pastes</div>
-                    <div class="feature active">Password Protected Pastes</div>
-                    <div class="feature active">3 Username Changes</div>
-
-                    <button class="btn btn-purple purchase">
-                        Purchase
-                    </button>
-
+                <div style="margin-top:10px;color:#666;">
+                    Enter a post link or identifier below.
                 </div>
+
+                <input
+                    type="text"
+                    class="purge-input"
+                    id="purgeInput"
+                    placeholder="https://example.com/post/123"
+                >
+
+                <div style="margin-top:15px;">
+                    <button class="btn btn-danger" onclick="purgePost()">
+                        Purge Post
+                    </button>
+                </div>
+
+                <div class="status" id="purgeStatus"></div>
 
             </div>
 
@@ -654,7 +585,7 @@ tr:hover{
 
         <div id="logs" class="panel">
 
-            <div class="logs" id="logBox"></div>
+            <div class="logs" id="logsBox"></div>
 
         </div>
 
@@ -663,6 +594,8 @@ tr:hover{
 </div>
 
 <script>
+
+/* USERS */
 
 const users = [
 "asuna","Bella","go5","her","sewer","ace","mishka","Hacker",
@@ -675,59 +608,118 @@ const users = [
 "stalker","doppler","Water","Rogue","DGSI","father","Kaito"
 ];
 
-const userTable = document.getElementById("userTable");
+const table = document.getElementById("userTable");
 
-userTable.innerHTML = users.map((u,i)=>`
+function renderUsers(list){
 
-<tr>
+    table.innerHTML = list.map((u,i)=>`
 
-<td>#${1000+i}</td>
+    <tr>
 
-<td style="font-weight:700;color:white;">
-${u}
-</td>
+        <td>#${1000+i}</td>
 
-<td>
-<span class="rank ${
-i % 3 === 0 ? 'rank-vip' :
-i % 3 === 1 ? 'rank-criminal' :
-'rank-rich'
-}">
-${
-i % 3 === 0 ? 'VIP' :
-i % 3 === 1 ? 'CRIMINAL' :
-'RICH'
+        <td style="font-weight:700;color:white;">
+            ${u}
+        </td>
+
+        <td>
+            <span id="rank-${i}" class="rank ${
+                i % 3 === 0 ? 'rank-vip' :
+                i % 3 === 1 ? 'rank-criminal' :
+                'rank-rich'
+            }">
+                ${
+                    i % 3 === 0 ? 'VIP' :
+                    i % 3 === 1 ? 'CRIMINAL' :
+                    'RICH'
+                }
+            </span>
+        </td>
+
+        <td id="status-${i}" style="color:#46d37d;">
+            Online
+        </td>
+
+        <td style="display:flex;gap:8px;">
+
+            <button class="btn" onclick="promoteUser(${i})">
+                Promote
+            </button>
+
+            <button class="btn" onclick="kickUser(${i})">
+                Kick
+            </button>
+
+            <button class="btn btn-danger" onclick="banUser(${i})">
+                Ban
+            </button>
+
+        </td>
+
+    </tr>
+
+    `).join("");
+
 }
-</span>
-</td>
 
-<td style="color:#46d37d;">
-Online
-</td>
+renderUsers(users);
 
-<td>
+/* SEARCH */
 
-<button class="btn">
-Promote
-</button>
+function searchUsers(query){
 
-<button class="btn">
-Kick
-</button>
+    query = query.toLowerCase();
 
-<button class="btn btn-danger" onclick="banRow(this)">
-Ban
-</button>
+    const filtered = users.filter(u =>
+        u.toLowerCase().includes(query)
+    );
 
-</td>
+    renderUsers(filtered);
 
-</tr>
-
-`).join("");
-
-function banRow(btn){
-    btn.closest("tr").style.opacity=".35";
 }
+
+/* USER ACTIONS */
+
+function promoteUser(id){
+
+    const rank = document.getElementById(`rank-${id}`);
+
+    if(!rank) return;
+
+    rank.className = "rank rank-admin";
+    rank.innerText = "ADMIN";
+
+    addLog("silent [Manager]", "promoted user permissions");
+
+}
+
+function kickUser(id){
+
+    const status = document.getElementById(`status-${id}`);
+
+    if(!status) return;
+
+    status.style.color = "#ffb347";
+    status.innerText = "Kicked";
+
+    addLog("silent [Manager]", "kicked user session");
+
+}
+
+function banUser(id){
+
+    const row = document.querySelectorAll("#userTable tr")[id];
+
+    if(!row) return;
+
+    row.style.opacity = ".35";
+    row.style.pointerEvents = "none";
+
+    addLog("silent [Manager]", "banned account");
+
+}
+
+/* PANELS */
 
 function switchPanel(id,el){
 
@@ -742,33 +734,111 @@ function switchPanel(id,el){
     document.getElementById(id).classList.add("active");
 
     el.classList.add("active");
+
 }
 
-const logBox = document.getElementById("logBox");
+/* SERVER */
 
-const actions = [
-"restarted website server",
-"updated user permissions",
-"banned account",
-"created database backup",
-"optimized storage cluster",
-"updated memberships",
-"reviewed audit log",
-"enabled maintenance mode"
-];
+let online = true;
 
-let html = "";
+function restartServer(){
 
-for(let i=0;i<120;i++){
+    const text = document.getElementById("serverText");
+    const status = document.getElementById("serverStatus");
 
-    html += `
-    <div class="log">
-        <span>ceo</span> ${actions[Math.floor(Math.random()*actions.length)]}
-    </div>
+    text.innerText = "Restarting...";
+    status.innerText = "Restarting...";
+
+    addLog("silent [Manager]", "restarted website server");
+
+    setTimeout(()=>{
+
+        text.innerText = "Running";
+        status.innerText = "Operational";
+
+    },2000);
+
+}
+
+function stopServer(){
+
+    online = false;
+
+    document.getElementById("serverText").innerText = "Offline";
+    document.getElementById("serverStatus").innerText = "Offline";
+
+    document.getElementById("serverIndicator").style.background = "#ff4d5a";
+    document.getElementById("serverDot").style.background = "#ff4d5a";
+
+    addLog("silent [Manager]", "stopped website server");
+
+}
+
+function fakeAction(msg){
+
+    addLog("system", msg);
+
+}
+
+/* PURGE */
+
+function purgePost(){
+
+    const input = document.getElementById("purgeInput");
+    const status = document.getElementById("purgeStatus");
+
+    if(!input.value) return;
+
+    status.style.display = "block";
+    status.innerText = "Connecting to cluster...";
+
+    setTimeout(()=>{
+
+        status.innerText = "Removing post data...";
+
+        setTimeout(()=>{
+
+            status.innerText = "SUCCESS: Post purged.";
+
+            addLog("silent [Manager]", "purged a post");
+
+            input.value = "";
+
+        },1400);
+
+    },1000);
+
+}
+
+/* LOGS */
+
+const logsBox = document.getElementById("logsBox");
+
+function addLog(user,action){
+
+    const div = document.createElement("div");
+
+    div.className = "log";
+
+    div.innerHTML = `
+        <span>${user}</span> ${action}
     `;
+
+    logsBox.prepend(div);
+
 }
 
-logBox.innerHTML = html;
+/* DEFAULT LOGS */
+
+[
+"reviewed audit logs",
+"updated permissions",
+"optimized database cluster",
+"cleared firewall cache",
+"refreshed user sessions"
+].forEach(log=>{
+    addLog("system",log);
+});
 
 </script>
 
