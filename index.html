@@ -11,12 +11,12 @@
 <style>
 
 :root{
-    --bg:#0b0b0f;
-    --sidebar:#0e0e12;
-    --card:#121218;
-    --border:#1c1c24;
+    --bg:#050505;
+    --sidebar:#0a0a0a;
+    --card:#101010;
+    --border:#1d1d1d;
 
-    --text:#e6e6e6;
+    --text:#e0e0e0;
     --muted:#7a7a7a;
 
     --purple:#b76cff;
@@ -32,8 +32,8 @@
 body{
     font-family:'Inter',sans-serif;
     color:var(--text);
-    background:var(--bg);
     overflow-x:hidden;
+    background: linear-gradient(145deg,#040404,#0d0717,#050505);
 }
 
 /* LOGIN */
@@ -45,14 +45,14 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-    background:rgba(0,0,0,.85);
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(20px);
+    background:rgba(0,0,0,.75);
 }
 
 .login-box{
     width:420px;
-    background:var(--card);
-    border:1px solid var(--border);
+    background:rgba(10,10,10,.95);
+    border:1px solid rgba(255,255,255,.06);
     border-radius:24px;
     padding:35px;
 }
@@ -60,7 +60,6 @@ body{
 .login-title{font-size:34px;font-weight:900;}
 .login-sub{color:#8f8f8f;margin-bottom:24px;}
 .login-error{margin-top:15px;color:#ff6a7d;display:none;}
-
 .hidden{display:none!important;}
 
 /* NAVBAR */
@@ -71,9 +70,9 @@ body{
     left:0;
     width:100%;
     height:68px;
-    background:rgba(10,10,14,.9);
+    background:rgba(4,4,4,.8);
     backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
+    border-bottom:1px solid rgba(255,255,255,.05);
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -88,7 +87,8 @@ body{
 
 .brand span{color:var(--purple);}
 
-.right-tag{
+/* RIGHT LABEL */
+.right-label{
     position:absolute;
     right:26px;
     top:22px;
@@ -107,21 +107,24 @@ body{
 .sidebar{
     width:250px;
     height:calc(100vh - 68px);
-    background:var(--sidebar);
+    background:rgba(8,8,8,.85);
+    backdrop-filter:blur(12px);
+    border-right:1px solid rgba(255,255,255,.04);
     position:fixed;
-    border-right:1px solid var(--border);
 }
 
 .nav-item{
     padding:15px 24px;
+    color:#8d8d8d;
     font-size:13px;
     font-weight:700;
-    color:#8d8d8d;
     cursor:pointer;
 }
 
-.nav-item:hover{background:#15151c;color:white;}
-.nav-item.active{color:white;background:#14141a;border-left:3px solid var(--purple);}
+.nav-item:hover{background:#121212;color:white;}
+.nav-item.active{background:#141414;border-left:3px solid var(--purple);color:white;}
+
+/* MAIN */
 
 .main{
     margin-left:250px;
@@ -129,21 +132,21 @@ body{
     padding:30px;
 }
 
-/* CARD */
+/* CARDS */
 
 .card{
-    background:var(--card);
-    border:1px solid var(--border);
+    background:rgba(20,20,20,.9);
+    border:1px solid rgba(255,255,255,.05);
     border-radius:18px;
     padding:24px;
     margin-bottom:22px;
 }
 
 .card-title{
-    color:#777;
+    color:#868686;
     font-size:11px;
-    font-weight:800;
     text-transform:uppercase;
+    font-weight:800;
     margin-bottom:18px;
 }
 
@@ -151,15 +154,15 @@ body{
 
 .stats{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(3,1fr);
     gap:18px;
 }
 
 .stat{
-    background:#15151c;
-    border:1px solid var(--border);
     border-radius:18px;
     padding:22px;
+    background:#151515;
+    border:1px solid rgba(255,255,255,.05);
 }
 
 .stat-value{
@@ -169,15 +172,15 @@ body{
 
 .stat-label{
     margin-top:8px;
-    color:#777;
+    color:#757575;
     font-size:12px;
 }
 
 /* BUTTONS */
 
 .btn{
-    background:#17171d;
-    border:1px solid #2a2a35;
+    background:#171717;
+    border:1px solid #2b2b2b;
     color:#d2d2d2;
     padding:11px 15px;
     border-radius:10px;
@@ -195,17 +198,17 @@ body{
 }
 
 .btn-danger{
-    background:#1a0f12;
-    border-color:#3a1a22;
+    background:#211014;
+    border-color:#4d1d27;
     color:#ff8ea1;
 }
 
 /* INPUTS */
 
-input,select,textarea{
+input,select{
     width:100%;
-    background:#0e0e12;
-    border:1px solid var(--border);
+    background:#0b0b0b;
+    border:1px solid rgba(255,255,255,.06);
     color:white;
     padding:14px;
     border-radius:12px;
@@ -219,24 +222,27 @@ input,select,textarea{
 /* TABLE */
 
 .table-wrap{
-    overflow:auto;
-    border:1px solid var(--border);
     border-radius:16px;
+    overflow:auto;
+    border:1px solid rgba(255,255,255,.05);
 }
 
-table{width:100%;border-collapse:collapse;}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
 
 th{
-    background:#121218;
+    background:#0b0b0b;
     padding:16px;
     text-align:left;
     font-size:11px;
-    color:#777;
+    color:#707070;
 }
 
 td{
     padding:16px;
-    border-bottom:1px solid #1b1b22;
+    border-bottom:1px solid rgba(255,255,255,.04);
 }
 
 /* STATUS */
@@ -252,6 +258,7 @@ td{
 
 <body>
 
+<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
         <div class="login-title">secure access</div>
@@ -265,52 +272,78 @@ td{
     </div>
 </div>
 
+<!-- NAVBAR -->
 <div class="navbar">
     <div class="brand">control<span>.core</span></div>
-    <div class="right-tag">silent [Manager]</div>
+    <div class="right-label">silent [Manager]</div>
 </div>
 
 <div class="layout">
 
+<!-- SIDEBAR -->
 <aside class="sidebar">
+
     <div class="nav-item active" onclick="switchPanel('dashboard',this)">Dashboard</div>
     <div class="nav-item" onclick="switchPanel('users',this)">Users</div>
     <div class="nav-item" onclick="switchPanel('userpanel',this)">User Panel</div>
     <div class="nav-item" onclick="switchPanel('logs',this)">Audit Logs</div>
+
 </aside>
 
+<!-- MAIN -->
 <main class="main">
 
+<!-- DASHBOARD -->
 <div id="dashboard" class="panel active">
 
     <div class="stats">
-        <div class="stat"><div class="stat-value" id="totalUsers">0</div><div class="stat-label">USERS</div></div>
-        <div class="stat"><div class="stat-value" id="onlineUsers">0</div><div class="stat-label">ONLINE</div></div>
-        <div class="stat"><div class="stat-value">SECURE</div><div class="stat-label">STATUS</div></div>
-        <div class="stat"><div class="stat-value">NODE</div><div class="stat-label">SYSTEM</div></div>
+
+        <div class="stat">
+            <div class="stat-value" id="totalUsers">0</div>
+            <div class="stat-label">TOTAL USERS</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-value" id="onlineUsers">0</div>
+            <div class="stat-label">ONLINE USERS</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-value">SECURE</div>
+            <div class="stat-label">NODE STATUS</div>
+        </div>
+
     </div>
 
 </div>
 
+<!-- USERS -->
 <div id="users" class="panel">
 
     <div class="card">
+
         <input id="searchInput" oninput="renderUsers()" placeholder="Search users...">
 
         <div class="table-wrap">
             <table>
                 <thead>
-                    <tr><th>ID</th><th>Name</th><th>Rank</th><th>Status</th><th>Joined</th></tr>
+                    <tr>
+                        <th>ID</th><th>Name</th><th>Rank</th><th>Status</th><th>Joined</th>
+                    </tr>
                 </thead>
                 <tbody id="userTable"></tbody>
             </table>
         </div>
+
     </div>
 
 </div>
 
+<!-- USER PANEL -->
 <div id="userpanel" class="panel">
+
     <div class="card">
+
         <input id="targetUser" placeholder="username...">
 
         <select id="rankSelect">
@@ -329,28 +362,32 @@ td{
         <button class="btn btn-danger" onclick="deleteUser()">Delete</button>
 
         <div id="panelStatus"></div>
+
     </div>
+
 </div>
 
+<!-- LOGS -->
 <div id="logs" class="panel">
     <div id="logsBox"></div>
 </div>
 
 </main>
-
 </div>
 
 <script>
 
+/* LOGIN */
 function login(){
-    const pass = document.getElementById("passwordInput").value;
-    if(pass === "1344"){
+    const pass=document.getElementById("passwordInput").value;
+    if(pass==="1344"){
         document.getElementById("loginScreen").classList.add("hidden");
     } else {
         document.getElementById("loginError").style.display="block";
     }
 }
 
+/* USERS */
 const users=[];
 const ranks=["MEMBER","VIP","CRIMINAL","RICH","COUNCIL","MOD","MANAGER","ADMIN","FOUNDER"];
 
@@ -364,8 +401,10 @@ joined:"2025"
 });
 }
 
+/* RENDER */
 function renderUsers(){
 const t=document.getElementById("userTable");
+
 t.innerHTML=users.map(u=>`
 <tr>
 <td>${u.id}</td>
@@ -374,12 +413,14 @@ t.innerHTML=users.map(u=>`
 <td>${u.status}</td>
 <td>${u.joined}</td>
 </tr>`).join("");
+
 document.getElementById("totalUsers").innerText=users.length;
 document.getElementById("onlineUsers").innerText=users.filter(u=>u.status==="Online").length;
 }
 
 renderUsers();
 
+/* PANEL SWITCH */
 function switchPanel(id,el){
 document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
 document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
@@ -387,6 +428,7 @@ document.getElementById(id).classList.add("active");
 el.classList.add("active");
 }
 
+/* USER OPS */
 function getUser(){
 const n=document.getElementById("targetUser").value.toLowerCase();
 return users.find(u=>u.name.toLowerCase()===n);
