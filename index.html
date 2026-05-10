@@ -1,560 +1,880 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NX Control</title>
 
-<title>manager panel</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
-    --bg:#050505;
-    --sidebar:#0a0a0a;
-    --card:#101010;
-    --border:#1d1d1d;
 
-    --text:#e0e0e0;
-    --muted:#7a7a7a;
+--bg:#06070b;
+--bg2:#0b1020;
 
-    --purple:#b76cff;
-    --purple2:#6b42ff;
-    --purple3:#2f1d52;
+--card:#111522;
+--card2:#0f1420;
 
-    --danger:#ff4d6d;
-    --success:#3ce68c;
-    --warning:#ffbf52;
+--border:rgba(255,255,255,.06);
+
+--text:#f3f4f8;
+--muted:#7d8596;
+
+--purple:#8f5cff;
+--purple2:#5c7cff;
+
+--green:#35d98b;
+--red:#ff5577;
+--yellow:#ffcb57;
+
+--shadow:
+0 10px 40px rgba(0,0,0,.45);
+
 }
 
+/* RESET */
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    font-family:'Inter',sans-serif;
-    color:var(--text);
-    overflow-x:hidden;
 
-    background:
-    radial-gradient(circle at top left,#32154d 0%,transparent 25%),
-    radial-gradient(circle at top right,#16204f 0%,transparent 25%),
-    radial-gradient(circle at bottom,#2d1248 0%,transparent 35%),
-    linear-gradient(145deg,#040404,#0d0717,#050505);
+font-family:'Inter',sans-serif;
+color:var(--text);
+
+min-height:100vh;
+overflow-x:hidden;
+
+background:
+linear-gradient(
+135deg,
+#06070b 0%,
+#0c1122 35%,
+#111733 60%,
+#0b0f18 100%
+);
+
+}
+
+/* BACKGROUND FX */
+
+.bg-grid{
+
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.25;
+
+background-image:
+linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+
+background-size:40px 40px;
+
+mask-image:radial-gradient(circle at center, black 30%, transparent 100%);
+
 }
 
 /* LOGIN */
 
-.login-screen{
-    position:fixed;
-    inset:0;
-    z-index:999999;
+.login{
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+position:fixed;
+inset:0;
+z-index:999999;
 
-    backdrop-filter:blur(20px);
+display:flex;
+align-items:center;
+justify-content:center;
 
-    background:
-    radial-gradient(circle at top left,#522381 0%,transparent 25%),
-    radial-gradient(circle at bottom right,#2e4cff 0%,transparent 25%),
-    rgba(0,0,0,.75);
+backdrop-filter:blur(25px);
+
+background:
+rgba(5,7,12,.8);
+
 }
 
 .login-box{
-    width:420px;
-    background:rgba(10,10,10,.95);
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:24px;
-    padding:35px;
 
-    box-shadow:
-    0 0 80px rgba(114,61,255,.35),
-    inset 0 0 0 1px rgba(255,255,255,.03);
+width:420px;
+
+background:
+linear-gradient(
+180deg,
+rgba(18,23,37,.98),
+rgba(10,13,20,.98)
+);
+
+border:1px solid var(--border);
+
+padding:35px;
+
+border-radius:30px;
+
+box-shadow:
+0 0 80px rgba(108,92,255,.18),
+var(--shadow);
+
 }
 
 .login-title{
-    font-size:34px;
-    font-weight:900;
-    margin-bottom:8px;
+
+font-size:42px;
+font-weight:900;
+letter-spacing:-2px;
+
+margin-bottom:10px;
+
 }
 
 .login-sub{
-    color:#8f8f8f;
-    margin-bottom:24px;
+
+color:var(--muted);
+margin-bottom:25px;
+
 }
 
-.login-error{
-    margin-top:15px;
-    color:#ff6a7d;
-    display:none;
+/* INPUT */
+
+.input{
+
+width:100%;
+
+background:#0d1220;
+
+border:1px solid rgba(255,255,255,.05);
+
+color:white;
+
+padding:16px;
+border-radius:16px;
+
+outline:none;
+
+transition:.2s;
+
+font-family:inherit;
+
 }
 
-.hidden{
-    display:none !important;
+.input:focus{
+
+border-color:var(--purple);
+
+box-shadow:
+0 0 0 4px rgba(143,92,255,.12);
+
 }
 
-/* NAVBAR */
+/* BUTTON */
 
-.navbar{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:68px;
+.btn{
 
-    background:rgba(4,4,4,.8);
-    backdrop-filter:blur(12px);
+border:none;
+outline:none;
 
-    border-bottom:1px solid rgba(255,255,255,.05);
+cursor:pointer;
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+padding:14px 18px;
 
-    padding:0 26px;
-    z-index:999;
+border-radius:16px;
+
+font-weight:800;
+font-size:12px;
+
+text-transform:uppercase;
+letter-spacing:.5px;
+
+transition:.2s;
+
 }
 
-.brand{
-    font-size:20px;
-    font-weight:900;
-    letter-spacing:1px;
-    color:white;
+.btn:hover{
+
+transform:translateY(-2px);
+
 }
 
-.brand span{
-    color:var(--purple);
+.btn-primary{
+
+background:
+linear-gradient(
+135deg,
+var(--purple),
+var(--purple2)
+);
+
+color:white;
+
+box-shadow:
+0 10px 30px rgba(92,124,255,.22);
+
 }
 
-.profile{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.btn-danger{
+
+background:#2b1319;
+color:#ff87a0;
+
 }
 
-.avatar{
-    width:42px;
-    height:42px;
-    border-radius:50%;
+.btn-dark{
 
-    background:
-    linear-gradient(135deg,var(--purple),var(--purple2));
+background:#161b29;
+color:#c9cfdb;
 
-    box-shadow:
-    0 0 25px rgba(183,108,255,.45);
+}
+
+/* APP */
+
+.app{
+
+display:none;
+
+}
+
+/* TOPBAR */
+
+.topbar{
+
+position:fixed;
+top:0;
+left:0;
+right:0;
+
+height:78px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:0 28px;
+
+background:
+rgba(8,11,18,.8);
+
+backdrop-filter:blur(14px);
+
+border-bottom:1px solid var(--border);
+
+z-index:1000;
+
+}
+
+.logo{
+
+font-size:26px;
+font-weight:900;
+letter-spacing:-1px;
+
+}
+
+.logo span{
+
+background:
+linear-gradient(
+135deg,
+var(--purple),
+var(--purple2)
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.top-actions{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+}
+
+.search{
+
+width:260px;
+
+background:#121826;
+border:1px solid rgba(255,255,255,.05);
+
+padding:13px 16px;
+border-radius:14px;
+
+color:white;
+
+outline:none;
+
 }
 
 /* LAYOUT */
 
 .layout{
-    display:flex;
-    padding-top:68px;
+
+display:flex;
+padding-top:78px;
+
 }
+
+/* SIDEBAR */
 
 .sidebar{
-    width:250px;
-    height:calc(100vh - 68px);
 
-    background:rgba(8,8,8,.85);
-    backdrop-filter:blur(12px);
+width:260px;
+height:calc(100vh - 78px);
 
-    border-right:1px solid rgba(255,255,255,.04);
+position:fixed;
 
-    position:fixed;
+background:
+rgba(10,14,22,.75);
+
+backdrop-filter:blur(16px);
+
+border-right:1px solid var(--border);
+
+padding:22px 14px;
+
+overflow:auto;
+
 }
 
-.sidebar-inner{
-    padding:20px 0;
+.side-title{
+
+font-size:11px;
+font-weight:800;
+letter-spacing:1px;
+
+color:#6c7487;
+
+margin:20px 12px 10px;
+
+text-transform:uppercase;
+
 }
 
-.nav-item{
-    padding:15px 24px;
-    color:#8d8d8d;
+.nav{
 
-    font-size:13px;
-    font-weight:700;
+display:flex;
+flex-direction:column;
+gap:4px;
 
-    cursor:pointer;
-    transition:.2s;
-
-    border-left:3px solid transparent;
 }
 
-.nav-item:hover{
-    background:#121212;
-    color:white;
+.nav-btn{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+padding:14px 14px;
+
+border-radius:16px;
+
+cursor:pointer;
+
+transition:.2s;
+
+font-weight:700;
+font-size:14px;
+
+color:#aab1c2;
+
 }
 
-.nav-item.active{
-    background:linear-gradient(90deg,#1a1129,transparent);
-    border-left-color:var(--purple);
-    color:white;
+.nav-btn:hover{
+
+background:#141b2b;
+color:white;
+
+}
+
+.nav-btn.active{
+
+background:
+linear-gradient(
+135deg,
+rgba(143,92,255,.16),
+rgba(92,124,255,.16)
+);
+
+color:white;
+
+border:1px solid rgba(143,92,255,.15);
+
 }
 
 /* MAIN */
 
 .main{
-    margin-left:250px;
-    width:100%;
-    padding:30px;
-}
 
-/* CARDS */
+margin-left:260px;
+width:100%;
 
-.card{
-    background:
-    linear-gradient(180deg,
-    rgba(20,20,20,.9),
-    rgba(10,10,10,.9));
+padding:28px;
 
-    border:1px solid rgba(255,255,255,.05);
-
-    border-radius:18px;
-    padding:24px;
-
-    margin-bottom:22px;
-
-    box-shadow:
-    0 0 40px rgba(0,0,0,.25);
-}
-
-.card-title{
-    color:#868686;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    margin-bottom:18px;
-    font-weight:800;
-}
-
-/* STATS */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    margin-bottom:25px;
-}
-
-.stat{
-    border-radius:18px;
-    padding:22px;
-
-    background:
-    linear-gradient(145deg,
-    rgba(25,25,25,.95),
-    rgba(12,12,12,.95));
-
-    border:1px solid rgba(255,255,255,.05);
-}
-
-.stat-value{
-    font-size:28px;
-    font-weight:900;
-    color:white;
-}
-
-.stat-label{
-    margin-top:8px;
-    color:#757575;
-    font-size:12px;
-}
-
-/* BUTTONS */
-
-.btn{
-    background:#171717;
-    border:1px solid #2b2b2b;
-
-    color:#d2d2d2;
-
-    padding:11px 15px;
-    border-radius:10px;
-
-    cursor:pointer;
-    transition:.2s;
-
-    font-size:11px;
-    font-weight:800;
-    text-transform:uppercase;
-}
-
-.btn:hover{
-    transform:translateY(-1px);
-    border-color:var(--purple);
-    color:white;
-}
-
-.btn-purple{
-    border:none;
-    color:white;
-
-    background:
-    linear-gradient(135deg,
-    var(--purple),
-    var(--purple2));
-
-    box-shadow:
-    0 0 25px rgba(183,108,255,.25);
-}
-
-.btn-danger{
-    background:#211014;
-    border-color:#4d1d27;
-    color:#ff8ea1;
-}
-
-/* INPUTS */
-
-input,select,textarea{
-    width:100%;
-    background:#090909;
-    border:1px solid rgba(255,255,255,.06);
-
-    color:white;
-
-    padding:14px;
-    border-radius:12px;
-
-    outline:none;
-
-    font-family:inherit;
-}
-
-textarea{
-    resize:vertical;
-    min-height:120px;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-    border-color:var(--purple);
-}
-
-/* TABLE */
-
-.table-wrap{
-    border-radius:16px;
-    overflow:auto;
-
-    border:1px solid rgba(255,255,255,.05);
-
-    max-height:700px;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th{
-    position:sticky;
-    top:0;
-
-    background:#0b0b0b;
-
-    padding:16px;
-
-    text-align:left;
-
-    color:#707070;
-    font-size:11px;
-
-    border-bottom:1px solid rgba(255,255,255,.06);
-}
-
-td{
-    padding:16px;
-    border-bottom:1px solid rgba(255,255,255,.04);
-}
-
-tr:hover{
-    background:#111;
 }
 
 /* PANELS */
 
 .panel{
-    display:none;
+
+display:none;
+
+animation:fade .2s ease;
+
 }
 
 .panel.active{
-    display:block;
+
+display:block;
+
 }
 
-/* STATUS */
+@keyframes fade{
 
-.status-online{color:#4be285;}
-.status-offline{color:#8d8d8d;}
-.status-banned{color:#ff637d;}
-.status-timeout{color:#ffbf52;}
-.status-kicked{color:#9d9d9d;}
-
-/* RANKS */
-
-.rank{
-    padding:6px 10px;
-    border-radius:30px;
-    font-size:10px;
-    font-weight:900;
+from{
+opacity:0;
+transform:translateY(10px);
 }
 
-.rank-member{background:#1f1f1f;color:#999;}
-.rank-vip{background:#2c1837;color:#d099ff;}
-.rank-criminal{background:#281438;color:#b56eff;}
-.rank-rich{background:#30270d;color:#ffd24d;}
-.rank-council{background:#132130;color:#7cc2ff;}
-.rank-mod{background:#15281d;color:#6fffaf;}
-.rank-manager{background:#2f1c3f;color:#deabff;}
-.rank-admin{background:#351515;color:#ff8181;}
-.rank-founder{background:#382d08;color:#ffe26b;}
+to{
+opacity:1;
+transform:none;
+}
+
+}
+
+/* STATS */
+
+.stats{
+
+display:grid;
+grid-template-columns:repeat(4,1fr);
+
+gap:18px;
+
+margin-bottom:20px;
+
+}
+
+.stat{
+
+background:
+linear-gradient(
+180deg,
+rgba(20,25,38,.95),
+rgba(12,15,24,.95)
+);
+
+border:1px solid var(--border);
+
+border-radius:24px;
+
+padding:24px;
+
+box-shadow:var(--shadow);
+
+position:relative;
+overflow:hidden;
+
+}
+
+.stat::before{
+
+content:"";
+
+position:absolute;
+top:-50px;
+right:-50px;
+
+width:120px;
+height:120px;
+
+background:
+radial-gradient(circle,
+rgba(143,92,255,.25),
+transparent 70%);
+
+}
+
+.stat-value{
+
+font-size:36px;
+font-weight:900;
+
+}
+
+.stat-label{
+
+margin-top:8px;
+color:var(--muted);
+
+font-size:13px;
+
+}
+
+/* CARDS */
+
+.card{
+
+background:
+linear-gradient(
+180deg,
+rgba(17,21,34,.95),
+rgba(11,14,23,.95)
+);
+
+border:1px solid var(--border);
+
+border-radius:26px;
+
+padding:24px;
+
+margin-bottom:20px;
+
+box-shadow:var(--shadow);
+
+}
+
+.card-title{
+
+font-size:13px;
+font-weight:800;
+letter-spacing:1px;
+
+text-transform:uppercase;
+
+color:#7d8596;
+
+margin-bottom:20px;
+
+}
+
+/* TABLE */
+
+.table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+.table th{
+
+text-align:left;
+
+padding:16px;
+
+font-size:12px;
+
+color:#6f7687;
+
+border-bottom:1px solid rgba(255,255,255,.05);
+
+}
+
+.table td{
+
+padding:16px;
+
+border-bottom:1px solid rgba(255,255,255,.04);
+
+}
+
+.table tr:hover{
+
+background:#121826;
+
+}
+
+/* TAG */
+
+.tag{
+
+display:inline-flex;
+align-items:center;
+
+padding:6px 12px;
+
+border-radius:999px;
+
+font-size:11px;
+font-weight:800;
+
+}
+
+.member{
+background:#1d212d;
+color:#98a0b2;
+}
+
+.vip{
+background:#29193c;
+color:#cb9dff;
+}
+
+.admin{
+background:#35151f;
+color:#ff95ab;
+}
+
+.online{
+background:#13251d;
+color:#7cffbf;
+}
+
+.offline{
+background:#1c1f28;
+color:#8b93a4;
+}
 
 /* GRID */
 
-.panel-grid{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:20px;
+.grid{
+
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
+
 }
 
 /* POSTS */
 
 .post{
-    padding:18px;
-    border-radius:14px;
 
-    background:#0d0d0d;
-    border:1px solid rgba(255,255,255,.05);
+background:#101522;
 
-    margin-bottom:14px;
+border:1px solid rgba(255,255,255,.05);
+
+padding:20px;
+
+border-radius:22px;
+
+margin-bottom:16px;
+
+transition:.2s;
+
+}
+
+.post:hover{
+
+transform:translateY(-2px);
+
 }
 
 .post-top{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:12px;
+
+display:flex;
+justify-content:space-between;
+
+margin-bottom:14px;
+
 }
 
-.post-author{
-    font-weight:800;
+.post-user{
+
+font-weight:800;
+
 }
 
 .post-content{
-    color:#bdbdbd;
-    line-height:1.6;
+
+line-height:1.7;
+color:#ccd2de;
+
+margin-bottom:16px;
+
 }
 
-.post-tags{
-    margin-top:12px;
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
+.post-actions{
+
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+
 }
 
-.tag{
-    background:#1c1428;
-    color:#cf9fff;
-    padding:5px 10px;
-    border-radius:999px;
-    font-size:10px;
-    font-weight:800;
+/* CHAT */
+
+.chat{
+
+height:420px;
+overflow:auto;
+
+display:flex;
+flex-direction:column;
+gap:12px;
+
 }
 
-/* LOGS */
+.msg{
 
-.logs{
-    border-radius:16px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.05);
+padding:14px 16px;
+
+background:#141b2b;
+
+border-radius:18px;
+
+max-width:80%;
+
 }
 
-.log{
-    padding:14px 18px;
-    border-bottom:1px solid rgba(255,255,255,.04);
-    color:#7d7d7d;
+.msg.self{
+
+margin-left:auto;
+
+background:
+linear-gradient(
+135deg,
+rgba(143,92,255,.25),
+rgba(92,124,255,.25)
+);
+
 }
 
-.log span{
-    color:var(--purple);
-    font-weight:800;
+/* ACTIVITY */
+
+.activity{
+
+display:flex;
+flex-direction:column;
+gap:10px;
+
 }
 
-.status-msg{
-    display:none;
-    margin-top:15px;
-    color:#c48eff;
+.activity-item{
+
+padding:14px;
+
+border-radius:16px;
+
+background:#121826;
+
+color:#c6cbd7;
+
+font-size:14px;
+
 }
 
-/* HALL */
+/* SETTINGS */
 
-.hall-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:18px;
+.setting{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:16px 0;
+
+border-bottom:1px solid rgba(255,255,255,.05);
+
 }
 
-.hall-card{
-    border-radius:18px;
-    padding:20px;
+/* TOGGLE */
 
-    background:
-    linear-gradient(145deg,
-    rgba(35,18,57,.95),
-    rgba(10,10,10,.95));
+.toggle{
 
-    border:1px solid rgba(194,130,255,.15);
+width:52px;
+height:28px;
+
+background:#1d2535;
+
+border-radius:999px;
+
+position:relative;
+
+cursor:pointer;
+
 }
 
-.hall-title{
-    font-size:20px;
-    font-weight:900;
-    margin-bottom:10px;
+.toggle::after{
+
+content:"";
+
+position:absolute;
+top:4px;
+left:4px;
+
+width:20px;
+height:20px;
+
+border-radius:50%;
+
+background:white;
+
+transition:.2s;
+
 }
 
-.hall-user{
-    color:#dcaeff;
-    font-weight:800;
-    margin-bottom:12px;
+.toggle.active{
+
+background:
+linear-gradient(
+135deg,
+var(--purple),
+var(--purple2)
+);
+
 }
 
-.quick-actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+.toggle.active::after{
+
+left:28px;
+
 }
 
-.pinned{
-    border-color:#d4a1ff !important;
-    box-shadow:0 0 30px rgba(183,108,255,.15);
+/* QUICK */
+
+.quick{
+
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+
 }
+
+/* MOBILE */
 
 @media(max-width:1100px){
 
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
+.stats{
+
+grid-template-columns:repeat(2,1fr);
 
 }
 
-@media(max-width:900px){
+.grid{
 
-    .sidebar{
-        display:none;
-    }
+grid-template-columns:1fr;
 
-    .main{
-        margin-left:0;
-    }
+}
 
-    .panel-grid{
-        grid-template-columns:1fr;
-    }
+}
+
+@media(max-width:850px){
+
+.sidebar{
+
+display:none;
+
+}
+
+.main{
+
+margin-left:0;
+
+}
+
+.stats{
+
+grid-template-columns:1fr;
+
+}
 
 }
 
@@ -562,533 +882,655 @@ tr:hover{
 </head>
 <body>
 
+<div class="bg-grid"></div>
+
 <!-- LOGIN -->
 
-<div class="login-screen" id="loginScreen">
+<div class="login" id="login">
 
-    <div class="login-box">
+<div class="login-box">
 
-        <div class="login-title">
-            secure access
-        </div>
+<div class="login-title">
+NX<span style="color:#8f5cff;">Control</span>
+</div>
 
-        <div class="login-sub">
-            enter password to continue
-        </div>
+<div class="login-sub">
+secure access required
+</div>
 
-        <input
-        type="password"
-        id="passwordInput"
-        placeholder="password"
-        onkeydown="if(event.key==='Enter') login()"
-        >
+<input
+type="password"
+class="input"
+id="pass"
+placeholder="enter password"
+>
 
-        <div style="margin-top:18px;">
-            <button class="btn btn-purple"
-            style="width:100%;padding:15px;"
-            onclick="login()">
-                unlock
-            </button>
-        </div>
+<div style="height:16px;"></div>
 
-        <div class="login-error"
-        id="loginError">
-            invalid password
-        </div>
+<button
+class="btn btn-primary"
+style="width:100%;"
+onclick="login()">
+unlock
+</button>
 
-    </div>
+<div
+id="loginError"
+style="
+margin-top:14px;
+color:#ff6f88;
+display:none;
+">
+invalid password
+</div>
 
 </div>
 
-<!-- NAVBAR -->
+</div>
 
-<div class="navbar">
+<!-- APP -->
 
-    <div class="brand">
-        control<span>.core</span>
-    </div>
+<div class="app" id="app">
 
-    <div class="profile">
-        <div>
-            <div style="font-weight:800;">
-                secure session
-            </div>
+<!-- TOPBAR -->
 
-            <div style="
-            font-size:11px;
-            color:#777;
-            ">
-                encrypted node
-            </div>
-        </div>
+<div class="topbar">
 
-        <div class="avatar"></div>
-    </div>
+<div class="logo">
+NX<span>Control</span>
+</div>
+
+<div class="top-actions">
+
+<input
+class="search"
+placeholder="search anything..."
+>
+
+<button class="btn btn-dark">
+Export
+</button>
+
+<button class="btn btn-primary">
+Deploy
+</button>
+
+</div>
 
 </div>
 
 <div class="layout">
 
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar">
+<!-- SIDEBAR -->
 
-        <div class="sidebar-inner">
+<div class="sidebar">
 
-            <div class="nav-item active"
-            onclick="switchPanel('dashboard',this)">
-                Dashboard
-            </div>
+<div class="side-title">
+CORE
+</div>
 
-            <div class="nav-item"
-            onclick="switchPanel('users',this)">
-                Users
-            </div>
+<div class="nav">
+
+<div class="nav-btn active"
+onclick="switchPanel('dashboard',this)">
+Dashboard
+</div>
+
+<div class="nav-btn"
+onclick="switchPanel('users',this)">
+Users
+</div>
+
+<div class="nav-btn"
+onclick="switchPanel('posts',this)">
+Posts
+</div>
+
+<div class="nav-btn"
+onclick="switchPanel('analytics',this)">
+Analytics
+</div>
+
+<div class="nav-btn"
+onclick="switchPanel('chat',this)">
+Live Chat
+</div>
+
+<div class="nav-btn"
+onclick="switchPanel('activity',this)">
+Activity
+</div>
+
+<div class="nav-btn"
+onclick="switchPanel('moderation',this)">
+Moderation
+</div>
 
-            <div class="nav-item"
-            onclick="switchPanel('posts',this)">
-                Posts
-            </div>
+<div class="nav-btn"
+onclick="switchPanel('settings',this)">
+Settings
+</div>
+
+</div>
+
+<div class="side-title">
+ACTIONS
+</div>
+
+<div class="nav">
+
+<div class="nav-btn"
+onclick="randomizeUsers()">
+Randomize
+</div>
+
+<div class="nav-btn"
+onclick="offlineAll()">
+Offline Sweep
+</div>
+
+<div class="nav-btn"
+onclick="spawnPosts()">
+Spawn Posts
+</div>
 
-            <div class="nav-item"
-            onclick="switchPanel('hall',this)">
-                Hall Of Autism
-            </div>
+<div class="nav-btn"
+onclick="purgeSystem()">
+Purge
+</div>
+
+</div>
 
-            <div class="nav-item"
-            onclick="switchPanel('adduser',this)">
-                Add User
-            </div>
+</div>
 
-            <div class="nav-item"
-            onclick="switchPanel('userpanel',this)">
-                User Panel
-            </div>
+<!-- MAIN -->
 
-            <div class="nav-item"
-            onclick="switchPanel('purge',this)">
-                Post Purge
-            </div>
+<div class="main">
 
-            <div class="nav-item"
-            onclick="switchPanel('logs',this)">
-                Audit Logs
-            </div>
+<!-- DASHBOARD -->
 
-        </div>
+<div class="panel active" id="dashboard">
 
-    </aside>
+<div class="stats">
 
-    <!-- MAIN -->
+<div class="stat">
+<div class="stat-value" id="totalUsers">
+0
+</div>
+<div class="stat-label">
+TOTAL USERS
+</div>
+</div>
 
-    <main class="main">
+<div class="stat">
+<div class="stat-value" id="onlineUsers">
+0
+</div>
+<div class="stat-label">
+ONLINE USERS
+</div>
+</div>
 
-        <!-- DASHBOARD -->
+<div class="stat">
+<div class="stat-value" id="totalPosts">
+0
+</div>
+<div class="stat-label">
+TOTAL POSTS
+</div>
+</div>
 
-        <div id="dashboard" class="panel active">
+<div class="stat">
+<div class="stat-value">
+99.9%
+</div>
+<div class="stat-label">
+UPTIME
+</div>
+</div>
 
-            <div class="stats">
+</div>
 
-                <div class="stat">
-                    <div class="stat-value"
-                    id="totalUsers">
-                        0
-                    </div>
+<div class="grid">
 
-                    <div class="stat-label">
-                        TOTAL USERS
-                    </div>
-                </div>
+<div>
 
-                <div class="stat">
-                    <div class="stat-value"
-                    id="onlineUsers">
-                        0
-                    </div>
+<div class="card">
 
-                    <div class="stat-label">
-                        ONLINE USERS
-                    </div>
-                </div>
+<div class="card-title">
+Quick Actions
+</div>
 
-                <div class="stat">
-                    <div class="stat-value"
-                    id="postCount">
-                        0
-                    </div>
+<div class="quick">
 
-                    <div class="stat-label">
-                        ACTIVE POSTS
-                    </div>
-                </div>
+<button
+class="btn btn-primary"
+onclick="addFakeUser()">
+Add User
+</button>
 
-                <div class="stat">
-                    <div class="stat-value">
-                        SECURE
-                    </div>
+<button
+class="btn btn-dark"
+onclick="spawnPosts()">
+Generate Posts
+</button>
 
-                    <div class="stat-label">
-                        NODE STATUS
-                    </div>
-                </div>
+<button
+class="btn btn-dark"
+onclick="simulateAttack()">
+Simulate Attack
+</button>
 
-            </div>
+<button
+class="btn btn-danger"
+onclick="purgeSystem()">
+Emergency Purge
+</button>
 
-            <div class="card">
+</div>
 
-                <div class="card-title">
-                    Quick Actions
-                </div>
+</div>
 
-                <div class="quick-actions">
+<div class="card">
 
-                    <button class="btn btn-purple"
-                    onclick="randomizeUsers()">
-                        Randomize Status
-                    </button>
+<div class="card-title">
+Latest Posts
+</div>
 
-                    <button class="btn"
-                    onclick="massOffline()">
-                        Offline Sweep
-                    </button>
+<div id="dashboardPosts"></div>
 
-                    <button class="btn"
-                    onclick="createRandomPost()">
-                        Spawn Random Post
-                    </button>
+</div>
 
-                    <button class="btn btn-danger"
-                    onclick="purgeRandom()">
-                        Emergency Purge
-                    </button>
+</div>
 
-                </div>
+<div>
 
-            </div>
+<div class="card">
 
-        </div>
+<div class="card-title">
+System Status
+</div>
 
-        <!-- USERS -->
+<div class="activity">
 
-        <div id="users" class="panel">
+<div class="activity-item">
+Realtime sync online
+</div>
 
-            <div class="card">
+<div class="activity-item">
+Audit engine active
+</div>
 
-                <div class="card-title">
-                    User Database
-                </div>
+<div class="activity-item">
+Encryption enabled
+</div>
 
-                <input
-                type="text"
-                placeholder="Search users..."
-                id="searchInput"
-                oninput="renderUsers()"
-                style="margin-bottom:18px;"
-                >
+<div class="activity-item">
+Mirror nodes stable
+</div>
 
-                <div class="table-wrap">
+</div>
 
-                    <table>
+</div>
 
-                        <thead>
+<div class="card">
 
-                            <tr>
-                                <th>ID</th>
-                                <th>Username</th>
-                                <th>Rank</th>
-                                <th>Status</th>
-                                <th>Joined</th>
-                            </tr>
+<div class="card-title">
+Live Feed
+</div>
 
-                        </thead>
+<div
+class="activity"
+id="liveFeed">
+</div>
 
-                        <tbody id="userTable"></tbody>
+</div>
 
-                    </table>
+</div>
 
-                </div>
+</div>
 
-            </div>
+</div>
 
-        </div>
+<!-- USERS -->
 
-        <!-- POSTS -->
+<div class="panel" id="users">
 
-        <div id="posts" class="panel">
+<div class="card">
 
-            <div class="card">
+<div class="card-title">
+User Database
+</div>
 
-                <div class="card-title">
-                    Create Post
-                </div>
+<table class="table">
 
-                <input
-                type="text"
-                id="postAuthor"
-                placeholder="author..."
-                >
+<thead>
 
-                <div style="height:14px;"></div>
+<tr>
+<th>ID</th>
+<th>USERNAME</th>
+<th>RANK</th>
+<th>STATUS</th>
+<th>JOINED</th>
+</tr>
 
-                <textarea
-                id="postContent"
-                placeholder="write post..."
-                ></textarea>
+</thead>
 
-                <div style="
-                display:flex;
-                gap:10px;
-                margin-top:16px;
-                flex-wrap:wrap;
-                ">
+<tbody id="userTable"></tbody>
 
-                    <button class="btn btn-purple"
-                    onclick="addPost()">
-                        Publish
-                    </button>
+</table>
 
-                    <button class="btn"
-                    onclick="pinPaste()">
-                        Pin Paste
-                    </button>
+</div>
 
-                    <button class="btn"
-                    onclick="hallPost()">
-                        Send To Hall
-                    </button>
+</div>
 
-                </div>
+<!-- POSTS -->
 
-            </div>
+<div class="panel" id="posts">
 
-            <div id="postsContainer"></div>
+<div class="card">
 
-        </div>
+<div class="card-title">
+Create Post
+</div>
 
-        <!-- HALL -->
+<input
+class="input"
+id="postUser"
+placeholder="username"
+>
 
-        <div id="hall" class="panel">
+<div style="height:14px;"></div>
 
-            <div class="card">
+<textarea
+class="input"
+style="height:140px;"
+id="postContent"
+placeholder="write something..."
+></textarea>
 
-                <div class="card-title">
-                    Hall Of Autism
-                </div>
+<div style="height:14px;"></div>
 
-                <div class="hall-grid"
-                id="hallContainer"></div>
+<div class="quick">
 
-            </div>
+<button
+class="btn btn-primary"
+onclick="createPost()">
+Publish
+</button>
 
-        </div>
+<button
+class="btn btn-dark"
+onclick="pinPaste()">
+Pin Paste
+</button>
 
-        <!-- ADD USER -->
+<button
+class="btn btn-danger"
+onclick="clearPosts()">
+Clear Posts
+</button>
 
-        <div id="adduser" class="panel">
+</div>
 
-            <div class="card"
-            style="max-width:700px;">
+</div>
 
-                <div class="card-title">
-                    Create New User
-                </div>
+<div id="postsContainer"></div>
 
-                <input
-                type="text"
-                id="newUsername"
-                placeholder="Username..."
-                >
+</div>
 
-                <div style="height:14px;"></div>
+<!-- ANALYTICS -->
 
-                <select id="newRank">
+<div class="panel" id="analytics">
 
-                    <option>MEMBER</option>
-                    <option>VIP</option>
-                    <option>CRIMINAL</option>
-                    <option>RICH</option>
-                    <option>COUNCIL</option>
-                    <option>MOD</option>
-                    <option>MANAGER</option>
+<div class="stats">
 
-                </select>
+<div class="stat">
+<div class="stat-value">
+4.9M
+</div>
+<div class="stat-label">
+REQUESTS
+</div>
+</div>
 
-                <div style="margin-top:18px;">
+<div class="stat">
+<div class="stat-value">
+2.4TB
+</div>
+<div class="stat-label">
+TRAFFIC
+</div>
+</div>
 
-                    <button class="btn btn-purple"
-                    onclick="addUser()">
-                        Add User
-                    </button>
+<div class="stat">
+<div class="stat-value">
+1.2K
+</div>
+<div class="stat-label">
+SESSIONS
+</div>
+</div>
 
-                </div>
+<div class="stat">
+<div class="stat-value">
+12ms
+</div>
+<div class="stat-label">
+LATENCY
+</div>
+</div>
 
-                <div class="status-msg"
-                id="addUserStatus"></div>
+</div>
 
-            </div>
+<div class="card">
 
-        </div>
+<div class="card-title">
+Traffic Overview
+</div>
 
-        <!-- USER PANEL -->
+<div style="
+height:240px;
+border-radius:20px;
+background:
+linear-gradient(
+180deg,
+rgba(143,92,255,.16),
+transparent
+);
+display:flex;
+align-items:flex-end;
+gap:10px;
+padding:20px;
+">
 
-        <div id="userpanel" class="panel">
+<div style="height:40%;flex:1;background:#8f5cff;border-radius:12px;"></div>
+<div style="height:65%;flex:1;background:#7a67ff;border-radius:12px;"></div>
+<div style="height:52%;flex:1;background:#6f7cff;border-radius:12px;"></div>
+<div style="height:80%;flex:1;background:#5c7cff;border-radius:12px;"></div>
+<div style="height:70%;flex:1;background:#7290ff;border-radius:12px;"></div>
+<div style="height:95%;flex:1;background:#8f5cff;border-radius:12px;"></div>
 
-            <div class="panel-grid">
+</div>
 
-                <div class="card">
+</div>
 
-                    <div class="card-title">
-                        User Management
-                    </div>
+</div>
 
-                    <input
-                    type="text"
-                    id="targetUser"
-                    placeholder="Enter username..."
-                    >
+<!-- CHAT -->
 
-                    <div style="height:16px;"></div>
+<div class="panel" id="chat">
 
-                    <select id="rankSelect">
+<div class="card">
 
-                        <option>MEMBER</option>
-                        <option>VIP</option>
-                        <option>CRIMINAL</option>
-                        <option>RICH</option>
-                        <option>COUNCIL</option>
-                        <option>MOD</option>
-                        <option>MANAGER</option>
-                        <option>ADMIN</option>
-                        <option>FOUNDER</option>
+<div class="card-title">
+Internal Chat
+</div>
 
-                    </select>
+<div class="chat" id="chatBox">
 
-                    <div style="
-                    margin-top:18px;
-                    display:flex;
-                    gap:10px;
-                    flex-wrap:wrap;
-                    ">
+<div class="msg">
+server synced
+</div>
 
-                        <button class="btn btn-purple"
-                        onclick="changeRank()">
-                            Change Rank
-                        </button>
+<div class="msg self">
+copy that
+</div>
 
-                        <button class="btn"
-                        onclick="degradeRank()">
-                            Degrade
-                        </button>
+</div>
 
-                        <button class="btn"
-                        onclick="changeNickname()">
-                            Nickname
-                        </button>
+<div style="height:16px;"></div>
 
-                        <button class="btn"
-                        onclick="kickSession()">
-                            Session Kick
-                        </button>
+<div style="display:flex;gap:10px;">
 
-                        <button class="btn btn-danger"
-                        onclick="timeoutUser()">
-                            Timeout
-                        </button>
+<input
+class="input"
+id="chatInput"
+placeholder="type message..."
+>
 
-                        <button class="btn btn-danger"
-                        onclick="banPanelUser()">
-                            Ban
-                        </button>
+<button
+class="btn btn-primary"
+onclick="sendMessage()">
+Send
+</button>
 
-                        <button class="btn btn-danger"
-                        onclick="deleteUser()">
-                            Delete User
-                        </button>
+</div>
 
-                    </div>
+</div>
 
-                    <div class="status-msg"
-                    id="panelStatus"></div>
+</div>
 
-                </div>
+<!-- ACTIVITY -->
 
-                <div class="card">
+<div class="panel" id="activity">
 
-                    <div class="card-title">
-                        Rank Hierarchy
-                    </div>
+<div class="card">
 
-                    <div style="line-height:2;">
-                        Member<br>
-                        VIP<br>
-                        Criminal<br>
-                        Rich<br>
-                        Council<br>
-                        Mod<br>
-                        Manager<br>
-                        Admin<br>
-                        Founder
-                    </div>
+<div class="card-title">
+Realtime Activity
+</div>
 
-                </div>
+<div
+class="activity"
+id="activityBox">
+</div>
 
-            </div>
+</div>
 
-        </div>
+</div>
 
-        <!-- PURGE -->
+<!-- MODERATION -->
 
-        <div id="purge" class="panel">
+<div class="panel" id="moderation">
 
-            <div class="card"
-            style="max-width:650px;">
+<div class="card">
 
-                <div class="card-title">
-                    Post Purge + Pin Paste
-                </div>
+<div class="card-title">
+Moderation Tools
+</div>
 
-                <input
-                type="text"
-                id="purgeInput"
-                placeholder="https://example.com/post/123"
-                >
+<div class="quick">
 
-                <div style="
-                margin-top:15px;
-                display:flex;
-                gap:10px;
-                flex-wrap:wrap;
-                ">
+<button class="btn btn-dark">
+Shadow Ban
+</button>
 
-                    <button class="btn btn-danger"
-                    onclick="purgePost()">
-                        Purge Post
-                    </button>
+<button class="btn btn-dark">
+Lock Chat
+</button>
 
-                    <button class="btn"
-                    onclick="pastePin()">
-                        Paste Pin
-                    </button>
+<button class="btn btn-dark">
+Mass Timeout
+</button>
 
-                </div>
+<button class="btn btn-dark">
+Reset Tokens
+</button>
 
-                <div class="status-msg"
-                id="purgeStatus"></div>
+<button class="btn btn-danger">
+Kill Sessions
+</button>
 
-            </div>
+<button class="btn btn-danger">
+Wipe Cache
+</button>
 
-        </div>
+</div>
 
-        <!-- LOGS -->
+</div>
 
-        <div id="logs" class="panel">
+<div class="card">
 
-            <div class="logs"
-            id="logsBox"></div>
+<div class="card-title">
+Moderation Queue
+</div>
 
-        </div>
+<div class="activity">
 
-    </main>
+<div class="activity-item">
+flagged post by "ghost"
+</div>
+
+<div class="activity-item">
+spam detected from node 14
+</div>
+
+<div class="activity-item">
+multiple failed auth attempts
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SETTINGS -->
+
+<div class="panel" id="settings">
+
+<div class="card">
+
+<div class="card-title">
+Preferences
+</div>
+
+<div class="setting">
+<div>Realtime Sync</div>
+<div class="toggle active"
+onclick="toggle(this)">
+</div>
+</div>
+
+<div class="setting">
+<div>Advanced Logging</div>
+<div class="toggle active"
+onclick="toggle(this)">
+</div>
+</div>
+
+<div class="setting">
+<div>Auto Backup</div>
+<div class="toggle"
+onclick="toggle(this)">
+</div>
+</div>
+
+<div class="setting">
+<div>Stealth Mode</div>
+<div class="toggle"
+onclick="toggle(this)">
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -1098,490 +1540,167 @@ tr:hover{
 
 function login(){
 
-    const pass =
-    document.getElementById("passwordInput").value;
+const pass =
+document.getElementById("pass").value;
 
-    const err =
-    document.getElementById("loginError");
+if(pass === "1344"){
 
-    if(pass === "1344"){
+document.getElementById("login").style.display="none";
 
-        document
-        .getElementById("loginScreen")
-        .classList.add("hidden");
+document.getElementById("app").style.display="block";
 
-        addLog(
-        "system",
-        "secure session unlocked"
-        );
+}else{
 
-    }else{
-
-        err.style.display = "block";
-
-    }
+document.getElementById("loginError")
+.style.display="block";
 
 }
 
-/* RANKS */
+}
 
-const ranks = [
-"MEMBER",
-"VIP",
-"CRIMINAL",
-"RICH",
-"COUNCIL",
-"MOD",
-"MANAGER",
-"ADMIN",
-"FOUNDER"
-];
+/* SWITCH */
 
-/* USERS */
+function switchPanel(id,el){
+
+document.querySelectorAll(".panel")
+.forEach(p=>p.classList.remove("active"));
+
+document.querySelectorAll(".nav-btn")
+.forEach(n=>n.classList.remove("active"));
+
+document.getElementById(id)
+.classList.add("active");
+
+el.classList.add("active");
+
+}
+
+/* DATA */
 
 const users = [];
-
-/* POSTS */
-
 const posts = [];
 
-const hallPosts = [];
-
-/* NAMES */
-
 const names = [
-"go","her","ace","mishka","vayne","rockstar",
-"bella","sewer","sin","water","federal",
-"ghost","reaper","luci","drain","terror",
-"crossfade","vice","minted","swat","dead",
-"envy","hfwm","drecc","scare","toenail",
-"kapaisu","weather","harm","versus","asce",
-"babytron","root","spydir","vile","fox",
-"silent","month","law","hacker","arabz"
+"ghost","vayne","proxy","silent","nova",
+"root","envy","drain","cross","zero",
+"riot","cipher","phantom","void","saint",
+"virus","flare","wraith","toxic","bleed"
 ];
 
 /* USERS */
 
-for(let i=0;i<120;i++){
+for(let i=0;i<60;i++){
 
-    users.push({
+users.push({
 
-        id:Math.floor(Math.random()*900000),
+id:Math.floor(Math.random()*999999),
 
-        name:
-        names[Math.floor(Math.random()*names.length)]
-        + (Math.random()>.7
-        ? Math.floor(Math.random()*999)
-        : ""),
+name:
+names[Math.floor(Math.random()*names.length)]
++
+Math.floor(Math.random()*999),
 
-        rank:ranks[
-            Math.floor(Math.random()*5)
-        ],
+rank:
+Math.random()>.8
+? "ADMIN"
+: Math.random()>.5
+? "VIP"
+: "MEMBER",
 
-        status:
-        Math.random()>.5
-        ? "Online"
-        : "Offline",
+status:
+Math.random()>.5
+? "ONLINE"
+: "OFFLINE",
 
-        joined:"202"+Math.floor(Math.random()*6)
+joined:
+2020 + Math.floor(Math.random()*6)
 
-    });
+});
 
 }
-
-/* SPECIAL USERS */
-
-users.unshift(
-{
-id:1,
-name:"kt",
-rank:"FOUNDER",
-status:"Online",
-joined:"2019"
-},
-{
-id:0,
-name:"Admin",
-rank:"ADMIN",
-status:"Online",
-joined:"2001"
-}
-);
-
-/* TABLE */
-
-const table =
-document.getElementById("userTable");
 
 /* RENDER USERS */
 
 function renderUsers(){
 
-    const search =
-    document.getElementById("searchInput")
-    ?.value
-    ?.toLowerCase() || "";
-
-    table.innerHTML = users
-    .filter(u=>
-        u.name.toLowerCase()
-        .includes(search)
-    )
-    .map(u=>`
-
-    <tr>
-
-        <td>#${u.id}</td>
-
-        <td style="
-        color:white;
-        font-weight:800;
-        ">
-            ${u.name}
-        </td>
-
-        <td>
-            <span class="
-            rank
-            rank-${u.rank.toLowerCase()}
-            ">
-                ${u.rank}
-            </span>
-        </td>
-
-        <td class="
-        status-${u.status.toLowerCase()}
-        ">
-            ${u.status}
-        </td>
-
-        <td style="color:#777;">
-            ${u.joined}
-        </td>
-
-    </tr>
-
-    `).join("");
-
-    updateStats();
-
-}
-
-renderUsers();
-
-/* STATS */
-
-function updateStats(){
-
-    document.getElementById("totalUsers")
-    .innerText = users.length;
-
-    document.getElementById("onlineUsers")
-    .innerText =
-    users.filter(u=>
-    u.status==="Online").length;
-
-    document.getElementById("postCount")
-    .innerText = posts.length;
-
-}
-
-/* ADD USER */
-
-function addUser(){
-
-    const username =
-    document.getElementById("newUsername")
-    .value.trim();
-
-    const rank =
-    document.getElementById("newRank")
-    .value;
-
-    const status =
-    document.getElementById("addUserStatus");
-
-    if(!username){
-
-        status.style.display="block";
-        status.innerText =
-        "Username required.";
-
-        return;
-    }
-
-    users.unshift({
-
-        id:Math.floor(Math.random()*999999),
-
-        name:username,
-
-        rank,
-
-        status:"Online",
-
-        joined:new Date()
-        .getFullYear()
-
-    });
-
-    renderUsers();
-
-    addLog(
-    "system",
-    `created user ${username}`
-    );
-
-    status.style.display="block";
-
-    status.innerText =
-    `${username} added successfully.`;
-
-    document.getElementById("newUsername")
-    .value = "";
-
-}
-
-/* GET USER */
-
-function getUser(){
-
-    const target =
-    document.getElementById("targetUser")
-    .value
-    .trim()
-    .toLowerCase();
-
-    return users.find(u=>
-    u.name.toLowerCase()===target
-    );
-
-}
-
-/* PANEL STATUS */
-
-function setStatus(msg){
-
-    const s =
-    document.getElementById("panelStatus");
-
-    s.style.display = "block";
-    s.innerText = msg;
-
-}
-
-/* CHANGE RANK */
-
-function changeRank(){
-
-    const user = getUser();
-
-    if(!user)
-    return setStatus("User not found.");
-
-    user.rank =
-    document.getElementById("rankSelect")
-    .value;
-
-    renderUsers();
-
-    setStatus(
-    `${user.name} rank updated.`
-    );
-
-}
-
-/* DEGRADE */
-
-function degradeRank(){
-
-    const user = getUser();
-
-    if(!user)
-    return setStatus("User not found.");
-
-    let index =
-    ranks.indexOf(user.rank);
-
-    if(index <= 0)
-    return setStatus(
-    "Cannot degrade further."
-    );
-
-    user.rank =
-    ranks[index - 1];
-
-    renderUsers();
-
-    setStatus(
-    `${user.name} degraded.`
-    );
-
-}
-
-/* NICKNAME */
-
-function changeNickname(){
-
-    const user = getUser();
-
-    if(!user)
-    return setStatus("User not found.");
-
-    const newName =
-    prompt("New nickname:");
-
-    if(!newName)
-    return;
-
-    user.name = newName;
-
-    renderUsers();
-
-    addLog(
-    "system",
-    `renamed user to ${newName}`
-    );
-
-}
-
-/* KICK */
-
-function kickSession(){
-
-    const user = getUser();
-
-    if(!user)
-    return setStatus("User not found.");
-
-    user.status = "Kicked";
-
-    renderUsers();
-
-}
-
-/* TIMEOUT */
-
-function timeoutUser(){
-
-    const user = getUser();
-
-    if(!user)
-    return setStatus("User not found.");
-
-    user.status = "Timeout";
-
-    renderUsers();
-
-}
-
-/* BAN */
-
-function banPanelUser(){
-
-    const user = getUser();
-
-    if(!user)
-    return setStatus("User not found.");
-
-    user.status = "Banned";
-
-    renderUsers();
-
-}
-
-/* DELETE */
-
-function deleteUser(){
-
-    const user = getUser();
-
-    if(!user)
-    return setStatus("User not found.");
-
-    const index =
-    users.indexOf(user);
-
-    users.splice(index,1);
-
-    renderUsers();
-
-    setStatus("User deleted.");
+const table =
+document.getElementById("userTable");
+
+table.innerHTML =
+users.map(u=>`
+
+<tr>
+
+<td>#${u.id}</td>
+
+<td style="font-weight:800;">
+${u.name}
+</td>
+
+<td>
+<span class="
+tag
+${u.rank.toLowerCase()}
+">
+${u.rank}
+</span>
+</td>
+
+<td>
+<span class="
+tag
+${u.status.toLowerCase()}
+">
+${u.status}
+</span>
+</td>
+
+<td>${u.joined}</td>
+
+</tr>
+
+`).join("");
+
+document.getElementById("totalUsers")
+.innerText = users.length;
+
+document.getElementById("onlineUsers")
+.innerText =
+users.filter(
+u=>u.status==="ONLINE"
+).length;
 
 }
 
 /* POSTS */
 
-function addPost(){
+function createPost(){
 
-    const author =
-    document.getElementById("postAuthor")
-    .value.trim();
+const user =
+document.getElementById("postUser").value;
 
-    const content =
-    document.getElementById("postContent")
-    .value.trim();
+const content =
+document.getElementById("postContent").value;
 
-    if(!author || !content)
-    return;
+if(!user || !content) return;
 
-    posts.unshift({
+posts.unshift({
 
-        id:Date.now(),
+id:Date.now(),
+user,
+content,
+pinned:false
 
-        author,
+});
 
-        content,
+renderPosts();
 
-        pinned:false
+document.getElementById("postUser").value="";
+document.getElementById("postContent").value="";
 
-    });
-
-    renderPosts();
-
-    addLog(
-    author,
-    "published a post"
-    );
-
-    document.getElementById("postAuthor").value="";
-    document.getElementById("postContent").value="";
-
-}
-
-/* PIN PASTE */
-
-function pinPaste(){
-
-    if(!posts.length)
-    return;
-
-    posts[0].pinned = true;
-
-    renderPosts();
-
-    addLog(
-    "system",
-    "pinned a paste"
-    );
-
-}
-
-/* HALL */
-
-function hallPost(){
-
-    if(!posts.length)
-    return;
-
-    hallPosts.unshift(posts[0]);
-
-    renderHall();
-
-    addLog(
-    "system",
-    "sent post to hall of autism"
-    );
+addFeed(
+`${user} created post`
+);
 
 }
 
@@ -1589,286 +1708,315 @@ function hallPost(){
 
 function renderPosts(){
 
-    const container =
-    document.getElementById("postsContainer");
+const container =
+document.getElementById("postsContainer");
 
-    container.innerHTML =
-    posts.map(post=>`
+const dash =
+document.getElementById("dashboardPosts");
 
-    <div class="
-    post
-    ${post.pinned ? 'pinned' : ''}
-    ">
+const html =
+posts.map(p=>`
 
-        <div class="post-top">
+<div class="post">
 
-            <div class="post-author">
-                ${post.author}
-            </div>
+<div class="post-top">
 
-            <div style="
-            color:#666;
-            font-size:12px;
-            ">
-                #${post.id}
-            </div>
+<div class="post-user">
+${p.user}
+</div>
 
-        </div>
+<div style="color:#6f7687;">
+#${p.id}
+</div>
 
-        <div class="post-content">
-            ${post.content}
-        </div>
+</div>
 
-        <div class="post-tags">
+<div class="post-content">
+${p.content}
+</div>
 
-            ${
-                post.pinned
-                ? '<div class="tag">PINNED</div>'
-                : ''
-            }
+<div class="post-actions">
 
-        </div>
+<button class="btn btn-dark">
+Edit
+</button>
 
-    </div>
+<button class="btn btn-dark">
+Archive
+</button>
 
-    `).join("");
+<button
+class="btn btn-primary"
+onclick="pinSingle(${p.id})">
+Pin
+</button>
 
-    updateStats();
+<button
+class="btn btn-danger"
+onclick="deletePost(${p.id})">
+Delete
+</button>
 
-}
+</div>
 
-/* RENDER HALL */
+</div>
 
-function renderHall(){
+`).join("");
 
-    const container =
-    document.getElementById("hallContainer");
+container.innerHTML = html;
 
-    container.innerHTML =
-    hallPosts.map(post=>`
+dash.innerHTML =
+posts.slice(0,3).map(p=>`
 
-    <div class="hall-card">
+<div class="activity-item">
+<b>${p.user}</b>:
+${p.content}
+</div>
 
-        <div class="hall-title">
-            archived entry
-        </div>
+`).join("");
 
-        <div class="hall-user">
-            ${post.author}
-        </div>
-
-        <div style="
-        color:#cfcfcf;
-        line-height:1.7;
-        ">
-            ${post.content}
-        </div>
-
-    </div>
-
-    `).join("");
+document.getElementById("totalPosts")
+.innerText = posts.length;
 
 }
 
-/* RANDOM POST */
+/* POST ACTIONS */
 
-function createRandomPost(){
+function deletePost(id){
 
-    const msgs = [
-    "node leak incoming",
-    "backend wiped",
-    "mirror archived",
-    "session bypass active",
-    "new exploit discovered",
-    "purge wave started"
-    ];
+const index =
+posts.findIndex(p=>p.id===id);
 
-    posts.unshift({
+if(index > -1){
 
-        id:Date.now(),
+posts.splice(index,1);
 
-        author:names[
-        Math.floor(Math.random()*names.length)
-        ],
+renderPosts();
 
-        content:msgs[
-        Math.floor(Math.random()*msgs.length)
-        ],
-
-        pinned:false
-
-    });
-
-    renderPosts();
+addFeed(
+`post ${id} deleted`
+);
 
 }
 
-/* QUICK ACTIONS */
+}
+
+function pinSingle(id){
+
+addFeed(
+`post ${id} pinned`
+);
+
+}
+
+function pinPaste(){
+
+addFeed(
+"global paste pinned"
+);
+
+alert("Paste pinned.");
+
+}
+
+function clearPosts(){
+
+posts.length = 0;
+
+renderPosts();
+
+}
+
+/* FEED */
+
+function addFeed(text){
+
+const feed =
+document.getElementById("liveFeed");
+
+const box =
+document.getElementById("activityBox");
+
+const html = `
+<div class="activity-item">
+${text}
+</div>
+`;
+
+feed.innerHTML =
+html + feed.innerHTML;
+
+box.innerHTML =
+html + box.innerHTML;
+
+}
+
+/* CHAT */
+
+function sendMessage(){
+
+const input =
+document.getElementById("chatInput");
+
+if(!input.value) return;
+
+const chat =
+document.getElementById("chatBox");
+
+chat.innerHTML += `
+<div class="msg self">
+${input.value}
+</div>
+`;
+
+chat.scrollTop =
+chat.scrollHeight;
+
+input.value="";
+
+}
+
+/* TOGGLE */
+
+function toggle(el){
+
+el.classList.toggle("active");
+
+}
+
+/* QUICK */
+
+function addFakeUser(){
+
+users.unshift({
+
+id:Math.floor(Math.random()*999999),
+
+name:
+names[Math.floor(Math.random()*names.length)]
++
+Math.floor(Math.random()*999),
+
+rank:"MEMBER",
+status:"ONLINE",
+joined:2026
+
+});
+
+renderUsers();
+
+addFeed(
+"user added"
+);
+
+}
 
 function randomizeUsers(){
 
-    users.forEach(u=>{
+users.forEach(u=>{
 
-        u.status =
-        Math.random()>.5
-        ? "Online"
-        : "Offline";
+u.status =
+Math.random()>.5
+? "ONLINE"
+: "OFFLINE";
 
-    });
-
-    renderUsers();
-
-    addLog(
-    "system",
-    "randomized presence nodes"
-    );
-
-}
-
-function massOffline(){
-
-    users.forEach(u=>{
-        u.status = "Offline";
-    });
-
-    renderUsers();
-
-    addLog(
-    "system",
-    "performed offline sweep"
-    );
-
-}
-
-function purgeRandom(){
-
-    addLog(
-    "system",
-    "executed emergency purge"
-    );
-
-    alert(
-    "Emergency purge completed."
-    );
-
-}
-
-/* PURGE */
-
-function purgePost(){
-
-    const input =
-    document.getElementById("purgeInput");
-
-    const status =
-    document.getElementById("purgeStatus");
-
-    if(!input.value)
-    return;
-
-    status.style.display="block";
-
-    status.innerText =
-    "Connecting to archive nodes...";
-
-    setTimeout(()=>{
-
-        status.innerText =
-        "Purging mirrors...";
-
-        setTimeout(()=>{
-
-            status.innerText =
-            "Destroying references...";
-
-            setTimeout(()=>{
-
-                status.innerText =
-                "SUCCESS: Post purged.";
-
-                addLog(
-                "system",
-                `purged ${input.value}`
-                );
-
-            },1000);
-
-        },1200);
-
-    },1000);
-
-}
-
-/* PASTE PIN */
-
-function pastePin(){
-
-    const status =
-    document.getElementById("purgeStatus");
-
-    status.style.display="block";
-
-    status.innerText =
-    "Generating permanent paste pin...";
-
-    setTimeout(()=>{
-
-        status.innerText =
-        "PIN GENERATED: #PIN-" +
-        Math.floor(Math.random()*999999);
-
-    },1200);
-
-}
-
-/* LOGS */
-
-const logsBox =
-document.getElementById("logsBox");
-
-function addLog(user,action){
-
-    const div =
-    document.createElement("div");
-
-    div.className = "log";
-
-    div.innerHTML = `
-    <span>${user}</span> ${action}
-    `;
-
-    logsBox.prepend(div);
-
-}
-
-[
-"initialized secure node",
-"encrypted transport layer ready",
-"audit backend connected",
-"session validation online",
-"database stable"
-].forEach(log=>{
-    addLog("system",log);
 });
 
-/* PANELS */
+renderUsers();
 
-function switchPanel(id,el){
-
-    document.querySelectorAll(".panel")
-    .forEach(p=>
-    p.classList.remove("active"));
-
-    document.querySelectorAll(".nav-item")
-    .forEach(n=>
-    n.classList.remove("active"));
-
-    document.getElementById(id)
-    .classList.add("active");
-
-    el.classList.add("active");
+addFeed(
+"statuses randomized"
+);
 
 }
+
+function offlineAll(){
+
+users.forEach(
+u=>u.status="OFFLINE"
+);
+
+renderUsers();
+
+addFeed(
+"offline sweep complete"
+);
+
+}
+
+function spawnPosts(){
+
+for(let i=0;i<5;i++){
+
+posts.unshift({
+
+id:Date.now()+i,
+
+user:
+names[
+Math.floor(
+Math.random()*names.length
+)
+],
+
+content:
+"generated system post #" + i,
+
+pinned:false
+
+});
+
+}
+
+renderPosts();
+
+addFeed(
+"posts generated"
+);
+
+}
+
+function simulateAttack(){
+
+addFeed(
+"simulated attack detected"
+);
+
+alert(
+"Threat simulation complete."
+);
+
+}
+
+function purgeSystem(){
+
+addFeed(
+"emergency purge initiated"
+);
+
+alert(
+"System purge completed."
+);
+
+}
+
+/* INIT */
+
+renderUsers();
+
+spawnPosts();
+
+addFeed(
+"system initialized"
+);
+
+addFeed(
+"audit engine online"
+);
+
+addFeed(
+"mirror nodes synced"
+);
 
 </script>
 
