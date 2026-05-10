@@ -1,49 +1,53 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silent Manager</title>
+    <title>Silent Manager v2.0</title>
     <style>
         :root {
-            --bg-main: #080808;
-            --bg-sidebar: #030303;
-            --bg-card: #0d0d0d;
-            --border: #1a1a1a;
-            --accent: #bb71e4;
-            --text: #a0a0a0;
+            --bg-main: #050505;
+            --bg-sidebar: #020202;
+            --bg-card: #0a0a0a;
+            --border: #141414;
+            --accent: #bb71e4; /* VIP/Light Purple */
+            --criminal: #7a2eb0; /* Dark Purple */
+            --rich: #ffd700; /* Gold */
+            --text: #888;
             --danger: #ff4444;
+            --success: #00ff88;
         }
 
         body {
             margin: 0;
             background: var(--bg-main);
             color: var(--text);
-            font-family: 'Inter', sans-serif;
-            font-size: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
         }
 
+        /* --- UI Framework --- */
         .navbar {
-            height: 50px;
+            height: 60px;
             background: var(--bg-sidebar);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            padding: 0 25px;
+            padding: 0 30px;
             position: fixed;
             width: 100%;
             z-index: 100;
             box-sizing: border-box;
         }
 
-        .brand { color: #fff; font-weight: 800; letter-spacing: 1px; font-size: 14px; }
+        .brand { color: #fff; font-weight: bold; letter-spacing: 2px; }
         .brand span { color: var(--accent); }
 
-        .layout { display: flex; padding-top: 50px; }
+        .layout { display: flex; padding-top: 60px; }
 
         .sidebar {
-            width: 220px;
-            height: calc(100vh - 50px);
+            width: 240px;
+            height: calc(100vh - 60px);
             background: var(--bg-sidebar);
             border-right: 1px solid var(--border);
             position: fixed;
@@ -51,208 +55,235 @@
         }
 
         .nav-item {
-            padding: 12px 25px;
+            padding: 15px 30px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
             transition: 0.2s;
-            border-left: 3px solid transparent;
+            border-left: 2px solid transparent;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
         }
 
-        .nav-item:hover { background: #0a0a0a; color: #fff; }
+        .nav-item:hover { background: #080808; color: #fff; }
         .nav-item.active { 
-            background: #0f0f0f; 
+            background: #0d0d0d; 
             color: #fff; 
             border-left-color: var(--accent);
         }
 
-        .main { margin-left: 220px; padding: 30px; width: 100%; }
+        .main { margin-left: 240px; padding: 40px; width: calc(100% - 240px); box-sizing: border-box; }
 
-        /* Dashboard Components */
-        .purge-container {
-            max-width: 600px;
+        /* --- Components --- */
+        .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 4px;
+            padding: 25px;
+            border-radius: 2px;
+            margin-bottom: 20px;
         }
 
-        input[type="text"] {
-            width: 100%;
-            background: #050505;
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+        input, select {
+            background: #000;
             border: 1px solid var(--border);
             padding: 12px;
             color: #fff;
-            margin: 10px 0;
-            box-sizing: border-box;
+            font-family: inherit;
+            margin-bottom: 10px;
             outline: none;
         }
 
         .btn {
-            padding: 8px 15px;
-            border: none;
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: #fff;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 10px;
+            font-family: inherit;
             text-transform: uppercase;
-            border-radius: 2px;
+            font-size: 11px;
             transition: 0.3s;
         }
 
-        .btn-purge { background: var(--danger); color: white; width: 100%; margin-top: 10px; }
-        .btn-purge:hover { opacity: 0.8; box-shadow: 0 0 15px rgba(255, 68, 68, 0.3); }
+        .btn:hover { background: #fff; color: #000; }
+        .btn-danger { border-color: var(--danger); color: var(--danger); }
+        .btn-danger:hover { background: var(--danger); color: #fff; }
+        .btn-success { border-color: var(--success); color: var(--success); }
+        .btn-success:hover { background: var(--success); color: #000; }
+
+        /* --- Ranks & UI Polish --- */
+        .rank { font-weight: bold; padding: 2px 6px; border-radius: 2px; font-size: 10px; }
+        .rank-vip { color: var(--accent); border: 1px solid var(--accent); }
+        .rank-criminal { color: var(--criminal); border: 1px solid var(--criminal); }
+        .rank-rich { color: var(--rich); border: 1px solid var(--rich); text-shadow: 0 0 5px var(--rich); }
         
-        .btn-table { padding: 4px 8px; margin-right: 4px; background: #1a1a1a; color: #888; border: 1px solid #333; }
-        .btn-table:hover { color: #fff; border-color: var(--accent); }
-        .btn-ban { color: var(--danger); }
-
-        table { width: 100%; border-collapse: collapse; background: var(--bg-card); border: 1px solid var(--border); }
-        th { text-align: left; padding: 12px 15px; color: #444; border-bottom: 1px solid var(--border); font-size: 10px; }
-        td { padding: 10px 15px; border-bottom: 1px solid #111; }
-
-        .role { font-weight: bold; font-size: 10px; }
-        .role-manager { color: var(--accent); }
-        .role-rich { color: #00ffcc; }
-        .role-mod { color: #00d4ff; }
-        .role-admin { color: #ff4444; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 15px; border-bottom: 2px solid var(--border); color: #444; font-size: 10px; }
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); }
 
         .hidden { display: none; }
-        .status-msg { margin-top: 15px; font-style: italic; color: var(--accent); display: none; }
+        .console-text { color: var(--success); font-family: monospace; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="brand">SILENT <span>[MANAGER]</span></div>
+        <div class="brand">SYSTEM<span>CORE</span></div>
     </nav>
 
     <div class="layout">
         <aside class="sidebar">
-            <div class="nav-item active" onclick="tab('users')">👥 Users</div>
-            <div class="nav-item" onclick="tab('purge')">🔥 Purge Paste</div>
-            <div class="nav-item" onclick="tab('logs')">📜 Audit Logs</div>
+            <div class="nav-item active" onclick="tab('home')">Home</div>
+            <div class="nav-item" onclick="tab('users')">Users</div>
+            <div class="nav-item" onclick="tab('management')">User Control</div>
+            <div class="nav-item" onclick="tab('purge')">Purge System</div>
+            <div class="nav-item" onclick="tab('logs')">Audit Logs</div>
         </aside>
 
         <main class="main">
-            <!-- USERS SECTION -->
-            <div id="users-sec">
-                <table id="userTableMain">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Rank</th>
-                            <th>Management</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userTable"></tbody>
-                </table>
+            <!-- HOME / SERVER FUNCTIONS -->
+            <div id="home-sec">
+                <h2 style="color:#fff">System Status</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4 style="margin:0">Database Cluster</h4>
+                        <p class="console-text">ONLINE [0.4ms]</p>
+                        <button class="btn btn-danger" onclick="serverOp('STOP_DB')">Kill DB</button>
+                    </div>
+                    <div class="card">
+                        <h4 style="margin:0">Main Server</h4>
+                        <p class="console-text" id="serverStatus">RUNNING</p>
+                        <button class="btn btn-danger" onclick="serverOp('STOP_SRV')">Stop Server</button>
+                        <button class="btn btn-success" onclick="serverOp('START_SRV')">Restart</button>
+                    </div>
+                    <div class="card">
+                        <h4 style="margin:0">Firewall</h4>
+                        <p class="console-text">ACTIVE [DROP_ALL]</p>
+                        <button class="btn">Settings</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USERS LIST -->
+            <div id="users-sec" class="hidden">
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr><th>ID</th><th>User</th><th>Rank</th><th>Joined</th></tr>
+                        </thead>
+                        <tbody id="userTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- USER CONTROL PANEL -->
+            <div id="management-sec" class="hidden">
+                <div class="card" style="max-width: 500px;">
+                    <h3>User Override Panel</h3>
+                    <p>Enter exact username to modify permissions.</p>
+                    <input type="text" id="targetUser" placeholder="Username..." style="width:100%">
+                    <div style="display:flex; gap:10px; margin-bottom: 20px;">
+                        <select id="rankSelect" style="flex:1">
+                            <option value="vip">VIP [$30]</option>
+                            <option value="criminal">Criminal [$50]</option>
+                            <option value="rich">Rich [$100]</option>
+                        </select>
+                        <button class="btn btn-success" onclick="modifyUser('RANK')">Set Rank</button>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <button class="btn btn-danger" onclick="modifyUser('BAN')">Permanent Ban</button>
+                        <button class="btn" onclick="modifyUser('KICK')">Session Kick</button>
+                    </div>
+                    <div id="mgtStatus" class="console-text" style="margin-top:20px; display:none;"></div>
+                </div>
             </div>
 
             <!-- PURGE SECTION -->
             <div id="purge-sec" class="hidden">
-                <div class="purge-container">
-                    <h2 style="color:#fff; margin-top:0">Instant Purge</h2>
-                    <p>Enter the paste URL or ID to remove it permanently from the database.</p>
-                    <input type="text" id="purgeInput" placeholder="https://doxbin.net/upload/xxxx...">
-                    <button class="btn btn-purge" onclick="executePurge()">Execute Purge</button>
-                    <div id="purgeStatus" class="status-msg">Request sent to database clusters...</div>
+                <div class="card">
+                    <h3>Paste Nullifier</h3>
+                    <input type="text" id="purgeInput" placeholder="Paste URL..." style="width: 100%">
+                    <button class="btn btn-danger" style="width:100%" onclick="executePurge()">Wipe from Storage</button>
                 </div>
             </div>
 
-            <!-- LOGS SECTION -->
+            <!-- LOGS -->
             <div id="logs-sec" class="hidden">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Operator</th>
-                            <th>Action</th>
-                            <th>Context</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody id="logTable"></tbody>
-                </table>
+                <div class="card">
+                    <table id="logTable"></table>
+                </div>
             </div>
         </main>
     </div>
 
     <script>
-        const admins = ["ceo", "Admin", "Kaede", "month", "boss"];
-        const list = ["asuna", "Bella", "go5", "her", "sewer", "ace", "mishka", "Hacker", "ye", "vxu", "xan", "king", "Kris", "Akanori", "baki", "laskun", "engineowning", "vayne", "paranoid", "law", "obsessor", "config", "Joey", "Worsaken", "ruin", "Ry", "Fed", "babytron", "tragic", "rockstar", "glow", "Ty", "proxy", "Kira", "bladee", "declare", "Leonardo", "sean", "ghoul", "lord", "kills", "Ivan", "femboy", "solar", "Dolphin", "Harmless", "Graveyard", "Vile", "horrid", "meow", "lyoni", "dw", "coffin", "Machiavelli", "Drayco", "Jay", "stalker", "doppler", "Icmp", "Water", "Rogue", "sick", "ave", "sin", "wdr", "DGSI", "mature", "father", "Kaito", "shorty", "Network", "Amulet", "Valor", "irc", "Cliqued", "Designer", "Konti", "crown", "compa", "zui", "cult", "cell", "viceatone", "Icarus", "bane", "cure", "Unknown", "Imran", "Lota", "Unholy", "drayn", "dinner", "sixset", "extort", "Eevee", "dritan", "kitty", "cherry", "crook", "skydive", "fiji", "xf24", "pastin", "vela", "xpath", "shawty", "Wilson", "Crew", "livid", "Ringwraith", "archive", "emma", "r00tkit", "injured", "fbh", "LOVEBRO", "eth", "candle", "agentone", "Larceny", "pvtswat", "Nocif", "Clairvoyant", "Ichigo", "juvenile", "ninja", "evelyn", "graceful", "Haine", "Priority", "templates", "prince", "Stitch", "strawb", "gia", "Rapture", "starboy", "ruhydon", "DexCFW", "Disturbia", "deathnotes", "Fusi", "ib", "Fire", "shokoloko", "Weather", "adderall", "lucki", "Christian", "Niridya", "distress", "tea", "wink", "lethal", "remi", "twink", "BestBuy", "Amoere", "Padlock", "dyssomnia", "Harm", "alex", "nanachi", "Pusha", "convict", "johnnyzyns", "Arcturus", "Swattin", "asset", "mop", "harmed", "vampire", "Terminator", "zoeycat", "John", "Demon", "Clique", "Valhalla", "goth", "scare", "Italy", "pumpkin", "merc"];
+        const users = [
+            {n: "asuna", r: "rich", j: "2023"}, {n: "Bella", r: "vip", j: "2024"}, 
+            {n: "ceo", r: "rich", j: "2020"}, {n: "Hacker", r: "criminal", j: "2021"}
+        ];
 
-        // Render Users
-        const uTable = document.getElementById('userTable');
-        uTable.innerHTML = list.map((name, i) => `
-            <tr id="row-${i}">
-                <td>#${1000 + i}</td>
-                <td style="color:#eee; font-weight:600">${name}</td>
-                <td><span id="rank-${i}" class="role role-rich">Rich</span></td>
-                <td>
-                    <button class="btn btn-table" onclick="setRank(${i}, 'Mod')">Rank+</button>
-                    <button class="btn btn-table" onclick="setRank(${i}, 'Rich')">Rank-</button>
-                    <button class="btn btn-table btn-ban" onclick="banUser(${i})">Ban</button>
-                </td>
-            </tr>
-        `).join('');
-
-        // Action Functions
-        function setRank(id, rank) {
-            const el = document.getElementById(`rank-${id}`);
-            el.className = `role role-${rank.toLowerCase()}`;
-            el.innerText = rank;
+        // Fill user table
+        function renderUsers() {
+            const tbody = document.getElementById('userTable');
+            tbody.innerHTML = users.map((u, i) => `
+                <tr>
+                    <td>#${2000+i}</td>
+                    <td style="color:#fff">${u.n}</td>
+                    <td><span class="rank rank-${u.r}">${u.r.toUpperCase()}</span></td>
+                    <td>${u.j}</td>
+                </tr>
+            `).join('');
         }
 
-        function banUser(id) {
-            if(confirm("Confirm permanent ban?")) {
-                document.getElementById(`row-${id}`).style.opacity = "0.3";
-                document.getElementById(`row-${id}`).style.pointerEvents = "none";
+        // Server Ops
+        function serverOp(op) {
+            const s = document.getElementById('serverStatus');
+            if(op === 'STOP_SRV') {
+                s.innerText = "OFFLINE";
+                s.style.color = "var(--danger)";
+            } else if(op === 'START_SRV') {
+                s.innerText = "REBOOTING...";
+                setTimeout(() => { s.innerText = "RUNNING"; s.style.color = "var(--success)"; }, 2000);
             }
         }
 
-        function executePurge() {
-            const input = document.getElementById('purgeInput');
-            const status = document.getElementById('purgeStatus');
-            if(!input.value) return;
-            
+        // User Management
+        function modifyUser(type) {
+            const user = document.getElementById('targetUser').value;
+            const status = document.getElementById('mgtStatus');
+            if(!user) return;
+
             status.style.display = "block";
-            status.innerText = "Connecting to DB...";
+            status.innerText = `[SYS] Executing ${type} on ${user}...`;
             
             setTimeout(() => {
-                status.innerText = "Wiping data segments...";
-                setTimeout(() => {
-                    status.innerText = "SUCCESS: Paste data purged.";
-                    input.value = "";
-                }, 1500);
+                status.innerText = `[DONE] ${user} has been updated.`;
             }, 1000);
         }
 
-        // Diversified Logs
-        const lTable = document.getElementById('logTable');
-        const actions = ["PURGE_EXEC", "BAN_USER", "RANK_CHANGE", "LOGIN_SUCCESS", "SQL_QUERY"];
-        let logHtml = "";
-        for(let i=0; i<200; i++) {
-            const adm = admins[Math.floor(Math.random() * admins.length)];
-            const act = actions[Math.floor(Math.random() * actions.length)];
-            logHtml += `
-                <tr>
-                    <td style="color:var(--accent)">${adm}</td>
-                    <td><span style="background:#111; padding:2px 5px; border-radius:3px; font-size:9px;">${act}</span></td>
-                    <td>Session #${Math.floor(Math.random()*99999)}</td>
-                    <td style="color:#333">${i+1}m ago</td>
-                </tr>
-            `;
-        }
-        lTable.innerHTML = logHtml;
-
+        // Navigation
         function tab(t) {
-            document.getElementById('users-sec').classList.toggle('hidden', t !== 'users');
-            document.getElementById('purge-sec').classList.toggle('hidden', t !== 'purge');
-            document.getElementById('logs-sec').classList.toggle('hidden', t !== 'logs');
+            ['home', 'users', 'management', 'purge', 'logs'].forEach(s => {
+                document.getElementById(s + '-sec').classList.add('hidden');
+            });
+            document.getElementById(t + '-sec').classList.remove('hidden');
+            
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
+            
+            if(t === 'users') renderUsers();
         }
+
+        // Generate Logs
+        const logData = [];
+        const ops = ["Admin", "ceo", "Kaede"];
+        const acts = ["SET_RANK", "BAN", "PURGE", "RESTART_SRV"];
+        for(let i=0; i<50; i++) {
+            logData.push(`<tr><td>${ops[i%3]}</td><td>${acts[i%4]}</td><td>node_0${i}</td><td>${i}m ago</td></tr>`);
+        }
+        document.getElementById('logTable').innerHTML = logData.join('');
+
     </script>
 </body>
 </html>
