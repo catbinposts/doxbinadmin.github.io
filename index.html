@@ -2,29 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>silent [Manager]</title>
+<title>manager panel</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
-    --bg:#070707;
-    --sidebar:#0b0b0b;
+    --bg:#050505;
+    --sidebar:#0a0a0a;
     --card:#101010;
     --border:#1d1d1d;
 
-    --text:#d8d8d8;
-    --muted:#666;
+    --text:#e0e0e0;
+    --muted:#7a7a7a;
 
-    --purple:#bb71e4;
-    --purple2:#8b4eff;
+    --purple:#b76cff;
+    --purple2:#6b42ff;
+    --purple3:#2f1d52;
 
-    --danger:#ff4d5a;
-    --success:#42d67d;
-    --warning:#ffb84d;
+    --danger:#ff4d6d;
+    --success:#3ce68c;
+    --warning:#ffbf52;
 }
 
 *{
@@ -34,9 +35,67 @@
 }
 
 body{
-    background:var(--bg);
-    color:var(--text);
     font-family:'Inter',sans-serif;
+    color:var(--text);
+    overflow-x:hidden;
+
+    background:
+    radial-gradient(circle at top left,#32154d 0%,transparent 25%),
+    radial-gradient(circle at top right,#16204f 0%,transparent 25%),
+    radial-gradient(circle at bottom,#2d1248 0%,transparent 35%),
+    linear-gradient(145deg,#040404,#0d0717,#050505);
+}
+
+/* LOGIN */
+
+.login-screen{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    backdrop-filter:blur(20px);
+
+    background:
+    radial-gradient(circle at top left,#522381 0%,transparent 25%),
+    radial-gradient(circle at bottom right,#2e4cff 0%,transparent 25%),
+    rgba(0,0,0,.75);
+}
+
+.login-box{
+    width:420px;
+    background:rgba(10,10,10,.95);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:24px;
+    padding:35px;
+
+    box-shadow:
+    0 0 80px rgba(114,61,255,.35),
+    inset 0 0 0 1px rgba(255,255,255,.03);
+}
+
+.login-title{
+    font-size:34px;
+    font-weight:900;
+    margin-bottom:8px;
+}
+
+.login-sub{
+    color:#8f8f8f;
+    margin-bottom:24px;
+}
+
+.login-error{
+    margin-top:15px;
+    color:#ff6a7d;
+    display:none;
+}
+
+.hidden{
+    display:none !important;
 }
 
 /* NAVBAR */
@@ -46,21 +105,25 @@ body{
     top:0;
     left:0;
     width:100%;
-    height:60px;
-    background:#050505;
-    border-bottom:1px solid var(--border);
+    height:68px;
+
+    background:rgba(4,4,4,.8);
+    backdrop-filter:blur(12px);
+
+    border-bottom:1px solid rgba(255,255,255,.05);
 
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    padding:0 24px;
+    padding:0 26px;
     z-index:999;
 }
 
 .brand{
-    font-size:15px;
-    font-weight:800;
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:1px;
     color:white;
 }
 
@@ -75,57 +138,68 @@ body{
 }
 
 .avatar{
-    width:36px;
-    height:36px;
+    width:42px;
+    height:42px;
     border-radius:50%;
-    background:linear-gradient(135deg,var(--purple),var(--purple2));
-    box-shadow:0 0 20px rgba(187,113,228,.45);
+
+    background:
+    linear-gradient(135deg,var(--purple),var(--purple2));
+
+    box-shadow:
+    0 0 25px rgba(183,108,255,.45);
 }
 
 /* LAYOUT */
 
 .layout{
     display:flex;
-    padding-top:60px;
+    padding-top:68px;
 }
 
 .sidebar{
-    width:240px;
-    height:calc(100vh - 60px);
-    background:#0b0b0b;
-    border-right:1px solid var(--border);
+    width:250px;
+    height:calc(100vh - 68px);
+
+    background:rgba(8,8,8,.85);
+    backdrop-filter:blur(12px);
+
+    border-right:1px solid rgba(255,255,255,.04);
+
     position:fixed;
 }
 
 .sidebar-inner{
-    padding-top:20px;
+    padding:20px 0;
 }
 
 .nav-item{
-    padding:14px 24px;
-    color:#777;
+    padding:15px 24px;
+    color:#8d8d8d;
+
+    font-size:13px;
+    font-weight:700;
+
     cursor:pointer;
     transition:.2s;
+
     border-left:3px solid transparent;
-    font-size:13px;
-    font-weight:600;
 }
 
 .nav-item:hover{
-    background:#111;
+    background:#121212;
     color:white;
 }
 
 .nav-item.active{
-    background:#101010;
-    color:white;
+    background:linear-gradient(90deg,#1a1129,transparent);
     border-left-color:var(--purple);
+    color:white;
 }
 
 /* MAIN */
 
 .main{
-    margin-left:240px;
+    margin-left:250px;
     width:100%;
     padding:30px;
 }
@@ -133,19 +207,29 @@ body{
 /* CARDS */
 
 .card{
-    background:linear-gradient(180deg,#101010,#0b0b0b);
-    border:1px solid var(--border);
-    border-radius:12px;
+    background:
+    linear-gradient(180deg,
+    rgba(20,20,20,.9),
+    rgba(10,10,10,.9));
+
+    border:1px solid rgba(255,255,255,.05);
+
+    border-radius:18px;
     padding:24px;
-    margin-bottom:20px;
+
+    margin-bottom:22px;
+
+    box-shadow:
+    0 0 40px rgba(0,0,0,.25);
 }
 
 .card-title{
-    color:#666;
+    color:#868686;
     font-size:11px;
     text-transform:uppercase;
-    letter-spacing:1px;
-    margin-bottom:16px;
+    letter-spacing:1.5px;
+    margin-bottom:18px;
+    font-weight:800;
 }
 
 /* STATS */
@@ -154,25 +238,30 @@ body{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:18px;
-    margin-bottom:24px;
+    margin-bottom:25px;
 }
 
 .stat{
-    background:#0d0d0d;
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:18px;
+    border-radius:18px;
+    padding:22px;
+
+    background:
+    linear-gradient(145deg,
+    rgba(25,25,25,.95),
+    rgba(12,12,12,.95));
+
+    border:1px solid rgba(255,255,255,.05);
 }
 
 .stat-value{
-    font-size:26px;
-    font-weight:800;
+    font-size:28px;
+    font-weight:900;
     color:white;
 }
 
 .stat-label{
-    margin-top:5px;
-    color:#666;
+    margin-top:8px;
+    color:#757575;
     font-size:12px;
 }
 
@@ -181,40 +270,81 @@ body{
 .btn{
     background:#171717;
     border:1px solid #2b2b2b;
-    color:#ccc;
-    padding:10px 14px;
-    border-radius:6px;
+
+    color:#d2d2d2;
+
+    padding:11px 15px;
+    border-radius:10px;
+
     cursor:pointer;
     transition:.2s;
+
     font-size:11px;
-    font-weight:700;
+    font-weight:800;
     text-transform:uppercase;
 }
 
 .btn:hover{
+    transform:translateY(-1px);
     border-color:var(--purple);
     color:white;
 }
 
-.btn-danger{
-    background:#1a1010;
-    border-color:#3a1f1f;
-    color:#ff9191;
-}
-
 .btn-purple{
-    background:linear-gradient(135deg,var(--purple),var(--purple2));
     border:none;
     color:white;
+
+    background:
+    linear-gradient(135deg,
+    var(--purple),
+    var(--purple2));
+
+    box-shadow:
+    0 0 25px rgba(183,108,255,.25);
+}
+
+.btn-danger{
+    background:#211014;
+    border-color:#4d1d27;
+    color:#ff8ea1;
+}
+
+/* INPUTS */
+
+input,select,textarea{
+    width:100%;
+    background:#090909;
+    border:1px solid rgba(255,255,255,.06);
+
+    color:white;
+
+    padding:14px;
+    border-radius:12px;
+
+    outline:none;
+
+    font-family:inherit;
+}
+
+textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--purple);
 }
 
 /* TABLE */
 
 .table-wrap{
-    background:#0c0c0c;
-    border:1px solid var(--border);
-    border-radius:12px;
+    border-radius:16px;
     overflow:auto;
+
+    border:1px solid rgba(255,255,255,.05);
+
     max-height:700px;
 }
 
@@ -224,66 +354,29 @@ table{
 }
 
 th{
-    text-align:left;
-    padding:16px;
-    color:#555;
-    font-size:11px;
-    border-bottom:1px solid var(--border);
     position:sticky;
     top:0;
-    background:#0c0c0c;
+
+    background:#0b0b0b;
+
+    padding:16px;
+
+    text-align:left;
+
+    color:#707070;
+    font-size:11px;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
 }
 
 td{
     padding:16px;
-    border-bottom:1px solid #151515;
+    border-bottom:1px solid rgba(255,255,255,.04);
 }
 
 tr:hover{
     background:#111;
 }
-
-/* INPUTS */
-
-input,select{
-    width:100%;
-    background:#080808;
-    border:1px solid var(--border);
-    color:white;
-    padding:13px;
-    border-radius:8px;
-    outline:none;
-}
-
-input:focus,
-select:focus{
-    border-color:var(--purple);
-}
-
-.panel-grid{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:20px;
-}
-
-/* RANKS */
-
-.rank{
-    padding:5px 10px;
-    border-radius:30px;
-    font-size:10px;
-    font-weight:800;
-}
-
-.rank-member{background:#1c1c1c;color:#999;}
-.rank-vip{background:#2b1935;color:#cb97ff;}
-.rank-criminal{background:#251030;color:#a063ff;}
-.rank-rich{background:#2c240d;color:#ffcc4d;}
-.rank-council{background:#12202d;color:#6ebcff;}
-.rank-mod{background:#182b20;color:#6effa8;}
-.rank-manager{background:#2b1e36;color:#d495ff;}
-.rank-admin{background:#311515;color:#ff7878;}
-.rank-founder{background:#2f2608;color:#ffd86b;}
 
 /* PANELS */
 
@@ -297,36 +390,137 @@ select:focus{
 
 /* STATUS */
 
-.status-online{color:#46d37d;}
-.status-offline{color:#888;}
-.status-banned{color:#ff5c5c;}
-.status-timeout{color:#ffb84d;}
-.status-kicked{color:#999;}
+.status-online{color:#4be285;}
+.status-offline{color:#8d8d8d;}
+.status-banned{color:#ff637d;}
+.status-timeout{color:#ffbf52;}
+.status-kicked{color:#9d9d9d;}
+
+/* RANKS */
+
+.rank{
+    padding:6px 10px;
+    border-radius:30px;
+    font-size:10px;
+    font-weight:900;
+}
+
+.rank-member{background:#1f1f1f;color:#999;}
+.rank-vip{background:#2c1837;color:#d099ff;}
+.rank-criminal{background:#281438;color:#b56eff;}
+.rank-rich{background:#30270d;color:#ffd24d;}
+.rank-council{background:#132130;color:#7cc2ff;}
+.rank-mod{background:#15281d;color:#6fffaf;}
+.rank-manager{background:#2f1c3f;color:#deabff;}
+.rank-admin{background:#351515;color:#ff8181;}
+.rank-founder{background:#382d08;color:#ffe26b;}
+
+/* GRID */
+
+.panel-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+}
+
+/* POSTS */
+
+.post{
+    padding:18px;
+    border-radius:14px;
+
+    background:#0d0d0d;
+    border:1px solid rgba(255,255,255,.05);
+
+    margin-bottom:14px;
+}
+
+.post-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.post-author{
+    font-weight:800;
+}
+
+.post-content{
+    color:#bdbdbd;
+    line-height:1.6;
+}
+
+.post-tags{
+    margin-top:12px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.tag{
+    background:#1c1428;
+    color:#cf9fff;
+    padding:5px 10px;
+    border-radius:999px;
+    font-size:10px;
+    font-weight:800;
+}
 
 /* LOGS */
 
 .logs{
-    background:#0c0c0c;
-    border:1px solid var(--border);
-    border-radius:12px;
+    border-radius:16px;
     overflow:hidden;
+    border:1px solid rgba(255,255,255,.05);
 }
 
 .log{
     padding:14px 18px;
-    border-bottom:1px solid #161616;
-    color:#777;
+    border-bottom:1px solid rgba(255,255,255,.04);
+    color:#7d7d7d;
 }
 
 .log span{
     color:var(--purple);
-    font-weight:700;
+    font-weight:800;
 }
 
 .status-msg{
-    margin-top:14px;
-    color:var(--purple);
     display:none;
+    margin-top:15px;
+    color:#c48eff;
+}
+
+/* HALL */
+
+.hall-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:18px;
+}
+
+.hall-card{
+    border-radius:18px;
+    padding:20px;
+
+    background:
+    linear-gradient(145deg,
+    rgba(35,18,57,.95),
+    rgba(10,10,10,.95));
+
+    border:1px solid rgba(194,130,255,.15);
+}
+
+.hall-title{
+    font-size:20px;
+    font-weight:900;
+    margin-bottom:10px;
+}
+
+.hall-user{
+    color:#dcaeff;
+    font-weight:800;
+    margin-bottom:12px;
 }
 
 .quick-actions{
@@ -335,21 +529,96 @@ select:focus{
     flex-wrap:wrap;
 }
 
+.pinned{
+    border-color:#d4a1ff !important;
+    box-shadow:0 0 30px rgba(183,108,255,.15);
+}
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:900px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .panel-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
+
+<div class="login-screen" id="loginScreen">
+
+    <div class="login-box">
+
+        <div class="login-title">
+            secure access
+        </div>
+
+        <div class="login-sub">
+            enter password to continue
+        </div>
+
+        <input
+        type="password"
+        id="passwordInput"
+        placeholder="password"
+        onkeydown="if(event.key==='Enter') login()"
+        >
+
+        <div style="margin-top:18px;">
+            <button class="btn btn-purple"
+            style="width:100%;padding:15px;"
+            onclick="login()">
+                unlock
+            </button>
+        </div>
+
+        <div class="login-error"
+        id="loginError">
+            invalid password
+        </div>
+
+    </div>
+
+</div>
+
+<!-- NAVBAR -->
+
 <div class="navbar">
 
     <div class="brand">
-        silent <span>[Manager]</span>
+        control<span>.core</span>
     </div>
 
     <div class="profile">
         <div>
-            <div style="font-weight:700;">silent [Manager]</div>
-            <div style="font-size:11px;color:#666;">
-                Administrator
+            <div style="font-weight:800;">
+                secure session
+            </div>
+
+            <div style="
+            font-size:11px;
+            color:#777;
+            ">
+                encrypted node
             </div>
         </div>
 
@@ -374,6 +643,16 @@ select:focus{
             <div class="nav-item"
             onclick="switchPanel('users',this)">
                 Users
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('posts',this)">
+                Posts
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('hall',this)">
+                Hall Of Autism
             </div>
 
             <div class="nav-item"
@@ -433,22 +712,23 @@ select:focus{
                 </div>
 
                 <div class="stat">
-                    <div class="stat-value">
-                        8
+                    <div class="stat-value"
+                    id="postCount">
+                        0
                     </div>
 
                     <div class="stat-label">
-                        ACTIVE RANKS
+                        ACTIVE POSTS
                     </div>
                 </div>
 
                 <div class="stat">
                     <div class="stat-value">
-                        STABLE
+                        SECURE
                     </div>
 
                     <div class="stat-label">
-                        CLUSTER STATUS
+                        NODE STATUS
                     </div>
                 </div>
 
@@ -470,6 +750,11 @@ select:focus{
                     <button class="btn"
                     onclick="massOffline()">
                         Offline Sweep
+                    </button>
+
+                    <button class="btn"
+                    onclick="createRandomPost()">
+                        Spawn Random Post
                     </button>
 
                     <button class="btn btn-danger"
@@ -494,11 +779,11 @@ select:focus{
                 </div>
 
                 <input
-                    type="text"
-                    placeholder="Search users..."
-                    id="searchInput"
-                    oninput="renderUsers()"
-                    style="margin-bottom:18px;"
+                type="text"
+                placeholder="Search users..."
+                id="searchInput"
+                oninput="renderUsers()"
+                style="margin-bottom:18px;"
                 >
 
                 <div class="table-wrap">
@@ -506,6 +791,7 @@ select:focus{
                     <table>
 
                         <thead>
+
                             <tr>
                                 <th>ID</th>
                                 <th>Username</th>
@@ -513,6 +799,7 @@ select:focus{
                                 <th>Status</th>
                                 <th>Joined</th>
                             </tr>
+
                         </thead>
 
                         <tbody id="userTable"></tbody>
@@ -520,6 +807,76 @@ select:focus{
                     </table>
 
                 </div>
+
+            </div>
+
+        </div>
+
+        <!-- POSTS -->
+
+        <div id="posts" class="panel">
+
+            <div class="card">
+
+                <div class="card-title">
+                    Create Post
+                </div>
+
+                <input
+                type="text"
+                id="postAuthor"
+                placeholder="author..."
+                >
+
+                <div style="height:14px;"></div>
+
+                <textarea
+                id="postContent"
+                placeholder="write post..."
+                ></textarea>
+
+                <div style="
+                display:flex;
+                gap:10px;
+                margin-top:16px;
+                flex-wrap:wrap;
+                ">
+
+                    <button class="btn btn-purple"
+                    onclick="addPost()">
+                        Publish
+                    </button>
+
+                    <button class="btn"
+                    onclick="pinPaste()">
+                        Pin Paste
+                    </button>
+
+                    <button class="btn"
+                    onclick="hallPost()">
+                        Send To Hall
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div id="postsContainer"></div>
+
+        </div>
+
+        <!-- HALL -->
+
+        <div id="hall" class="panel">
+
+            <div class="card">
+
+                <div class="card-title">
+                    Hall Of Autism
+                </div>
+
+                <div class="hall-grid"
+                id="hallContainer"></div>
 
             </div>
 
@@ -537,9 +894,9 @@ select:focus{
                 </div>
 
                 <input
-                    type="text"
-                    id="newUsername"
-                    placeholder="Username..."
+                type="text"
+                id="newUsername"
+                placeholder="Username..."
                 >
 
                 <div style="height:14px;"></div>
@@ -585,9 +942,9 @@ select:focus{
                     </div>
 
                     <input
-                        type="text"
-                        id="targetUser"
-                        placeholder="Enter username..."
+                    type="text"
+                    id="targetUser"
+                    placeholder="Enter username..."
                     >
 
                     <div style="height:16px;"></div>
@@ -662,7 +1019,6 @@ select:focus{
                     </div>
 
                     <div style="line-height:2;">
-
                         Member<br>
                         VIP<br>
                         Criminal<br>
@@ -672,7 +1028,6 @@ select:focus{
                         Manager<br>
                         Admin<br>
                         Founder
-
                     </div>
 
                 </div>
@@ -689,20 +1044,30 @@ select:focus{
             style="max-width:650px;">
 
                 <div class="card-title">
-                    Post Purge
+                    Post Purge + Pin Paste
                 </div>
 
                 <input
-                    type="text"
-                    id="purgeInput"
-                    placeholder="https://example.com/post/123"
+                type="text"
+                id="purgeInput"
+                placeholder="https://example.com/post/123"
                 >
 
-                <div style="margin-top:15px;">
+                <div style="
+                margin-top:15px;
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+                ">
 
                     <button class="btn btn-danger"
                     onclick="purgePost()">
                         Purge Post
+                    </button>
+
+                    <button class="btn"
+                    onclick="pastePin()">
+                        Paste Pin
                     </button>
 
                 </div>
@@ -729,6 +1094,35 @@ select:focus{
 
 <script>
 
+/* PASSWORD */
+
+function login(){
+
+    const pass =
+    document.getElementById("passwordInput").value;
+
+    const err =
+    document.getElementById("loginError");
+
+    if(pass === "1344"){
+
+        document
+        .getElementById("loginScreen")
+        .classList.add("hidden");
+
+        addLog(
+        "system",
+        "secure session unlocked"
+        );
+
+    }else{
+
+        err.style.display = "block";
+
+    }
+
+}
+
 /* RANKS */
 
 const ranks = [
@@ -747,7 +1141,13 @@ const ranks = [
 
 const users = [];
 
-/* RANDOM NAMES */
+/* POSTS */
+
+const posts = [];
+
+const hallPosts = [];
+
+/* NAMES */
 
 const names = [
 "go","her","ace","mishka","vayne","rockstar",
@@ -757,21 +1157,10 @@ const names = [
 "envy","hfwm","drecc","scare","toenail",
 "kapaisu","weather","harm","versus","asce",
 "babytron","root","spydir","vile","fox",
-"silent","month","law","hacker","arabz",
-"egirl","suv","renzy","bo","cross",
-"nxe","hell","frost","vision","nova",
-"venom","slime","clawed","fatal","xeno",
-"chaos","void","zero","grim","sorrow",
-"panic","fame","rev","night","ghosted",
-"shade","wraith","oxide","fear","proxy",
-"delta","vortex","bleed","flare","riot",
-"pulse","karma","toxic","demon","saint",
-"cynic","havoc","virus","mirage","phantom",
-"glitch","cipher","hollow","doom","fraud",
-"scythe","ruthless","envyx","terrorized","static"
+"silent","month","law","hacker","arabz"
 ];
 
-/* GENERATE USERS */
+/* USERS */
 
 for(let i=0;i<120;i++){
 
@@ -816,20 +1205,15 @@ name:"Admin",
 rank:"ADMIN",
 status:"Online",
 joined:"2001"
-},
-{
-id:7819,
-name:"silent",
-rank:"MANAGER",
-status:"Online",
-joined:"2020"
 }
 );
+
+/* TABLE */
 
 const table =
 document.getElementById("userTable");
 
-/* RENDER */
+/* RENDER USERS */
 
 function renderUsers(){
 
@@ -851,7 +1235,7 @@ function renderUsers(){
 
         <td style="
         color:white;
-        font-weight:700;
+        font-weight:800;
         ">
             ${u.name}
         </td>
@@ -897,6 +1281,9 @@ function updateStats(){
     users.filter(u=>
     u.status==="Online").length;
 
+    document.getElementById("postCount")
+    .innerText = posts.length;
+
 }
 
 /* ADD USER */
@@ -941,11 +1328,12 @@ function addUser(){
     renderUsers();
 
     addLog(
-    "silent [Manager]",
+    "system",
     `created user ${username}`
     );
 
     status.style.display="block";
+
     status.innerText =
     `${username} added successfully.`;
 
@@ -970,7 +1358,7 @@ function getUser(){
 
 }
 
-/* STATUS */
+/* PANEL STATUS */
 
 function setStatus(msg){
 
@@ -999,11 +1387,6 @@ function changeRank(){
 
     setStatus(
     `${user.name} rank updated.`
-    );
-
-    addLog(
-    "silent [Manager]",
-    `changed ${user.name}'s rank`
     );
 
 }
@@ -1056,7 +1439,7 @@ function changeNickname(){
     renderUsers();
 
     addLog(
-    "silent [Manager]",
+    "system",
     `renamed user to ${newName}`
     );
 
@@ -1124,6 +1507,199 @@ function deleteUser(){
     renderUsers();
 
     setStatus("User deleted.");
+
+}
+
+/* POSTS */
+
+function addPost(){
+
+    const author =
+    document.getElementById("postAuthor")
+    .value.trim();
+
+    const content =
+    document.getElementById("postContent")
+    .value.trim();
+
+    if(!author || !content)
+    return;
+
+    posts.unshift({
+
+        id:Date.now(),
+
+        author,
+
+        content,
+
+        pinned:false
+
+    });
+
+    renderPosts();
+
+    addLog(
+    author,
+    "published a post"
+    );
+
+    document.getElementById("postAuthor").value="";
+    document.getElementById("postContent").value="";
+
+}
+
+/* PIN PASTE */
+
+function pinPaste(){
+
+    if(!posts.length)
+    return;
+
+    posts[0].pinned = true;
+
+    renderPosts();
+
+    addLog(
+    "system",
+    "pinned a paste"
+    );
+
+}
+
+/* HALL */
+
+function hallPost(){
+
+    if(!posts.length)
+    return;
+
+    hallPosts.unshift(posts[0]);
+
+    renderHall();
+
+    addLog(
+    "system",
+    "sent post to hall of autism"
+    );
+
+}
+
+/* RENDER POSTS */
+
+function renderPosts(){
+
+    const container =
+    document.getElementById("postsContainer");
+
+    container.innerHTML =
+    posts.map(post=>`
+
+    <div class="
+    post
+    ${post.pinned ? 'pinned' : ''}
+    ">
+
+        <div class="post-top">
+
+            <div class="post-author">
+                ${post.author}
+            </div>
+
+            <div style="
+            color:#666;
+            font-size:12px;
+            ">
+                #${post.id}
+            </div>
+
+        </div>
+
+        <div class="post-content">
+            ${post.content}
+        </div>
+
+        <div class="post-tags">
+
+            ${
+                post.pinned
+                ? '<div class="tag">PINNED</div>'
+                : ''
+            }
+
+        </div>
+
+    </div>
+
+    `).join("");
+
+    updateStats();
+
+}
+
+/* RENDER HALL */
+
+function renderHall(){
+
+    const container =
+    document.getElementById("hallContainer");
+
+    container.innerHTML =
+    hallPosts.map(post=>`
+
+    <div class="hall-card">
+
+        <div class="hall-title">
+            archived entry
+        </div>
+
+        <div class="hall-user">
+            ${post.author}
+        </div>
+
+        <div style="
+        color:#cfcfcf;
+        line-height:1.7;
+        ">
+            ${post.content}
+        </div>
+
+    </div>
+
+    `).join("");
+
+}
+
+/* RANDOM POST */
+
+function createRandomPost(){
+
+    const msgs = [
+    "node leak incoming",
+    "backend wiped",
+    "mirror archived",
+    "session bypass active",
+    "new exploit discovered",
+    "purge wave started"
+    ];
+
+    posts.unshift({
+
+        id:Date.now(),
+
+        author:names[
+        Math.floor(Math.random()*names.length)
+        ],
+
+        content:msgs[
+        Math.floor(Math.random()*msgs.length)
+        ],
+
+        pinned:false
+
+    });
+
+    renderPosts();
 
 }
 
@@ -1211,7 +1787,7 @@ function purgePost(){
                 "SUCCESS: Post purged.";
 
                 addLog(
-                "silent [Manager]",
+                "system",
                 `purged ${input.value}`
                 );
 
@@ -1220,6 +1796,28 @@ function purgePost(){
         },1200);
 
     },1000);
+
+}
+
+/* PASTE PIN */
+
+function pastePin(){
+
+    const status =
+    document.getElementById("purgeStatus");
+
+    status.style.display="block";
+
+    status.innerText =
+    "Generating permanent paste pin...";
+
+    setTimeout(()=>{
+
+        status.innerText =
+        "PIN GENERATED: #PIN-" +
+        Math.floor(Math.random()*999999);
+
+    },1200);
 
 }
 
@@ -1244,10 +1842,10 @@ function addLog(user,action){
 }
 
 [
-"initialized manager session",
-"loaded hierarchy",
-"connected audit backend",
-"permission nodes synced",
+"initialized secure node",
+"encrypted transport layer ready",
+"audit backend connected",
+"session validation online",
 "database stable"
 ].forEach(log=>{
     addLog("system",log);
