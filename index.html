@@ -13,16 +13,16 @@
     --bg:#070707;
     --sidebar:#0b0b0b;
     --card:#101010;
-    --card2:#0d0d0d;
     --border:#1d1d1d;
+
     --text:#d8d8d8;
-    --muted:#707070;
+    --muted:#666;
 
     --purple:#bb71e4;
-    --purple2:#8d49ff;
-    --gold:#ffcc4d;
+    --purple2:#8b4eff;
     --danger:#ff4d5a;
     --success:#42d67d;
+    --gold:#ffcc4d;
 }
 
 *{
@@ -35,7 +35,6 @@ body{
     background:var(--bg);
     color:var(--text);
     font-family:'Inter',sans-serif;
-    overflow-x:hidden;
 }
 
 /* NAVBAR */
@@ -46,7 +45,6 @@ body{
     left:0;
     width:100%;
     height:60px;
-
     background:#050505;
     border-bottom:1px solid var(--border);
 
@@ -62,7 +60,6 @@ body{
     font-size:15px;
     font-weight:800;
     color:white;
-    letter-spacing:1px;
 }
 
 .brand span{
@@ -80,7 +77,7 @@ body{
     height:36px;
     border-radius:50%;
     background:linear-gradient(135deg,var(--purple),var(--purple2));
-    box-shadow:0 0 18px rgba(187,113,228,.45);
+    box-shadow:0 0 20px rgba(187,113,228,.45);
 }
 
 /* LAYOUT */
@@ -93,7 +90,7 @@ body{
 .sidebar{
     width:240px;
     height:calc(100vh - 60px);
-    background:var(--sidebar);
+    background:#0b0b0b;
     border-right:1px solid var(--border);
     position:fixed;
 }
@@ -104,12 +101,12 @@ body{
 
 .nav-item{
     padding:14px 24px;
+    color:#777;
     cursor:pointer;
     transition:.2s;
-    color:#777;
+    border-left:3px solid transparent;
     font-size:13px;
     font-weight:600;
-    border-left:3px solid transparent;
 }
 
 .nav-item:hover{
@@ -133,29 +130,12 @@ body{
 
 /* CARDS */
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:20px;
-}
-
 .card{
     background:linear-gradient(180deg,#101010,#0b0b0b);
     border:1px solid var(--border);
     border-radius:12px;
     padding:24px;
-    position:relative;
-    overflow:hidden;
-}
-
-.card::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:1px;
-    background:linear-gradient(90deg,transparent,var(--purple),transparent);
+    margin-bottom:20px;
 }
 
 .card-title{
@@ -166,37 +146,16 @@ body{
     margin-bottom:14px;
 }
 
-.big{
-    font-size:30px;
-    font-weight:800;
-    color:white;
-}
-
-.online{
-    margin-top:10px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.dot{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:var(--success);
-    box-shadow:0 0 10px var(--success);
-}
-
 /* BUTTONS */
 
 .btn{
     background:#171717;
-    border:1px solid #292929;
-    color:#c0c0c0;
-    padding:9px 13px;
+    border:1px solid #2b2b2b;
+    color:#ccc;
+    padding:10px 14px;
     border-radius:6px;
     cursor:pointer;
-    transition:.25s;
+    transition:.2s;
     font-size:11px;
     font-weight:700;
     text-transform:uppercase;
@@ -207,37 +166,22 @@ body{
     color:white;
 }
 
+.btn-danger{
+    background:#1a1010;
+    border-color:#3a1f1f;
+    color:#ff9191;
+}
+
 .btn-purple{
     background:linear-gradient(135deg,var(--purple),var(--purple2));
     border:none;
     color:white;
 }
 
-.btn-purple:hover{
-    opacity:.9;
-}
-
-.btn-danger{
-    background:#1d1111;
-    border-color:#3d1f1f;
-    color:#ff8e8e;
-}
-
 /* TABLE */
 
-.search{
-    width:100%;
-    background:#090909;
-    border:1px solid var(--border);
-    padding:13px;
-    color:white;
-    border-radius:8px;
-    outline:none;
-    margin-bottom:18px;
-}
-
 .table-wrap{
-    background:var(--card2);
+    background:#0c0c0c;
     border:1px solid var(--border);
     border-radius:12px;
     overflow:hidden;
@@ -251,8 +195,8 @@ table{
 th{
     text-align:left;
     padding:16px;
-    font-size:11px;
     color:#555;
+    font-size:11px;
     border-bottom:1px solid var(--border);
 }
 
@@ -265,6 +209,24 @@ tr:hover{
     background:#111;
 }
 
+/* INPUTS */
+
+input,select{
+    width:100%;
+    background:#080808;
+    border:1px solid var(--border);
+    color:white;
+    padding:13px;
+    border-radius:8px;
+    outline:none;
+}
+
+.panel-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+}
+
 /* RANKS */
 
 .rank{
@@ -272,28 +234,16 @@ tr:hover{
     border-radius:30px;
     font-size:10px;
     font-weight:800;
-    letter-spacing:.5px;
 }
 
-.rank-vip{
-    background:#2d1936;
-    color:#cb96ff;
-}
-
-.rank-criminal{
-    background:#251030;
-    color:#9d61ff;
-}
-
-.rank-rich{
-    background:#2d250d;
-    color:var(--gold);
-}
-
-.rank-admin{
-    background:#311313;
-    color:#ff7474;
-}
+.rank-vip{background:#2b1935;color:#cb97ff;}
+.rank-criminal{background:#251030;color:#a063ff;}
+.rank-rich{background:#2c240d;color:#ffcc4d;}
+.rank-council{background:#12202d;color:#6ebcff;}
+.rank-mod{background:#182b20;color:#6effa8;}
+.rank-manager{background:#2b1e36;color:#d495ff;}
+.rank-admin{background:#311515;color:#ff7878;}
+.rank-founder{background:#2f2608;color:#ffd86b;}
 
 /* PANELS */
 
@@ -318,7 +268,6 @@ tr:hover{
     padding:14px 18px;
     border-bottom:1px solid #161616;
     color:#777;
-    font-size:13px;
 }
 
 .log span{
@@ -326,35 +275,15 @@ tr:hover{
     font-weight:700;
 }
 
-/* PURGE */
-
-.purge-box{
-    max-width:650px;
-}
-
-.purge-input{
-    width:100%;
-    margin-top:14px;
-    background:#080808;
-    border:1px solid var(--border);
-    color:white;
-    padding:14px;
-    border-radius:8px;
-    outline:none;
-}
-
 .status{
-    margin-top:15px;
+    margin-top:14px;
     color:var(--purple);
     display:none;
-    font-size:13px;
 }
 
 </style>
 </head>
 <body>
-
-<!-- NAVBAR -->
 
 <div class="navbar">
 
@@ -365,17 +294,12 @@ tr:hover{
     <div class="profile">
         <div>
             <div style="font-weight:700;">silent [Manager]</div>
-            <div style="font-size:11px;color:#666;">
-                Administrator
-            </div>
+            <div style="font-size:11px;color:#666;">Administrator</div>
         </div>
-
         <div class="avatar"></div>
     </div>
 
 </div>
-
-<!-- LAYOUT -->
 
 <div class="layout">
 
@@ -385,16 +309,12 @@ tr:hover{
 
         <div class="sidebar-inner">
 
-            <div class="nav-item active" onclick="switchPanel('dashboard',this)">
-                Main Menu
-            </div>
-
-            <div class="nav-item" onclick="switchPanel('users',this)">
+            <div class="nav-item active" onclick="switchPanel('users',this)">
                 Users
             </div>
 
-            <div class="nav-item" onclick="switchPanel('servers',this)">
-                Website Control
+            <div class="nav-item" onclick="switchPanel('userpanel',this)">
+                User Panel
             </div>
 
             <div class="nav-item" onclick="switchPanel('purge',this)">
@@ -413,128 +333,120 @@ tr:hover{
 
     <main class="main">
 
-        <!-- DASHBOARD -->
-
-        <div id="dashboard" class="panel active">
-
-            <div class="grid">
-
-                <div class="card">
-                    <div class="card-title">Registered Users</div>
-                    <div class="big" id="totalUsers">57</div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Online Users</div>
-                    <div class="big">1,482</div>
-
-                    <div class="online">
-                        <div class="dot"></div>
-                        <span>Realtime</span>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Website Status</div>
-
-                    <div class="online">
-                        <div class="dot" id="serverDot"></div>
-                        <span id="serverStatus">Operational</span>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">Database Cluster</div>
-
-                    <div class="online">
-                        <div class="dot"></div>
-                        <span>Healthy</span>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
         <!-- USERS -->
 
-        <div id="users" class="panel">
+        <div id="users" class="panel active">
 
-            <input class="search" type="text" placeholder="Search username..." onkeyup="searchUsers(this.value)">
+            <div class="card">
 
-            <div class="table-wrap">
+                <div class="card-title">
+                    User Database
+                </div>
 
-                <table>
+                <div class="table-wrap">
 
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Rank</th>
-                            <th>Status</th>
-                            <th>Management</th>
-                        </tr>
-                    </thead>
+                    <table>
 
-                    <tbody id="userTable"></tbody>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Rank</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
 
-                </table>
+                        <tbody id="userTable"></tbody>
+
+                    </table>
+
+                </div>
 
             </div>
 
         </div>
 
-        <!-- SERVERS -->
+        <!-- USER PANEL -->
 
-        <div id="servers" class="panel">
+        <div id="userpanel" class="panel">
 
-            <div class="grid">
+            <div class="panel-grid">
 
                 <div class="card">
 
                     <div class="card-title">
-                        Website Server
+                        User Management
                     </div>
 
-                    <div class="online">
-                        <div class="dot" id="serverIndicator"></div>
-                        <span id="serverText">Running</span>
-                    </div>
+                    <input
+                        type="text"
+                        id="targetUser"
+                        placeholder="Enter username..."
+                    >
 
-                    <div style="margin-top:24px; display:flex; gap:10px;">
+                    <div style="height:16px;"></div>
 
-                        <button class="btn btn-purple" onclick="restartServer()">
-                            Restart
+                    <select id="rankSelect">
+
+                        <option>VIP</option>
+                        <option>CRIMINAL</option>
+                        <option>RICH</option>
+                        <option>COUNCIL</option>
+                        <option>MOD</option>
+                        <option>MANAGER</option>
+                        <option>ADMIN</option>
+                        <option>FOUNDER</option>
+
+                    </select>
+
+                    <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+
+                        <button class="btn btn-purple" onclick="changeRank()">
+                            Change Rank
                         </button>
 
-                        <button class="btn btn-danger" onclick="stopServer()">
-                            Stop
+                        <button class="btn" onclick="degradeRank()">
+                            Degrade
+                        </button>
+
+                        <button class="btn" onclick="changeNickname()">
+                            Nickname
+                        </button>
+
+                        <button class="btn" onclick="kickSession()">
+                            Session Kick
+                        </button>
+
+                        <button class="btn btn-danger" onclick="timeoutUser()">
+                            Timeout
+                        </button>
+
+                        <button class="btn btn-danger" onclick="banPanelUser()">
+                            Ban
                         </button>
 
                     </div>
+
+                    <div class="status" id="panelStatus"></div>
 
                 </div>
 
                 <div class="card">
 
                     <div class="card-title">
-                        Security
+                        Rank Hierarchy
                     </div>
 
-                    <div class="online">
-                        <div class="dot"></div>
-                        <span>Protected</span>
-                    </div>
+                    <div style="line-height:2;">
 
-                    <div style="margin-top:24px; display:flex; gap:10px;">
-
-                        <button class="btn" onclick="fakeAction('Firewall cache cleared')">
-                            Firewall
-                        </button>
-
-                        <button class="btn" onclick="fakeAction('All sessions refreshed')">
-                            Sessions
-                        </button>
+                        VIP<br>
+                        Criminal<br>
+                        Rich<br>
+                        Council<br>
+                        Mod<br>
+                        Manager<br>
+                        Admin<br>
+                        Founder
 
                     </div>
 
@@ -548,23 +460,14 @@ tr:hover{
 
         <div id="purge" class="panel">
 
-            <div class="card purge-box">
+            <div class="card" style="max-width:650px;">
 
                 <div class="card-title">
                     Post Purge
                 </div>
 
-                <div style="font-size:26px;font-weight:800;color:white;">
-                    Remove Post
-                </div>
-
-                <div style="margin-top:10px;color:#666;">
-                    Enter a post link or identifier below.
-                </div>
-
                 <input
                     type="text"
-                    class="purge-input"
                     id="purgeInput"
                     placeholder="https://example.com/post/123"
                 >
@@ -595,65 +498,58 @@ tr:hover{
 
 <script>
 
-/* USERS */
+/* USER DATA */
+
+const ranks = [
+"VIP",
+"CRIMINAL",
+"RICH",
+"COUNCIL",
+"MOD",
+"MANAGER",
+"ADMIN",
+"FOUNDER"
+];
 
 const users = [
-"asuna","Bella","go5","her","sewer","ace","mishka","Hacker",
-"ye","vxu","xan","king","Kris","Akanori","baki","laskun",
-"engineowning","vayne","paranoid","law","obsessor","config",
-"Joey","Worsaken","ruin","Ry","Fed","babytron","tragic",
-"rockstar","glow","Ty","proxy","Kira","bladee","Leonardo",
-"ghoul","lord","kills","Ivan","solar","Dolphin","Harmless",
-"Graveyard","Vile","meow","coffin","Machiavelli","Jay",
-"stalker","doppler","Water","Rogue","DGSI","father","Kaito"
+{name:"asuna",rank:"VIP",status:"Online"},
+{name:"Bella",rank:"CRIMINAL",status:"Online"},
+{name:"go5",rank:"RICH",status:"Online"},
+{name:"her",rank:"COUNCIL",status:"Offline"},
+{name:"sewer",rank:"MOD",status:"Online"},
+{name:"ace",rank:"MANAGER",status:"Online"},
+{name:"mishka",rank:"ADMIN",status:"Offline"},
+{name:"Hacker",rank:"FOUNDER",status:"Online"}
 ];
 
 const table = document.getElementById("userTable");
 
-function renderUsers(list){
+/* RENDER */
 
-    table.innerHTML = list.map((u,i)=>`
+function renderUsers(){
+
+    table.innerHTML = users.map((u,i)=>`
 
     <tr>
 
         <td>#${1000+i}</td>
 
         <td style="font-weight:700;color:white;">
-            ${u}
+            ${u.name}
         </td>
 
         <td>
-            <span id="rank-${i}" class="rank ${
-                i % 3 === 0 ? 'rank-vip' :
-                i % 3 === 1 ? 'rank-criminal' :
-                'rank-rich'
-            }">
-                ${
-                    i % 3 === 0 ? 'VIP' :
-                    i % 3 === 1 ? 'CRIMINAL' :
-                    'RICH'
-                }
+            <span class="rank rank-${u.rank.toLowerCase()}">
+                ${u.rank}
             </span>
         </td>
 
-        <td id="status-${i}" style="color:#46d37d;">
-            Online
-        </td>
-
-        <td style="display:flex;gap:8px;">
-
-            <button class="btn" onclick="promoteUser(${i})">
-                Promote
-            </button>
-
-            <button class="btn" onclick="kickUser(${i})">
-                Kick
-            </button>
-
-            <button class="btn btn-danger" onclick="banUser(${i})">
-                Ban
-            </button>
-
+        <td style="color:${
+            u.status === "Online"
+            ? "#46d37d"
+            : "#999"
+        };">
+            ${u.status}
         </td>
 
     </tr>
@@ -662,121 +558,143 @@ function renderUsers(list){
 
 }
 
-renderUsers(users);
+renderUsers();
 
-/* SEARCH */
+/* USER PANEL */
 
-function searchUsers(query){
+function getUser(){
 
-    query = query.toLowerCase();
+    const target = document
+        .getElementById("targetUser")
+        .value
+        .trim()
+        .toLowerCase();
 
-    const filtered = users.filter(u =>
-        u.toLowerCase().includes(query)
+    return users.find(u =>
+        u.name.toLowerCase() === target
     );
 
-    renderUsers(filtered);
+}
+
+function setStatus(msg){
+
+    const s = document.getElementById("panelStatus");
+
+    s.style.display = "block";
+    s.innerText = msg;
 
 }
 
-/* USER ACTIONS */
+function changeRank(){
 
-function promoteUser(id){
+    const user = getUser();
 
-    const rank = document.getElementById(`rank-${id}`);
+    if(!user) return setStatus("User not found.");
 
-    if(!rank) return;
+    user.rank = document
+        .getElementById("rankSelect")
+        .value;
 
-    rank.className = "rank rank-admin";
-    rank.innerText = "ADMIN";
+    renderUsers();
 
-    addLog("silent [Manager]", "promoted user permissions");
+    setStatus(`Rank changed to ${user.rank}`);
 
-}
-
-function kickUser(id){
-
-    const status = document.getElementById(`status-${id}`);
-
-    if(!status) return;
-
-    status.style.color = "#ffb347";
-    status.innerText = "Kicked";
-
-    addLog("silent [Manager]", "kicked user session");
+    addLog("silent [Manager]",
+    `changed ${user.name}'s rank to ${user.rank}`);
 
 }
 
-function banUser(id){
+function degradeRank(){
 
-    const row = document.querySelectorAll("#userTable tr")[id];
+    const user = getUser();
 
-    if(!row) return;
+    if(!user) return setStatus("User not found.");
 
-    row.style.opacity = ".35";
-    row.style.pointerEvents = "none";
+    let index = ranks.indexOf(user.rank);
 
-    addLog("silent [Manager]", "banned account");
+    if(index <= 0)
+        return setStatus("Cannot degrade further.");
 
-}
+    user.rank = ranks[index - 1];
 
-/* PANELS */
+    renderUsers();
 
-function switchPanel(id,el){
+    setStatus(`${user.name} degraded to ${user.rank}`);
 
-    document.querySelectorAll(".panel").forEach(p=>{
-        p.classList.remove("active");
-    });
-
-    document.querySelectorAll(".nav-item").forEach(n=>{
-        n.classList.remove("active");
-    });
-
-    document.getElementById(id).classList.add("active");
-
-    el.classList.add("active");
+    addLog("silent [Manager]",
+    `degraded ${user.name} to ${user.rank}`);
 
 }
 
-/* SERVER */
+function changeNickname(){
 
-let online = true;
+    const user = getUser();
 
-function restartServer(){
+    if(!user) return setStatus("User not found.");
 
-    const text = document.getElementById("serverText");
-    const status = document.getElementById("serverStatus");
+    const newName = prompt("Enter new nickname:");
 
-    text.innerText = "Restarting...";
-    status.innerText = "Restarting...";
+    if(!newName) return;
 
-    addLog("silent [Manager]", "restarted website server");
+    addLog("silent [Manager]",
+    `changed nickname ${user.name} -> ${newName}`);
 
-    setTimeout(()=>{
+    user.name = newName;
 
-        text.innerText = "Running";
-        status.innerText = "Operational";
+    renderUsers();
 
-    },2000);
+    setStatus("Nickname updated.");
 
 }
 
-function stopServer(){
+function kickSession(){
 
-    online = false;
+    const user = getUser();
 
-    document.getElementById("serverText").innerText = "Offline";
-    document.getElementById("serverStatus").innerText = "Offline";
+    if(!user) return setStatus("User not found.");
 
-    document.getElementById("serverIndicator").style.background = "#ff4d5a";
-    document.getElementById("serverDot").style.background = "#ff4d5a";
+    user.status = "Kicked";
 
-    addLog("silent [Manager]", "stopped website server");
+    renderUsers();
+
+    setStatus(`${user.name} session kicked.`);
+
+    addLog("silent [Manager]",
+    `kicked ${user.name}'s session`);
 
 }
 
-function fakeAction(msg){
+function timeoutUser(){
 
-    addLog("system", msg);
+    const user = getUser();
+
+    if(!user) return setStatus("User not found.");
+
+    user.status = "Timeout";
+
+    renderUsers();
+
+    setStatus(`${user.name} timed out.`);
+
+    addLog("silent [Manager]",
+    `timed out ${user.name}`);
+
+}
+
+function banPanelUser(){
+
+    const user = getUser();
+
+    if(!user) return setStatus("User not found.");
+
+    user.status = "Banned";
+
+    renderUsers();
+
+    setStatus(`${user.name} banned.`);
+
+    addLog("silent [Manager]",
+    `banned ${user.name}`);
 
 }
 
@@ -790,21 +708,23 @@ function purgePost(){
     if(!input.value) return;
 
     status.style.display = "block";
-    status.innerText = "Connecting to cluster...";
+
+    status.innerText = "Connecting to storage cluster...";
 
     setTimeout(()=>{
 
-        status.innerText = "Removing post data...";
+        status.innerText = "Removing post fragments...";
 
         setTimeout(()=>{
 
             status.innerText = "SUCCESS: Post purged.";
 
-            addLog("silent [Manager]", "purged a post");
+            addLog("silent [Manager]",
+            `purged post ${input.value}`);
 
             input.value = "";
 
-        },1400);
+        },1200);
 
     },1000);
 
@@ -828,17 +748,30 @@ function addLog(user,action){
 
 }
 
-/* DEFAULT LOGS */
-
 [
 "reviewed audit logs",
-"updated permissions",
 "optimized database cluster",
-"cleared firewall cache",
-"refreshed user sessions"
+"updated role permissions"
 ].forEach(log=>{
     addLog("system",log);
 });
+
+/* PANELS */
+
+function switchPanel(id,el){
+
+    document.querySelectorAll(".panel")
+    .forEach(p=>p.classList.remove("active"));
+
+    document.querySelectorAll(".nav-item")
+    .forEach(n=>n.classList.remove("active"));
+
+    document.getElementById(id)
+    .classList.add("active");
+
+    el.classList.add("active");
+
+}
 
 </script>
 
