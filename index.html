@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <title>silent [Manager]</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,9 +21,10 @@
 
     --purple:#bb71e4;
     --purple2:#8b4eff;
+
     --danger:#ff4d5a;
     --success:#42d67d;
-    --gold:#ffcc4d;
+    --warning:#ffb84d;
 }
 
 *{
@@ -143,7 +145,35 @@ body{
     font-size:11px;
     text-transform:uppercase;
     letter-spacing:1px;
-    margin-bottom:14px;
+    margin-bottom:16px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:24px;
+}
+
+.stat{
+    background:#0d0d0d;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px;
+}
+
+.stat-value{
+    font-size:26px;
+    font-weight:800;
+    color:white;
+}
+
+.stat-label{
+    margin-top:5px;
+    color:#666;
+    font-size:12px;
 }
 
 /* BUTTONS */
@@ -184,7 +214,8 @@ body{
     background:#0c0c0c;
     border:1px solid var(--border);
     border-radius:12px;
-    overflow:hidden;
+    overflow:auto;
+    max-height:700px;
 }
 
 table{
@@ -198,6 +229,9 @@ th{
     color:#555;
     font-size:11px;
     border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    background:#0c0c0c;
 }
 
 td{
@@ -221,6 +255,11 @@ input,select{
     outline:none;
 }
 
+input:focus,
+select:focus{
+    border-color:var(--purple);
+}
+
 .panel-grid{
     display:grid;
     grid-template-columns:2fr 1fr;
@@ -236,6 +275,7 @@ input,select{
     font-weight:800;
 }
 
+.rank-member{background:#1c1c1c;color:#999;}
 .rank-vip{background:#2b1935;color:#cb97ff;}
 .rank-criminal{background:#251030;color:#a063ff;}
 .rank-rich{background:#2c240d;color:#ffcc4d;}
@@ -254,6 +294,14 @@ input,select{
 .panel.active{
     display:block;
 }
+
+/* STATUS */
+
+.status-online{color:#46d37d;}
+.status-offline{color:#888;}
+.status-banned{color:#ff5c5c;}
+.status-timeout{color:#ffb84d;}
+.status-kicked{color:#999;}
 
 /* LOGS */
 
@@ -275,10 +323,16 @@ input,select{
     font-weight:700;
 }
 
-.status{
+.status-msg{
     margin-top:14px;
     color:var(--purple);
     display:none;
+}
+
+.quick-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
 </style>
@@ -294,8 +348,11 @@ input,select{
     <div class="profile">
         <div>
             <div style="font-weight:700;">silent [Manager]</div>
-            <div style="font-size:11px;color:#666;">Administrator</div>
+            <div style="font-size:11px;color:#666;">
+                Administrator
+            </div>
         </div>
+
         <div class="avatar"></div>
     </div>
 
@@ -309,19 +366,33 @@ input,select{
 
         <div class="sidebar-inner">
 
-            <div class="nav-item active" onclick="switchPanel('users',this)">
+            <div class="nav-item active"
+            onclick="switchPanel('dashboard',this)">
+                Dashboard
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('users',this)">
                 Users
             </div>
 
-            <div class="nav-item" onclick="switchPanel('userpanel',this)">
+            <div class="nav-item"
+            onclick="switchPanel('adduser',this)">
+                Add User
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('userpanel',this)">
                 User Panel
             </div>
 
-            <div class="nav-item" onclick="switchPanel('purge',this)">
+            <div class="nav-item"
+            onclick="switchPanel('purge',this)">
                 Post Purge
             </div>
 
-            <div class="nav-item" onclick="switchPanel('logs',this)">
+            <div class="nav-item"
+            onclick="switchPanel('logs',this)">
                 Audit Logs
             </div>
 
@@ -333,15 +404,102 @@ input,select{
 
     <main class="main">
 
+        <!-- DASHBOARD -->
+
+        <div id="dashboard" class="panel active">
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat-value"
+                    id="totalUsers">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        TOTAL USERS
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-value"
+                    id="onlineUsers">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        ONLINE USERS
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-value">
+                        8
+                    </div>
+
+                    <div class="stat-label">
+                        ACTIVE RANKS
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-value">
+                        STABLE
+                    </div>
+
+                    <div class="stat-label">
+                        CLUSTER STATUS
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-title">
+                    Quick Actions
+                </div>
+
+                <div class="quick-actions">
+
+                    <button class="btn btn-purple"
+                    onclick="randomizeUsers()">
+                        Randomize Status
+                    </button>
+
+                    <button class="btn"
+                    onclick="massOffline()">
+                        Offline Sweep
+                    </button>
+
+                    <button class="btn btn-danger"
+                    onclick="purgeRandom()">
+                        Emergency Purge
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
         <!-- USERS -->
 
-        <div id="users" class="panel active">
+        <div id="users" class="panel">
 
             <div class="card">
 
                 <div class="card-title">
                     User Database
                 </div>
+
+                <input
+                    type="text"
+                    placeholder="Search users..."
+                    id="searchInput"
+                    oninput="renderUsers()"
+                    style="margin-bottom:18px;"
+                >
 
                 <div class="table-wrap">
 
@@ -353,6 +511,7 @@ input,select{
                                 <th>Username</th>
                                 <th>Rank</th>
                                 <th>Status</th>
+                                <th>Joined</th>
                             </tr>
                         </thead>
 
@@ -361,6 +520,53 @@ input,select{
                     </table>
 
                 </div>
+
+            </div>
+
+        </div>
+
+        <!-- ADD USER -->
+
+        <div id="adduser" class="panel">
+
+            <div class="card"
+            style="max-width:700px;">
+
+                <div class="card-title">
+                    Create New User
+                </div>
+
+                <input
+                    type="text"
+                    id="newUsername"
+                    placeholder="Username..."
+                >
+
+                <div style="height:14px;"></div>
+
+                <select id="newRank">
+
+                    <option>MEMBER</option>
+                    <option>VIP</option>
+                    <option>CRIMINAL</option>
+                    <option>RICH</option>
+                    <option>COUNCIL</option>
+                    <option>MOD</option>
+                    <option>MANAGER</option>
+
+                </select>
+
+                <div style="margin-top:18px;">
+
+                    <button class="btn btn-purple"
+                    onclick="addUser()">
+                        Add User
+                    </button>
+
+                </div>
+
+                <div class="status-msg"
+                id="addUserStatus"></div>
 
             </div>
 
@@ -388,6 +594,7 @@ input,select{
 
                     <select id="rankSelect">
 
+                        <option>MEMBER</option>
                         <option>VIP</option>
                         <option>CRIMINAL</option>
                         <option>RICH</option>
@@ -399,35 +606,52 @@ input,select{
 
                     </select>
 
-                    <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+                    <div style="
+                    margin-top:18px;
+                    display:flex;
+                    gap:10px;
+                    flex-wrap:wrap;
+                    ">
 
-                        <button class="btn btn-purple" onclick="changeRank()">
+                        <button class="btn btn-purple"
+                        onclick="changeRank()">
                             Change Rank
                         </button>
 
-                        <button class="btn" onclick="degradeRank()">
+                        <button class="btn"
+                        onclick="degradeRank()">
                             Degrade
                         </button>
 
-                        <button class="btn" onclick="changeNickname()">
+                        <button class="btn"
+                        onclick="changeNickname()">
                             Nickname
                         </button>
 
-                        <button class="btn" onclick="kickSession()">
+                        <button class="btn"
+                        onclick="kickSession()">
                             Session Kick
                         </button>
 
-                        <button class="btn btn-danger" onclick="timeoutUser()">
+                        <button class="btn btn-danger"
+                        onclick="timeoutUser()">
                             Timeout
                         </button>
 
-                        <button class="btn btn-danger" onclick="banPanelUser()">
+                        <button class="btn btn-danger"
+                        onclick="banPanelUser()">
                             Ban
+                        </button>
+
+                        <button class="btn btn-danger"
+                        onclick="deleteUser()">
+                            Delete User
                         </button>
 
                     </div>
 
-                    <div class="status" id="panelStatus"></div>
+                    <div class="status-msg"
+                    id="panelStatus"></div>
 
                 </div>
 
@@ -439,6 +663,7 @@ input,select{
 
                     <div style="line-height:2;">
 
+                        Member<br>
                         VIP<br>
                         Criminal<br>
                         Rich<br>
@@ -460,7 +685,8 @@ input,select{
 
         <div id="purge" class="panel">
 
-            <div class="card" style="max-width:650px;">
+            <div class="card"
+            style="max-width:650px;">
 
                 <div class="card-title">
                     Post Purge
@@ -473,12 +699,16 @@ input,select{
                 >
 
                 <div style="margin-top:15px;">
-                    <button class="btn btn-danger" onclick="purgePost()">
+
+                    <button class="btn btn-danger"
+                    onclick="purgePost()">
                         Purge Post
                     </button>
+
                 </div>
 
-                <div class="status" id="purgeStatus"></div>
+                <div class="status-msg"
+                id="purgeStatus"></div>
 
             </div>
 
@@ -488,7 +718,8 @@ input,select{
 
         <div id="logs" class="panel">
 
-            <div class="logs" id="logsBox"></div>
+            <div class="logs"
+            id="logsBox"></div>
 
         </div>
 
@@ -498,7 +729,10 @@ input,select{
 
 <script>
 
+/* RANKS */
+
 const ranks = [
+"MEMBER",
 "VIP",
 "CRIMINAL",
 "RICH",
@@ -509,182 +743,230 @@ const ranks = [
 "FOUNDER"
 ];
 
-/* MASSIVE USER DATABASE */
+/* USERS */
 
-const users = [
+const users = [];
 
-/* FOUNDER */
-{id:1,name:"kt",rank:"FOUNDER",status:"Online",joined:"Apr 13 2019"},
+/* RANDOM NAMES */
 
-/* ADMIN */
-{id:0,name:"Admin",rank:"ADMIN",status:"Online",joined:"Sep 11 2001"},
-
-/* MANAGER */
-{id:14,name:"month",rank:"MANAGER",status:"Online",joined:"Apr 14 2019"},
-{id:7819,name:"silent",rank:"MANAGER",status:"Online",joined:"Jun 24 2020"},
-
-/* MOD */
-{id:15,name:"compression",rank:"MOD",status:"Online",joined:"Apr 14 2019"},
-{id:6767,name:"Kaede",rank:"MOD",status:"Offline",joined:"Jun 4 2020"},
-{id:535998,name:"fox",rank:"MOD",status:"Online",joined:"Feb 16 2025"},
-
-/* COUNCIL */
-{id:5530,name:"boss",rank:"COUNCIL",status:"Online",joined:"May 7 2020"},
-{id:12437,name:"Federal",rank:"COUNCIL",status:"Offline",joined:"Sep 1 2020"},
-{id:290795,name:"hell",rank:"COUNCIL",status:"Online",joined:"Dec 26 2022"},
-{id:625547,name:"arabz",rank:"COUNCIL",status:"Online",joined:"Apr 15 2026"},
-{id:627865,name:"m",rank:"COUNCIL",status:"Offline",joined:"Apr 26 2026"},
-
-/* RICH */
-{id:3,name:"munich",rank:"RICH",status:"Online",joined:"Apr 13 2019"},
-{id:6,name:"zz",rank:"RICH",status:"Online",joined:"Aug 25 2019"},
-{id:26,name:"asuna",rank:"RICH",status:"Offline",joined:"Apr 14 2019"},
-{id:33,name:"Bella",rank:"RICH",status:"Online",joined:"Apr 15 2019"},
-{id:36,name:"go",rank:"RICH",status:"Online",joined:"Apr 15 2019"},
-{id:37,name:"her",rank:"RICH",status:"Offline",joined:"Apr 15 2019"},
-{id:111,name:"sewer",rank:"RICH",status:"Online",joined:"Apr 23 2019"},
-{id:180,name:"ace",rank:"RICH",status:"Online",joined:"Apr 28 2019"},
-{id:276,name:"mishka",rank:"RICH",status:"Offline",joined:"May 11 2019"},
-{id:470,name:"Hacker",rank:"RICH",status:"Online",joined:"May 17 2019"},
-{id:877,name:"Kris",rank:"RICH",status:"Online",joined:"Jul 2 2019"},
-{id:1488,name:"vayne",rank:"RICH",status:"Offline",joined:"Aug 17 2019"},
-{id:2030,name:"law",rank:"RICH",status:"Online",joined:"Oct 6 2019"},
-{id:4301,name:"babytron",rank:"RICH",status:"Online",joined:"Mar 28 2020"},
-{id:4720,name:"rockstar",rank:"RICH",status:"Online",joined:"Apr 13 2020"},
-{id:5374,name:"Crossfade",rank:"RICH",status:"Offline",joined:"May 4 2020"},
-{id:6061,name:"Penis",rank:"RICH",status:"Online",joined:"May 21 2020"},
-{id:7323,name:"republic",rank:"RICH",status:"Online",joined:"Jun 15 2020"},
-{id:8395,name:"lncognito",rank:"RICH",status:"Offline",joined:"Jul 5 2020"},
-{id:10321,name:"Vile",rank:"RICH",status:"Online",joined:"Aug 4 2020"},
-{id:12181,name:"versus",rank:"RICH",status:"Online",joined:"Aug 29 2020"},
-{id:14742,name:"SCIA",rank:"RICH",status:"Offline",joined:"Oct 7 2020"},
-{id:20303,name:"Icmp",rank:"RICH",status:"Online",joined:"Dec 25 2020"},
-{id:22286,name:"Water",rank:"RICH",status:"Online",joined:"Jan 23 2021"},
-{id:24902,name:"sin",rank:"RICH",status:"Offline",joined:"Feb 23 2021"},
-{id:28850,name:"ROOTING",rank:"RICH",status:"Online",joined:"Apr 3 2021"},
-{id:34103,name:"Cliqued",rank:"RICH",status:"Online",joined:"May 29 2021"},
-{id:36144,name:"ft",rank:"RICH",status:"Offline",joined:"Jun 21 2021"},
-{id:38617,name:"luci",rank:"RICH",status:"Online",joined:"Jul 17 2021"},
-{id:41384,name:"viceatone",rank:"RICH",status:"Online",joined:"Aug 14 2021"},
-{id:44514,name:"Synqronize",rank:"RICH",status:"Offline",joined:"Sep 19 2021"},
-{id:47277,name:"bo",rank:"RICH",status:"Online",joined:"Oct 31 2021"},
-{id:51485,name:"taylors",rank:"RICH",status:"Online",joined:"Jan 9 2022"},
-{id:51509,name:"Eevee",rank:"RICH",status:"Offline",joined:"Jan 10 2022"},
-{id:51725,name:"egirlphobic",rank:"RICH",status:"Online",joined:"Jan 13 2022"},
-{id:256245,name:"vela",rank:"RICH",status:"Online",joined:"Mar 7 2022"},
-{id:257784,name:"pedohunters",rank:"RICH",status:"Offline",joined:"Mar 22 2022"},
-{id:266188,name:"someguy6969",rank:"RICH",status:"Online",joined:"Jun 12 2022"},
-{id:268821,name:"Clairvoyant",rank:"RICH",status:"Online",joined:"Jul 6 2022"},
-{id:270679,name:"CIA",rank:"RICH",status:"Offline",joined:"Jul 20 2022"},
-{id:273064,name:"Kawata",rank:"RICH",status:"Online",joined:"Aug 6 2022"},
-{id:278107,name:"SPYDIR",rank:"RICH",status:"Online",joined:"Sep 16 2022"},
-{id:283261,name:"BIockchain",rank:"RICH",status:"Offline",joined:"Nov 4 2022"},
-{id:290935,name:"Renzy2521",rank:"RICH",status:"Online",joined:"Dec 27 2022"},
-{id:297911,name:"Weather",rank:"RICH",status:"Online",joined:"Feb 12 2023"},
-{id:302426,name:"tobi",rank:"RICH",status:"Offline",joined:"Mar 12 2023"},
-{id:310318,name:"nxe",rank:"RICH",status:"Online",joined:"Apr 27 2023"},
-{id:330762,name:"Harm",rank:"RICH",status:"Online",joined:"Jun 27 2023"},
-{id:351430,name:"565",rank:"RICH",status:"Offline",joined:"Aug 30 2023"},
-{id:354239,name:"swatable",rank:"RICH",status:"Online",joined:"Sep 7 2023"},
-{id:381634,name:"TRENDSETTER",rank:"RICH",status:"Online",joined:"Oct 26 2023"},
-{id:390862,name:"Wehr",rank:"RICH",status:"Offline",joined:"Nov 15 2023"},
-{id:400334,name:"scare",rank:"RICH",status:"Online",joined:"Dec 15 2023"},
-{id:405278,name:"4FA",rank:"RICH",status:"Online",joined:"Dec 30 2023"},
-{id:416062,name:"distraught",rank:"RICH",status:"Offline",joined:"Jan 30 2024"},
-{id:424520,name:"minted",rank:"RICH",status:"Online",joined:"Feb 25 2024"},
-{id:427780,name:"terrorlxvely",rank:"RICH",status:"Online",joined:"Mar 6 2024"},
-{id:427851,name:"jumpscare",rank:"RICH",status:"Offline",joined:"Mar 6 2024"},
-{id:435348,name:"TheFederalist",rank:"RICH",status:"Online",joined:"Mar 29 2024"},
-{id:438258,name:"bignigga123",rank:"RICH",status:"Online",joined:"Apr 5 2024"},
-{id:440711,name:"toenail8866",rank:"RICH",status:"Offline",joined:"Apr 11 2024"},
-{id:446266,name:"attacking",rank:"RICH",status:"Online",joined:"Apr 27 2024"},
-{id:451980,name:"Hec",rank:"RICH",status:"Online",joined:"May 15 2024"},
-{id:454791,name:"broidontknow",rank:"RICH",status:"Offline",joined:"May 27 2024"},
-{id:457818,name:"kapaisu",rank:"RICH",status:"Online",joined:"Jun 5 2024"},
-{id:470486,name:"brad",rank:"RICH",status:"Online",joined:"Jul 10 2024"},
-{id:474840,name:"s7",rank:"RICH",status:"Offline",joined:"Jul 20 2024"},
-{id:481804,name:"dead",rank:"RICH",status:"Online",joined:"Aug 5 2024"},
-{id:490450,name:"HateClub",rank:"RICH",status:"Online",joined:"Aug 28 2024"},
-{id:493833,name:"Piqures",rank:"RICH",status:"Offline",joined:"Sep 7 2024"},
-{id:496832,name:"Revolting",rank:"RICH",status:"Online",joined:"Sep 17 2024"},
-{id:499187,name:"refuckly",rank:"RICH",status:"Online",joined:"Sep 27 2024"},
-{id:504562,name:"fameless",rank:"RICH",status:"Offline",joined:"Oct 15 2024"},
-{id:505666,name:"hfwm",rank:"RICH",status:"Online",joined:"Oct 19 2024"},
-{id:511552,name:"cuck",rank:"RICH",status:"Online",joined:"Nov 7 2024"},
-{id:511636,name:"nen",rank:"RICH",status:"Offline",joined:"Nov 7 2024"},
-{id:518525,name:"juvinal",rank:"RICH",status:"Online",joined:"Dec 7 2024"},
-{id:525836,name:"Prosecutor",rank:"RICH",status:"Online",joined:"Jan 4 2025"},
-{id:526503,name:"repercing",rank:"RICH",status:"Offline",joined:"Jan 6 2025"},
-{id:529250,name:"drecc",rank:"RICH",status:"Online",joined:"Jan 20 2025"},
-{id:531774,name:"demonicals",rank:"RICH",status:"Online",joined:"Jan 29 2025"},
-{id:540958,name:"hauling",rank:"RICH",status:"Offline",joined:"Mar 17 2025"},
-{id:542412,name:"suv",rank:"RICH",status:"Online",joined:"Apr 5 2025"},
-{id:551044,name:"Kaddins",rank:"RICH",status:"Online",joined:"May 2 2025"},
-{id:559636,name:"invading",rank:"RICH",status:"Offline",joined:"May 28 2025"},
-{id:577245,name:"egirl",rank:"RICH",status:"Online",joined:"Aug 19 2025"},
-{id:591028,name:"asce",rank:"RICH",status:"Online",joined:"Oct 15 2025"},
-{id:595672,name:"scraptedAE",rank:"RICH",status:"Offline",joined:"Nov 3 2025"},
-{id:614102,name:"pastereviewer",rank:"RICH",status:"Online",joined:"Feb 2 2026"}
-
+const names = [
+"go","her","ace","mishka","vayne","rockstar",
+"bella","sewer","sin","water","federal",
+"ghost","reaper","luci","drain","terror",
+"crossfade","vice","minted","swat","dead",
+"envy","hfwm","drecc","scare","toenail",
+"kapaisu","weather","harm","versus","asce",
+"babytron","root","spydir","vile","fox",
+"silent","month","law","hacker","arabz",
+"egirl","suv","renzy","bo","cross",
+"nxe","hell","frost","vision","nova",
+"venom","slime","clawed","fatal","xeno",
+"chaos","void","zero","grim","sorrow",
+"panic","fame","rev","night","ghosted",
+"shade","wraith","oxide","fear","proxy",
+"delta","vortex","bleed","flare","riot",
+"pulse","karma","toxic","demon","saint",
+"cynic","havoc","virus","mirage","phantom",
+"glitch","cipher","hollow","doom","fraud",
+"scythe","ruthless","envyx","terrorized","static"
 ];
 
-const table = document.getElementById("userTable");
+/* GENERATE USERS */
 
-/* RENDER USERS */
+for(let i=0;i<120;i++){
+
+    users.push({
+
+        id:Math.floor(Math.random()*900000),
+
+        name:
+        names[Math.floor(Math.random()*names.length)]
+        + (Math.random()>.7
+        ? Math.floor(Math.random()*999)
+        : ""),
+
+        rank:ranks[
+            Math.floor(Math.random()*5)
+        ],
+
+        status:
+        Math.random()>.5
+        ? "Online"
+        : "Offline",
+
+        joined:"202"+Math.floor(Math.random()*6)
+
+    });
+
+}
+
+/* SPECIAL USERS */
+
+users.unshift(
+{
+id:1,
+name:"kt",
+rank:"FOUNDER",
+status:"Online",
+joined:"2019"
+},
+{
+id:0,
+name:"Admin",
+rank:"ADMIN",
+status:"Online",
+joined:"2001"
+},
+{
+id:7819,
+name:"silent",
+rank:"MANAGER",
+status:"Online",
+joined:"2020"
+}
+);
+
+const table =
+document.getElementById("userTable");
+
+/* RENDER */
 
 function renderUsers(){
 
-table.innerHTML = users.map(u=>`
+    const search =
+    document.getElementById("searchInput")
+    ?.value
+    ?.toLowerCase() || "";
 
-<tr>
+    table.innerHTML = users
+    .filter(u=>
+        u.name.toLowerCase()
+        .includes(search)
+    )
+    .map(u=>`
 
-<td>#${u.id}</td>
+    <tr>
 
-<td style="font-weight:700;color:white;">
-${u.name}
-</td>
+        <td>#${u.id}</td>
 
-<td>
-<span class="rank rank-${u.rank.toLowerCase()}">
-${u.rank}
-</span>
-</td>
+        <td style="
+        color:white;
+        font-weight:700;
+        ">
+            ${u.name}
+        </td>
 
-<td style="color:${
-u.status === "Online"
-? "#46d37d"
-: u.status === "Banned"
-? "#ff5c5c"
-: u.status === "Timeout"
-? "#ffb84d"
-: u.status === "Kicked"
-? "#7d7d7d"
-: "#999"
-};">
-${u.status}
-</td>
+        <td>
+            <span class="
+            rank
+            rank-${u.rank.toLowerCase()}
+            ">
+                ${u.rank}
+            </span>
+        </td>
 
-</tr>
+        <td class="
+        status-${u.status.toLowerCase()}
+        ">
+            ${u.status}
+        </td>
 
-`).join("");
+        <td style="color:#777;">
+            ${u.joined}
+        </td>
+
+    </tr>
+
+    `).join("");
+
+    updateStats();
 
 }
 
 renderUsers();
 
+/* STATS */
+
+function updateStats(){
+
+    document.getElementById("totalUsers")
+    .innerText = users.length;
+
+    document.getElementById("onlineUsers")
+    .innerText =
+    users.filter(u=>
+    u.status==="Online").length;
+
+}
+
+/* ADD USER */
+
+function addUser(){
+
+    const username =
+    document.getElementById("newUsername")
+    .value.trim();
+
+    const rank =
+    document.getElementById("newRank")
+    .value;
+
+    const status =
+    document.getElementById("addUserStatus");
+
+    if(!username){
+
+        status.style.display="block";
+        status.innerText =
+        "Username required.";
+
+        return;
+    }
+
+    users.unshift({
+
+        id:Math.floor(Math.random()*999999),
+
+        name:username,
+
+        rank,
+
+        status:"Online",
+
+        joined:new Date()
+        .getFullYear()
+
+    });
+
+    renderUsers();
+
+    addLog(
+    "silent [Manager]",
+    `created user ${username}`
+    );
+
+    status.style.display="block";
+    status.innerText =
+    `${username} added successfully.`;
+
+    document.getElementById("newUsername")
+    .value = "";
+
+}
+
 /* GET USER */
 
 function getUser(){
 
-const target = document
-.getElementById("targetUser")
-.value
-.trim()
-.toLowerCase();
+    const target =
+    document.getElementById("targetUser")
+    .value
+    .trim()
+    .toLowerCase();
 
-return users.find(u =>
-u.name.toLowerCase() === target
-);
+    return users.find(u=>
+    u.name.toLowerCase()===target
+    );
 
 }
 
@@ -692,10 +974,11 @@ u.name.toLowerCase() === target
 
 function setStatus(msg){
 
-const s = document.getElementById("panelStatus");
+    const s =
+    document.getElementById("panelStatus");
 
-s.style.display = "block";
-s.innerText = msg;
+    s.style.display = "block";
+    s.innerText = msg;
 
 }
 
@@ -703,25 +986,25 @@ s.innerText = msg;
 
 function changeRank(){
 
-const user = getUser();
+    const user = getUser();
 
-if(!user)
-return setStatus("User not found.");
+    if(!user)
+    return setStatus("User not found.");
 
-const selected = document
-.getElementById("rankSelect")
-.value;
+    user.rank =
+    document.getElementById("rankSelect")
+    .value;
 
-user.rank = selected;
+    renderUsers();
 
-renderUsers();
+    setStatus(
+    `${user.name} rank updated.`
+    );
 
-setStatus(`${user.name} is now ${selected}`);
-
-addLog(
-"silent [Manager]",
-`changed ${user.name}'s rank to ${selected}`
-);
+    addLog(
+    "silent [Manager]",
+    `changed ${user.name}'s rank`
+    );
 
 }
 
@@ -729,79 +1012,68 @@ addLog(
 
 function degradeRank(){
 
-const user = getUser();
+    const user = getUser();
 
-if(!user)
-return setStatus("User not found.");
+    if(!user)
+    return setStatus("User not found.");
 
-let current = ranks.indexOf(user.rank);
+    let index =
+    ranks.indexOf(user.rank);
 
-if(current <= 0)
-return setStatus("Cannot degrade further.");
+    if(index <= 0)
+    return setStatus(
+    "Cannot degrade further."
+    );
 
-user.rank = ranks[current - 1];
+    user.rank =
+    ranks[index - 1];
 
-renderUsers();
+    renderUsers();
 
-setStatus(
-`${user.name} degraded to ${user.rank}`
-);
-
-addLog(
-"silent [Manager]",
-`degraded ${user.name} to ${user.rank}`
-);
+    setStatus(
+    `${user.name} degraded.`
+    );
 
 }
 
-/* CHANGE NICKNAME */
+/* NICKNAME */
 
 function changeNickname(){
 
-const user = getUser();
+    const user = getUser();
 
-if(!user)
-return setStatus("User not found.");
+    if(!user)
+    return setStatus("User not found.");
 
-const newName = prompt(
-"Enter new nickname:"
-);
+    const newName =
+    prompt("New nickname:");
 
-if(!newName)
-return;
+    if(!newName)
+    return;
 
-addLog(
-"silent [Manager]",
-`changed nickname ${user.name} -> ${newName}`
-);
+    user.name = newName;
 
-user.name = newName;
+    renderUsers();
 
-renderUsers();
-
-setStatus("Nickname updated.");
+    addLog(
+    "silent [Manager]",
+    `renamed user to ${newName}`
+    );
 
 }
 
-/* SESSION KICK */
+/* KICK */
 
 function kickSession(){
 
-const user = getUser();
+    const user = getUser();
 
-if(!user)
-return setStatus("User not found.");
+    if(!user)
+    return setStatus("User not found.");
 
-user.status = "Kicked";
+    user.status = "Kicked";
 
-renderUsers();
-
-setStatus(`${user.name} session kicked.`);
-
-addLog(
-"silent [Manager]",
-`kicked ${user.name}'s session`
-);
+    renderUsers();
 
 }
 
@@ -809,21 +1081,14 @@ addLog(
 
 function timeoutUser(){
 
-const user = getUser();
+    const user = getUser();
 
-if(!user)
-return setStatus("User not found.");
+    if(!user)
+    return setStatus("User not found.");
 
-user.status = "Timeout";
+    user.status = "Timeout";
 
-renderUsers();
-
-setStatus(`${user.name} timed out.`);
-
-addLog(
-"silent [Manager]",
-`timed out ${user.name}`
-);
+    renderUsers();
 
 }
 
@@ -831,21 +1096,84 @@ addLog(
 
 function banPanelUser(){
 
-const user = getUser();
+    const user = getUser();
 
-if(!user)
-return setStatus("User not found.");
+    if(!user)
+    return setStatus("User not found.");
 
-user.status = "Banned";
+    user.status = "Banned";
 
-renderUsers();
+    renderUsers();
 
-setStatus(`${user.name} banned.`);
+}
 
-addLog(
-"silent [Manager]",
-`banned ${user.name}`
-);
+/* DELETE */
+
+function deleteUser(){
+
+    const user = getUser();
+
+    if(!user)
+    return setStatus("User not found.");
+
+    const index =
+    users.indexOf(user);
+
+    users.splice(index,1);
+
+    renderUsers();
+
+    setStatus("User deleted.");
+
+}
+
+/* QUICK ACTIONS */
+
+function randomizeUsers(){
+
+    users.forEach(u=>{
+
+        u.status =
+        Math.random()>.5
+        ? "Online"
+        : "Offline";
+
+    });
+
+    renderUsers();
+
+    addLog(
+    "system",
+    "randomized presence nodes"
+    );
+
+}
+
+function massOffline(){
+
+    users.forEach(u=>{
+        u.status = "Offline";
+    });
+
+    renderUsers();
+
+    addLog(
+    "system",
+    "performed offline sweep"
+    );
+
+}
+
+function purgeRandom(){
+
+    addLog(
+    "system",
+    "executed emergency purge"
+    );
+
+    alert(
+    "Emergency purge completed."
+    );
 
 }
 
@@ -853,47 +1181,45 @@ addLog(
 
 function purgePost(){
 
-const input =
-document.getElementById("purgeInput");
+    const input =
+    document.getElementById("purgeInput");
 
-const status =
-document.getElementById("purgeStatus");
+    const status =
+    document.getElementById("purgeStatus");
 
-if(!input.value)
-return;
+    if(!input.value)
+    return;
 
-status.style.display = "block";
+    status.style.display="block";
 
-status.innerText =
-"Connecting to archive nodes...";
+    status.innerText =
+    "Connecting to archive nodes...";
 
-setTimeout(()=>{
+    setTimeout(()=>{
 
-status.innerText =
-"Purging mirrors...";
+        status.innerText =
+        "Purging mirrors...";
 
-setTimeout(()=>{
+        setTimeout(()=>{
 
-status.innerText =
-"Destroying references...";
+            status.innerText =
+            "Destroying references...";
 
-setTimeout(()=>{
+            setTimeout(()=>{
 
-status.innerText =
-"SUCCESS: Post purged.";
+                status.innerText =
+                "SUCCESS: Post purged.";
 
-addLog(
-"silent [Manager]",
-`purged ${input.value}`
-);
+                addLog(
+                "silent [Manager]",
+                `purged ${input.value}`
+                );
 
-input.value = "";
+            },1000);
 
-},1000);
+        },1200);
 
-},1200);
-
-},1000);
+    },1000);
 
 }
 
@@ -904,42 +1230,45 @@ document.getElementById("logsBox");
 
 function addLog(user,action){
 
-const div =
-document.createElement("div");
+    const div =
+    document.createElement("div");
 
-div.className = "log";
+    div.className = "log";
 
-div.innerHTML = `
-<span>${user}</span> ${action}
-`;
+    div.innerHTML = `
+    <span>${user}</span> ${action}
+    `;
 
-logsBox.prepend(div);
+    logsBox.prepend(div);
 
 }
 
 [
 "initialized manager session",
-"loaded user hierarchy",
-"connected to audit backend",
-"synced permission nodes"
+"loaded hierarchy",
+"connected audit backend",
+"permission nodes synced",
+"database stable"
 ].forEach(log=>{
-addLog("system",log);
+    addLog("system",log);
 });
 
-/* PANEL SWITCH */
+/* PANELS */
 
 function switchPanel(id,el){
 
-document.querySelectorAll(".panel")
-.forEach(p=>p.classList.remove("active"));
+    document.querySelectorAll(".panel")
+    .forEach(p=>
+    p.classList.remove("active"));
 
-document.querySelectorAll(".nav-item")
-.forEach(n=>n.classList.remove("active"));
+    document.querySelectorAll(".nav-item")
+    .forEach(n=>
+    n.classList.remove("active"));
 
-document.getElementById(id)
-.classList.add("active");
+    document.getElementById(id)
+    .classList.add("active");
 
-el.classList.add("active");
+    el.classList.add("active");
 
 }
 
