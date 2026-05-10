@@ -38,7 +38,6 @@ body{
     color:var(--text);
     font-family:'Inter',sans-serif;
 }
-    <div id="access-overlay"></div>
 
 /* NAVBAR */
 
@@ -261,19 +260,6 @@ select:focus{
     border-color:var(--purple);
 }
 
-#access-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #070707;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-    
 .panel-grid{
     display:grid;
     grid-template-columns:2fr 1fr;
@@ -757,12 +743,6 @@ const ranks = [
 "FOUNDER"
 ];
 
-
-    window.onload = () => {
-    const overlay = document.getElementById('access-overlay');
-    // Optional: Add a fade-out transition in CSS
-    setTimeout(() => overlay.style.display = 'none', 500); 
-};
 /* USERS */
 
 const users = [];
