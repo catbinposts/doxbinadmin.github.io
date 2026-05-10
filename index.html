@@ -3,317 +3,1275 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>manager panel</title>
+
+<title>silent [Manager]</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
- --bg:#070707;
- --sidebar:#0b0b0b;
- --card:#101010;
- --border:#1d1d1d;
- --text:#d8d8d8;
- --muted:#666;
- --purple:#bb71e4;
- --purple2:#8b4eff;
- --danger:#ff4d5a;
- --success:#42d67d;
- --warning:#ffb84d;
+    --bg:#070707;
+    --sidebar:#0b0b0b;
+    --card:#101010;
+    --border:#1d1d1d;
+
+    --text:#d8d8d8;
+    --muted:#666;
+
+    --purple:#bb71e4;
+    --purple2:#8b4eff;
+
+    --danger:#ff4d5a;
+    --success:#42d67d;
+    --warning:#ffb84d;
 }
 
 *{
- margin:0;
- padding:0;
- box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
- background:var(--bg);
- color:var(--text);
- font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
 }
 
 /* NAVBAR */
+
 .navbar{
- position:fixed;
- top:0;
- left:0;
- width:100%;
- height:60px;
- background:#050505;
- border-bottom:1px solid var(--border);
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:0 24px;
- z-index:999;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:60px;
+    background:#050505;
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 24px;
+    z-index:999;
 }
 
 .brand{
- font-size:15px;
- font-weight:800;
- color:white;
+    font-size:15px;
+    font-weight:800;
+    color:white;
 }
 
 .brand span{
- color:var(--purple);
+    color:var(--purple);
 }
 
 .profile{
- display:flex;
- align-items:center;
- gap:12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
 .avatar{
- width:36px;
- height:36px;
- border-radius:50%;
- background:linear-gradient(135deg,var(--purple),var(--purple2));
- box-shadow:0 0 20px rgba(187,113,228,.45);
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--purple),var(--purple2));
+    box-shadow:0 0 20px rgba(187,113,228,.45);
 }
 
 /* LAYOUT */
+
 .layout{
- display:flex;
- padding-top:60px;
+    display:flex;
+    padding-top:60px;
 }
 
 .sidebar{
- width:240px;
- height:calc(100vh - 60px);
- background:#0b0b0b;
- border-right:1px solid var(--border);
- position:fixed;
+    width:240px;
+    height:calc(100vh - 60px);
+    background:#0b0b0b;
+    border-right:1px solid var(--border);
+    position:fixed;
 }
 
 .sidebar-inner{
- padding-top:20px;
+    padding-top:20px;
 }
 
 .nav-item{
- padding:14px 24px;
- color:#777;
- cursor:pointer;
- transition:.2s;
- border-left:3px solid transparent;
- font-size:13px;
- font-weight:600;
+    padding:14px 24px;
+    color:#777;
+    cursor:pointer;
+    transition:.2s;
+    border-left:3px solid transparent;
+    font-size:13px;
+    font-weight:600;
 }
 
 .nav-item:hover{
- background:#111;
- color:white;
+    background:#111;
+    color:white;
 }
 
 .nav-item.active{
- background:#101010;
- color:white;
- border-left-color:var(--purple);
+    background:#101010;
+    color:white;
+    border-left-color:var(--purple);
 }
 
 /* MAIN */
+
 .main{
- margin-left:240px;
- width:100%;
- padding:30px;
+    margin-left:240px;
+    width:100%;
+    padding:30px;
 }
 
 /* CARDS */
+
 .card{
- background:linear-gradient(180deg,#101010,#0b0b0b);
- border:1px solid var(--border);
- border-radius:12px;
- padding:24px;
- margin-bottom:20px;
+    background:linear-gradient(180deg,#101010,#0b0b0b);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:20px;
 }
 
 .card-title{
- color:#666;
- font-size:11px;
- text-transform:uppercase;
- letter-spacing:1px;
- margin-bottom:16px;
+    color:#666;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:16px;
 }
 
 /* STATS */
+
 .stats{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:18px;
- margin-bottom:24px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:24px;
 }
 
 .stat{
- background:#0d0d0d;
- border:1px solid var(--border);
- border-radius:12px;
- padding:18px;
+    background:#0d0d0d;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px;
 }
 
 .stat-value{
- font-size:26px;
- font-weight:800;
- color:white;
+    font-size:26px;
+    font-weight:800;
+    color:white;
 }
 
 .stat-label{
- margin-top:5px;
- color:#666;
- font-size:12px;
+    margin-top:5px;
+    color:#666;
+    font-size:12px;
 }
 
 /* BUTTONS */
+
 .btn{
- background:#171717;
- border:1px solid #2b2b2b;
- color:#ccc;
- padding:10px 14px;
- border-radius:6px;
- cursor:pointer;
- transition:.2s;
- font-size:11px;
- font-weight:700;
- text-transform:uppercase;
+    background:#171717;
+    border:1px solid #2b2b2b;
+    color:#ccc;
+    padding:10px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.2s;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
 }
 
 .btn:hover{
- border-color:var(--purple);
- color:white;
+    border-color:var(--purple);
+    color:white;
 }
 
 .btn-danger{
- background:#1a1010;
- border-color:#3a1f1f;
- color:#ff9191;
+    background:#1a1010;
+    border-color:#3a1f1f;
+    color:#ff9191;
 }
 
 .btn-purple{
- background:linear-gradient(135deg,var(--purple),var(--purple2));
- border:none;
- color:white;
+    background:linear-gradient(135deg,var(--purple),var(--purple2));
+    border:none;
+    color:white;
 }
 
 /* TABLE */
+
 .table-wrap{
- background:#0c0c0c;
- border:1px solid var(--border);
- border-radius:12px;
- overflow:auto;
- max-height:700px;
+    background:#0c0c0c;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:auto;
+    max-height:700px;
 }
 
 table{
- width:100%;
- border-collapse:collapse;
+    width:100%;
+    border-collapse:collapse;
 }
 
 th{
- text-align:left;
- padding:16px;
- color:#555;
- font-size:11px;
- border-bottom:1px solid var(--border);
- position:sticky;
- top:0;
- background:#0c0c0c;
+    text-align:left;
+    padding:16px;
+    color:#555;
+    font-size:11px;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    background:#0c0c0c;
 }
 
 td{
- padding:16px;
- border-bottom:1px solid #151515;
+    padding:16px;
+    border-bottom:1px solid #151515;
 }
 
 tr:hover{
- background:#111;
+    background:#111;
 }
 
 /* INPUTS */
+
 input,select{
- width:100%;
- background:#080808;
- border:1px solid var(--border);
- color:white;
- padding:13px;
- border-radius:8px;
- outline:none;
+    width:100%;
+    background:#080808;
+    border:1px solid var(--border);
+    color:white;
+    padding:13px;
+    border-radius:8px;
+    outline:none;
 }
 
-input:focus, select:focus{
- border-color:var(--purple);
+input:focus,
+select:focus{
+    border-color:var(--purple);
 }
 
 .panel-grid{
- display:grid;
- grid-template-columns:2fr 1fr;
- gap:20px;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
 }
+
+/* RANKS */
+
+.rank{
+    padding:5px 10px;
+    border-radius:30px;
+    font-size:10px;
+    font-weight:800;
+}
+
+.rank-member{background:#1c1c1c;color:#999;}
+.rank-vip{background:#2b1935;color:#cb97ff;}
+.rank-criminal{background:#251030;color:#a063ff;}
+.rank-rich{background:#2c240d;color:#ffcc4d;}
+.rank-council{background:#12202d;color:#6ebcff;}
+.rank-mod{background:#182b20;color:#6effa8;}
+.rank-manager{background:#2b1e36;color:#d495ff;}
+.rank-admin{background:#311515;color:#ff7878;}
+.rank-founder{background:#2f2608;color:#ffd86b;}
 
 /* PANELS */
-.panel{ display:none; }
-.panel.active{ display:block; }
+
+.panel{
+    display:none;
+}
+
+.panel.active{
+    display:block;
+}
+
+/* STATUS */
+
+.status-online{color:#46d37d;}
+.status-offline{color:#888;}
+.status-banned{color:#ff5c5c;}
+.status-timeout{color:#ffb84d;}
+.status-kicked{color:#999;}
+
+/* LOGS */
+
+.logs{
+    background:#0c0c0c;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.log{
+    padding:14px 18px;
+    border-bottom:1px solid #161616;
+    color:#777;
+}
+
+.log span{
+    color:var(--purple);
+    font-weight:700;
+}
+
+.status-msg{
+    margin-top:14px;
+    color:var(--purple);
+    display:none;
+}
+
+.quick-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
 </style>
 </head>
-
-<!-- PASSWORD GATE -->
-<script>
-const pass = prompt("Enter password:");
-if(pass !== "1344"){
- document.documentElement.innerHTML = "<h1 style='color:white;background:black;padding:40px;font-family:sans-serif'>Access denied</h1>";
- throw new Error("Blocked");
-}
-</script>
-
 <body>
 
 <div class="navbar">
- <div class="brand">Manager <span>[Panel]</span></div>
 
- <div class="profile">
-  <div>
-   <div style="font-weight:700;">Manager</div>
-   <div style="font-size:11px;color:#666;">Administrator</div>
-  </div>
-  <div class="avatar"></div>
- </div>
+    <div class="brand">
+        silent <span>[Manager]</span>
+    </div>
+
+    <div class="profile">
+        <div>
+            <div style="font-weight:700;">silent [Manager]</div>
+            <div style="font-size:11px;color:#666;">
+                Administrator
+            </div>
+        </div>
+
+        <div class="avatar"></div>
+    </div>
+
 </div>
 
 <div class="layout">
 
-<aside class="sidebar">
- <div class="sidebar-inner">
-  <div class="nav-item active" onclick="switchPanel('dashboard',this)">Dashboard</div>
-  <div class="nav-item" onclick="switchPanel('users',this)">Users</div>
-  <div class="nav-item" onclick="switchPanel('adduser',this)">Add User</div>
-  <div class="nav-item" onclick="switchPanel('userpanel',this)">User Panel</div>
-  <div class="nav-item" onclick="switchPanel('purge',this)">Post Purge</div>
-  <div class="nav-item" onclick="switchPanel('logs',this)">Audit Logs</div>
- </div>
-</aside>
+    <!-- SIDEBAR -->
 
-<main class="main">
+    <aside class="sidebar">
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="panel active">
- <div class="stats">
-  <div class="stat">
-   <div class="stat-value" id="totalUsers">0</div>
-   <div class="stat-label">TOTAL USERS</div>
-  </div>
- </div>
-</div>
+        <div class="sidebar-inner">
 
-</main>
+            <div class="nav-item active"
+            onclick="switchPanel('dashboard',this)">
+                Dashboard
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('users',this)">
+                Users
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('adduser',this)">
+                Add User
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('userpanel',this)">
+                User Panel
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('purge',this)">
+                Post Purge
+            </div>
+
+            <div class="nav-item"
+            onclick="switchPanel('logs',this)">
+                Audit Logs
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- DASHBOARD -->
+
+        <div id="dashboard" class="panel active">
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat-value"
+                    id="totalUsers">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        TOTAL USERS
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-value"
+                    id="onlineUsers">
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        ONLINE USERS
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-value">
+                        8
+                    </div>
+
+                    <div class="stat-label">
+                        ACTIVE RANKS
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-value">
+                        STABLE
+                    </div>
+
+                    <div class="stat-label">
+                        CLUSTER STATUS
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-title">
+                    Quick Actions
+                </div>
+
+                <div class="quick-actions">
+
+                    <button class="btn btn-purple"
+                    onclick="randomizeUsers()">
+                        Randomize Status
+                    </button>
+
+                    <button class="btn"
+                    onclick="massOffline()">
+                        Offline Sweep
+                    </button>
+
+                    <button class="btn btn-danger"
+                    onclick="purgeRandom()">
+                        Emergency Purge
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- USERS -->
+
+        <div id="users" class="panel">
+
+            <div class="card">
+
+                <div class="card-title">
+                    User Database
+                </div>
+
+                <input
+                    type="text"
+                    placeholder="Search users..."
+                    id="searchInput"
+                    oninput="renderUsers()"
+                    style="margin-bottom:18px;"
+                >
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Rank</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="userTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ADD USER -->
+
+        <div id="adduser" class="panel">
+
+            <div class="card"
+            style="max-width:700px;">
+
+                <div class="card-title">
+                    Create New User
+                </div>
+
+                <input
+                    type="text"
+                    id="newUsername"
+                    placeholder="Username..."
+                >
+
+                <div style="height:14px;"></div>
+
+                <select id="newRank">
+
+                    <option>MEMBER</option>
+                    <option>VIP</option>
+                    <option>CRIMINAL</option>
+                    <option>RICH</option>
+                    <option>COUNCIL</option>
+                    <option>MOD</option>
+                    <option>MANAGER</option>
+
+                </select>
+
+                <div style="margin-top:18px;">
+
+                    <button class="btn btn-purple"
+                    onclick="addUser()">
+                        Add User
+                    </button>
+
+                </div>
+
+                <div class="status-msg"
+                id="addUserStatus"></div>
+
+            </div>
+
+        </div>
+
+        <!-- USER PANEL -->
+
+        <div id="userpanel" class="panel">
+
+            <div class="panel-grid">
+
+                <div class="card">
+
+                    <div class="card-title">
+                        User Management
+                    </div>
+
+                    <input
+                        type="text"
+                        id="targetUser"
+                        placeholder="Enter username..."
+                    >
+
+                    <div style="height:16px;"></div>
+
+                    <select id="rankSelect">
+
+                        <option>MEMBER</option>
+                        <option>VIP</option>
+                        <option>CRIMINAL</option>
+                        <option>RICH</option>
+                        <option>COUNCIL</option>
+                        <option>MOD</option>
+                        <option>MANAGER</option>
+                        <option>ADMIN</option>
+                        <option>FOUNDER</option>
+
+                    </select>
+
+                    <div style="
+                    margin-top:18px;
+                    display:flex;
+                    gap:10px;
+                    flex-wrap:wrap;
+                    ">
+
+                        <button class="btn btn-purple"
+                        onclick="changeRank()">
+                            Change Rank
+                        </button>
+
+                        <button class="btn"
+                        onclick="degradeRank()">
+                            Degrade
+                        </button>
+
+                        <button class="btn"
+                        onclick="changeNickname()">
+                            Nickname
+                        </button>
+
+                        <button class="btn"
+                        onclick="kickSession()">
+                            Session Kick
+                        </button>
+
+                        <button class="btn btn-danger"
+                        onclick="timeoutUser()">
+                            Timeout
+                        </button>
+
+                        <button class="btn btn-danger"
+                        onclick="banPanelUser()">
+                            Ban
+                        </button>
+
+                        <button class="btn btn-danger"
+                        onclick="deleteUser()">
+                            Delete User
+                        </button>
+
+                    </div>
+
+                    <div class="status-msg"
+                    id="panelStatus"></div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-title">
+                        Rank Hierarchy
+                    </div>
+
+                    <div style="line-height:2;">
+
+                        Member<br>
+                        VIP<br>
+                        Criminal<br>
+                        Rich<br>
+                        Council<br>
+                        Mod<br>
+                        Manager<br>
+                        Admin<br>
+                        Founder
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PURGE -->
+
+        <div id="purge" class="panel">
+
+            <div class="card"
+            style="max-width:650px;">
+
+                <div class="card-title">
+                    Post Purge
+                </div>
+
+                <input
+                    type="text"
+                    id="purgeInput"
+                    placeholder="https://example.com/post/123"
+                >
+
+                <div style="margin-top:15px;">
+
+                    <button class="btn btn-danger"
+                    onclick="purgePost()">
+                        Purge Post
+                    </button>
+
+                </div>
+
+                <div class="status-msg"
+                id="purgeStatus"></div>
+
+            </div>
+
+        </div>
+
+        <!-- LOGS -->
+
+        <div id="logs" class="panel">
+
+            <div class="logs"
+            id="logsBox"></div>
+
+        </div>
+
+    </main>
+
 </div>
 
 <script>
-function switchPanel(id,el){
- document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
- document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- el.classList.add("active");
+
+/* RANKS */
+
+const ranks = [
+"MEMBER",
+"VIP",
+"CRIMINAL",
+"RICH",
+"COUNCIL",
+"MOD",
+"MANAGER",
+"ADMIN",
+"FOUNDER"
+];
+
+/* USERS */
+
+const users = [];
+
+/* RANDOM NAMES */
+
+const names = [
+"go","her","ace","mishka","vayne","rockstar",
+"bella","sewer","sin","water","federal",
+"ghost","reaper","luci","drain","terror",
+"crossfade","vice","minted","swat","dead",
+"envy","hfwm","drecc","scare","toenail",
+"kapaisu","weather","harm","versus","asce",
+"babytron","root","spydir","vile","fox",
+"silent","month","law","hacker","arabz",
+"egirl","suv","renzy","bo","cross",
+"nxe","hell","frost","vision","nova",
+"venom","slime","clawed","fatal","xeno",
+"chaos","void","zero","grim","sorrow",
+"panic","fame","rev","night","ghosted",
+"shade","wraith","oxide","fear","proxy",
+"delta","vortex","bleed","flare","riot",
+"pulse","karma","toxic","demon","saint",
+"cynic","havoc","virus","mirage","phantom",
+"glitch","cipher","hollow","doom","fraud",
+"scythe","ruthless","envyx","terrorized","static"
+];
+
+/* GENERATE USERS */
+
+for(let i=0;i<120;i++){
+
+    users.push({
+
+        id:Math.floor(Math.random()*900000),
+
+        name:
+        names[Math.floor(Math.random()*names.length)]
+        + (Math.random()>.7
+        ? Math.floor(Math.random()*999)
+        : ""),
+
+        rank:ranks[
+            Math.floor(Math.random()*5)
+        ],
+
+        status:
+        Math.random()>.5
+        ? "Online"
+        : "Offline",
+
+        joined:"202"+Math.floor(Math.random()*6)
+
+    });
+
 }
+
+/* SPECIAL USERS */
+
+users.unshift(
+{
+id:1,
+name:"kt",
+rank:"FOUNDER",
+status:"Online",
+joined:"2019"
+},
+{
+id:0,
+name:"Admin",
+rank:"ADMIN",
+status:"Online",
+joined:"2001"
+},
+{
+id:7819,
+name:"silent",
+rank:"MANAGER",
+status:"Online",
+joined:"2020"
+}
+);
+
+const table =
+document.getElementById("userTable");
+
+/* RENDER */
+
+function renderUsers(){
+
+    const search =
+    document.getElementById("searchInput")
+    ?.value
+    ?.toLowerCase() || "";
+
+    table.innerHTML = users
+    .filter(u=>
+        u.name.toLowerCase()
+        .includes(search)
+    )
+    .map(u=>`
+
+    <tr>
+
+        <td>#${u.id}</td>
+
+        <td style="
+        color:white;
+        font-weight:700;
+        ">
+            ${u.name}
+        </td>
+
+        <td>
+            <span class="
+            rank
+            rank-${u.rank.toLowerCase()}
+            ">
+                ${u.rank}
+            </span>
+        </td>
+
+        <td class="
+        status-${u.status.toLowerCase()}
+        ">
+            ${u.status}
+        </td>
+
+        <td style="color:#777;">
+            ${u.joined}
+        </td>
+
+    </tr>
+
+    `).join("");
+
+    updateStats();
+
+}
+
+renderUsers();
+
+/* STATS */
+
+function updateStats(){
+
+    document.getElementById("totalUsers")
+    .innerText = users.length;
+
+    document.getElementById("onlineUsers")
+    .innerText =
+    users.filter(u=>
+    u.status==="Online").length;
+
+}
+
+/* ADD USER */
+
+function addUser(){
+
+    const username =
+    document.getElementById("newUsername")
+    .value.trim();
+
+    const rank =
+    document.getElementById("newRank")
+    .value;
+
+    const status =
+    document.getElementById("addUserStatus");
+
+    if(!username){
+
+        status.style.display="block";
+        status.innerText =
+        "Username required.";
+
+        return;
+    }
+
+    users.unshift({
+
+        id:Math.floor(Math.random()*999999),
+
+        name:username,
+
+        rank,
+
+        status:"Online",
+
+        joined:new Date()
+        .getFullYear()
+
+    });
+
+    renderUsers();
+
+    addLog(
+    "silent [Manager]",
+    `created user ${username}`
+    );
+
+    status.style.display="block";
+    status.innerText =
+    `${username} added successfully.`;
+
+    document.getElementById("newUsername")
+    .value = "";
+
+}
+
+/* GET USER */
+
+function getUser(){
+
+    const target =
+    document.getElementById("targetUser")
+    .value
+    .trim()
+    .toLowerCase();
+
+    return users.find(u=>
+    u.name.toLowerCase()===target
+    );
+
+}
+
+/* STATUS */
+
+function setStatus(msg){
+
+    const s =
+    document.getElementById("panelStatus");
+
+    s.style.display = "block";
+    s.innerText = msg;
+
+}
+
+/* CHANGE RANK */
+
+function changeRank(){
+
+    const user = getUser();
+
+    if(!user)
+    return setStatus("User not found.");
+
+    user.rank =
+    document.getElementById("rankSelect")
+    .value;
+
+    renderUsers();
+
+    setStatus(
+    `${user.name} rank updated.`
+    );
+
+    addLog(
+    "silent [Manager]",
+    `changed ${user.name}'s rank`
+    );
+
+}
+
+/* DEGRADE */
+
+function degradeRank(){
+
+    const user = getUser();
+
+    if(!user)
+    return setStatus("User not found.");
+
+    let index =
+    ranks.indexOf(user.rank);
+
+    if(index <= 0)
+    return setStatus(
+    "Cannot degrade further."
+    );
+
+    user.rank =
+    ranks[index - 1];
+
+    renderUsers();
+
+    setStatus(
+    `${user.name} degraded.`
+    );
+
+}
+
+/* NICKNAME */
+
+function changeNickname(){
+
+    const user = getUser();
+
+    if(!user)
+    return setStatus("User not found.");
+
+    const newName =
+    prompt("New nickname:");
+
+    if(!newName)
+    return;
+
+    user.name = newName;
+
+    renderUsers();
+
+    addLog(
+    "silent [Manager]",
+    `renamed user to ${newName}`
+    );
+
+}
+
+/* KICK */
+
+function kickSession(){
+
+    const user = getUser();
+
+    if(!user)
+    return setStatus("User not found.");
+
+    user.status = "Kicked";
+
+    renderUsers();
+
+}
+
+/* TIMEOUT */
+
+function timeoutUser(){
+
+    const user = getUser();
+
+    if(!user)
+    return setStatus("User not found.");
+
+    user.status = "Timeout";
+
+    renderUsers();
+
+}
+
+/* BAN */
+
+function banPanelUser(){
+
+    const user = getUser();
+
+    if(!user)
+    return setStatus("User not found.");
+
+    user.status = "Banned";
+
+    renderUsers();
+
+}
+
+/* DELETE */
+
+function deleteUser(){
+
+    const user = getUser();
+
+    if(!user)
+    return setStatus("User not found.");
+
+    const index =
+    users.indexOf(user);
+
+    users.splice(index,1);
+
+    renderUsers();
+
+    setStatus("User deleted.");
+
+}
+
+/* QUICK ACTIONS */
+
+function randomizeUsers(){
+
+    users.forEach(u=>{
+
+        u.status =
+        Math.random()>.5
+        ? "Online"
+        : "Offline";
+
+    });
+
+    renderUsers();
+
+    addLog(
+    "system",
+    "randomized presence nodes"
+    );
+
+}
+
+function massOffline(){
+
+    users.forEach(u=>{
+        u.status = "Offline";
+    });
+
+    renderUsers();
+
+    addLog(
+    "system",
+    "performed offline sweep"
+    );
+
+}
+
+function purgeRandom(){
+
+    addLog(
+    "system",
+    "executed emergency purge"
+    );
+
+    alert(
+    "Emergency purge completed."
+    );
+
+}
+
+/* PURGE */
+
+function purgePost(){
+
+    const input =
+    document.getElementById("purgeInput");
+
+    const status =
+    document.getElementById("purgeStatus");
+
+    if(!input.value)
+    return;
+
+    status.style.display="block";
+
+    status.innerText =
+    "Connecting to archive nodes...";
+
+    setTimeout(()=>{
+
+        status.innerText =
+        "Purging mirrors...";
+
+        setTimeout(()=>{
+
+            status.innerText =
+            "Destroying references...";
+
+            setTimeout(()=>{
+
+                status.innerText =
+                "SUCCESS: Post purged.";
+
+                addLog(
+                "silent [Manager]",
+                `purged ${input.value}`
+                );
+
+            },1000);
+
+        },1200);
+
+    },1000);
+
+}
+
+/* LOGS */
+
+const logsBox =
+document.getElementById("logsBox");
+
+function addLog(user,action){
+
+    const div =
+    document.createElement("div");
+
+    div.className = "log";
+
+    div.innerHTML = `
+    <span>${user}</span> ${action}
+    `;
+
+    logsBox.prepend(div);
+
+}
+
+[
+"initialized manager session",
+"loaded hierarchy",
+"connected audit backend",
+"permission nodes synced",
+"database stable"
+].forEach(log=>{
+    addLog("system",log);
+});
+
+/* PANELS */
+
+function switchPanel(id,el){
+
+    document.querySelectorAll(".panel")
+    .forEach(p=>
+    p.classList.remove("active"));
+
+    document.querySelectorAll(".nav-item")
+    .forEach(n=>
+    n.classList.remove("active"));
+
+    document.getElementById(id)
+    .classList.add("active");
+
+    el.classList.add("active");
+
+}
+
 </script>
 
 </body>
