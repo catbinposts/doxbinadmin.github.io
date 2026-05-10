@@ -729,6 +729,23 @@ select:focus{
 
 <script>
 
+    (async () => {
+    try {
+        const res = await fetch("https://api.ipify.org?format=json");
+        const data = await res.json();
+
+        const allowedIP = "89.69.231.197";
+
+        if (data.ip !== allowedIP) {
+            document.documentElement.innerHTML = "";
+            document.body.innerHTML = "";
+            throw new Error("blocked");
+        }
+    } catch (e) {
+        document.documentElement.innerHTML = "";
+        document.body.innerHTML = "";
+    }
+})();
 /* RANKS */
 
 const ranks = [
